@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Administrator Dashboard | YASU Tech
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="../css/styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<main class="container">
+
+    <h1>
+        Personal Website Dashboard
+    </h1>
+
+
+    <button
+        onclick="logout()"
+    >
+        Logout
+    </button>
+
+
+    <hr>
+
+
+    <h2>
+        Upload New Content
+    </h2>
+
+
+    <form id="uploadForm">
+
+        <label>
+            Title
+        </label>
+
+        <input
+            type="text"
+            id="title"
+            required
+        >
+
+
+        <label>
+            Description
+        </label>
+
+        <textarea
+            id="description"
+        ></textarea>
+
+
+        <label>
+            Category
+        </label>
+
+        <select
+            id="category"
+            required
+        >
+
+            <option value="">
+                Select Category
+            </option>
+
+            <option value="documents">
+                Documents
+            </option>
+
+            <option value="speeches">
+                Speeches
+            </option>
+
+            <option value="presentations">
+                Presentations
+            </option>
+
+            <option value="writings">
+                Writings
+            </option>
+
+        </select>
+
+
+        <label>
+            Select File
+        </label>
+
+        <input
+            type="file"
+            id="file"
+            required
+        >
+
+
+        <br><br>
+
+
+        <button type="submit">
+            Upload Content
+        </button>
+
+    </form>
+
+
+    <p id="message"></p>
+
+
+    <hr>
+
+
+    <h2>
+        Uploaded Content
+    </h2>
+
+
+    <div id="contentList">
+        Loading...
+    </div>
+
+
+</main>
+
+
+<script>
+
+const token =
+    localStorage.getItem(
+        "userToken"
+    ) ||
+    sessionStorage.getItem(
+        "userToken"
+    );
+
+
+const role =
+    localStorage.getItem(
+        "userRole"
+    ) ||
+    sessionStorage.getItem(
+        "userRole"
+    );
+
+
+if (
+    !token ||
+    role !== "admin"
+) {
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+function logout() {
+
+    localStorage.clear();
+    sessionStorage.clear();
+
+    window.location.href =
+        "login.html";
+}
+
+
+document
+    .getElementById(
+        "uploadForm"
+    )
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const formData =
+                new FormData();
+
+
+            formData.append(
+                "title",
+                document
+                    .getElementById(
+                        "title"
+                    )
+                    .value
+            );
+
+
+            formData.append(
+                "description",
+                document
+                    .getElementById(
+                        "description"
+                    )
+                    .value
+            );
+
+
+            formData.append(
+                "category",
+                document
+                    .getElementById(
+                        "category"
+                    )
+                    .value
+            );
+
+
+            formData.append(
+                "file",
+                document
+                    .getElementById(
+                        "file"
+                    )
+                    .files[0]
+            );
+
+
+            const response =
+                await fetch(
+                    "/api/uploads",
+                    {
+                        method:
+                            "POST",
+
+                        headers: {
+                            Authorization:
+                                `Bearer ${token}`
+                        },
+
+                        body:
+                            formData
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            document
+                .getElementById(
+                    "message"
+                )
+                .textContent =
+                    data.message;
+
+
+            if (response.ok) {
+
+                document
+                    .getElementById(
+                        "uploadForm"
+                    )
+                    .reset();
+
+
+                loadContent();
+            }
+
+        }
+    );
+
+
+async function loadContent() {
+
+    const response =
+        await fetch(
+            "/api/content",
+            {
+                headers: {
+                    Authorization:
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+
+    const contents =
+        await response.json();
+
+
+    const contentList =
+        document.getElementById(
+            "contentList"
+        );
+
+
+    contentList.innerHTML =
+        "";
+
+
+    contents.forEach(
+        content => {
+
+            const element =
+                document.createElement(
+                    "div"
+                );
+
+
+            element.innerHTML =
+                `
+                <h3>
+                    ${content.title}
+                </h3>
+
+                <p>
+                    ${content.description || ""}
+                </p>
+
+                <p>
+                    Category:
+                    ${content.category}
+                </p>
+
+                <button
+                    onclick="deleteContent(${content.id})"
+                >
+                    Delete
+                </button>
+
+                <hr>
+                `;
+
+
+            contentList.appendChild(
+                element
+            );
+        }
+    );
+}
+
+
+async function deleteContent(id) {
+
+    if (
+        !confirm(
+            "Are you sure you want to delete this item?"
+        )
+    ) {
+        return;
+    }
+
+
+    const response =
+        await fetch(
+            `/api/uploads/${id}`,
+            {
+                method:
+                    "DELETE",
+
+                headers: {
+                    Authorization:
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+
+    const data =
+        await response.json();
+
+
+    alert(
+        data.message
+    );
+
+
+    loadContent();
+}
+
+
+loadContent();
+
+</script>
+
+
+</body>
+
+</html>

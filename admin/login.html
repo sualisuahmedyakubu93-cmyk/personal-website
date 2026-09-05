@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Administrator Login | YASU Tech</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<main class="auth-page">
+
+    <section class="auth-container">
+
+        <h1>
+            Administrator Login
+        </h1>
+
+
+        <form id="adminLoginForm">
+
+            <label>
+                Username
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                autocomplete="username"
+                required
+            >
+
+
+            <label>
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                autocomplete="current-password"
+                required
+            >
+
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    id="rememberMe"
+                >
+
+                Remember me
+
+            </label>
+
+
+            <button type="submit">
+                Login
+            </button>
+
+
+            <p id="message"></p>
+
+        </form>
+
+    </section>
+
+</main>
+
+
+<script>
+
+document
+    .getElementById(
+        "adminLoginForm"
+    )
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const username =
+                document
+                    .getElementById(
+                        "username"
+                    )
+                    .value;
+
+
+            const password =
+                document
+                    .getElementById(
+                        "password"
+                    )
+                    .value;
+
+
+            const rememberMe =
+                document
+                    .getElementById(
+                        "rememberMe"
+                    )
+                    .checked;
+
+
+            const response =
+                await fetch(
+                    "/api/auth/login",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+                                username,
+                                password,
+                                rememberMe
+                            })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                document
+                    .getElementById(
+                        "message"
+                    )
+                    .textContent =
+                        data.message;
+
+                return;
+            }
+
+
+            if (
+                data.user.role !==
+                "admin"
+            ) {
+
+                document
+                    .getElementById(
+                        "message"
+                    )
+                    .textContent =
+                        "You do not have administrator access.";
+
+                return;
+            }
+
+
+            const storage =
+                rememberMe
+                    ? localStorage
+                    : sessionStorage;
+
+
+            storage.setItem(
+                "userToken",
+                data.token
+            );
+
+
+            storage.setItem(
+                "userRole",
+                data.user.role
+            );
+
+
+            window.location.href =
+                "dashboard.html";
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

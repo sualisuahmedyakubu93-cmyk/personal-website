@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Login | YASU Tech</title>
+
+    <link
+        rel="stylesheet"
+        href="css/styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<main class="auth-page">
+
+    <section class="auth-container">
+
+        <h1>Welcome</h1>
+
+        <p>
+            Log in to access the website.
+        </p>
+
+
+        <form id="loginForm">
+
+            <label for="username">
+                Username
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                name="username"
+                autocomplete="username"
+                required
+            >
+
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                autocomplete="current-password"
+                required
+            >
+
+
+            <label class="checkbox-label">
+
+                <input
+                    type="checkbox"
+                    id="rememberMe"
+                >
+
+                Remember me
+
+            </label>
+
+
+            <button type="submit">
+                Login
+            </button>
+
+
+            <p id="message"></p>
+
+
+        </form>
+
+
+        <p>
+            Don't have an account?
+
+            <a href="register.html">
+                Register here
+            </a>
+        </p>
+
+
+    </section>
+
+</main>
+
+
+<script>
+
+const loginForm =
+    document.getElementById(
+        "loginForm"
+    );
+
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+
+loginForm.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        const username =
+            document
+                .getElementById(
+                    "username"
+                )
+                .value
+                .trim();
+
+
+        const password =
+            document
+                .getElementById(
+                    "password"
+                )
+                .value;
+
+
+        const rememberMe =
+            document
+                .getElementById(
+                    "rememberMe"
+                )
+                .checked;
+
+
+        message.textContent =
+            "Logging in...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/auth/login",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+                                username,
+                                password,
+                                rememberMe
+                            })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                if (
+                    data.needsVerification
+                ) {
+
+                    sessionStorage.setItem(
+                        "verificationEmail",
+                        data.email
+                    );
+
+                    window.location.href =
+                        "verify-otp.html";
+
+                    return;
+                }
+
+                message.textContent =
+                    data.message;
+
+                return;
+            }
+
+
+            /*
+            Remember Me:
+            localStorage persists after
+            the browser is closed.
+
+            sessionStorage is cleared
+            when the browser session ends.
+            */
+
+            const storage =
+                rememberMe
+                    ? localStorage
+                    : sessionStorage;
+
+
+            storage.setItem(
+                "userToken",
+                data.token
+            );
+
+
+            storage.setItem(
+                "username",
+                data.user.username
+            );
+
+
+            storage.setItem(
+                "userRole",
+                data.user.role
+            );
+
+
+            window.location.href =
+                "index.html";
+
+
+        } catch (error) {
+
+            message.textContent =
+                "Unable to connect to the server.";
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

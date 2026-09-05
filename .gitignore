@@ -1,0 +1,10 @@
+node_modules/
+
+.env
+
+data/*.db
+
+uploads/documents/*
+uploads/speeches/*
+uploads/presentations/*
+uploads/writings/*

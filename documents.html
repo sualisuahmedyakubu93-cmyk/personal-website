@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Documents | YASU Tech</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+
+<body>
+
+    <header class="header">
+
+        <div class="container nav-container">
+
+            <a href="index.html" class="logo">
+                YSA<span>.</span>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle">
+                ☰
+            </button>
+
+            <nav class="navbar" id="navbar">
+
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="documents.html" class="active">Documents</a>
+                <a href="speeches.html">Speeches</a>
+                <a href="presentations.html">Presentations</a>
+                <a href="writings.html">Writings</a>
+                <a href="programming.html">Programming</a>
+                <a href="contact.html">Contact</a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <section class="page-hero">
+
+            <div class="container">
+
+                <p class="section-subtitle">
+                    ACADEMIC LIBRARY
+                </p>
+
+                <h1>
+                    Documents
+                </h1>
+
+                <p>
+                    Academic documents, notes, reports and educational materials.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="container">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="search-input"
+                    placeholder="Search documents..."
+                >
+
+
+                <div class="filter-buttons">
+
+                    <button class="filter-btn active-filter"
+                        data-filter="all">
+                        All
+                    </button>
+
+                    <button class="filter-btn"
+                        data-filter="mathematics">
+                        Mathematics
+                    </button>
+
+                    <button class="filter-btn"
+                        data-filter="ict">
+                        ICT
+                    </button>
+
+                    <button class="filter-btn"
+                        data-filter="education">
+                        Education
+                    </button>
+
+                    <button class="filter-btn"
+                        data-filter="reports">
+                        Reports
+                    </button>
+
+                </div>
+
+
+                <div class="card-grid" id="documentGrid">
+
+
+                    <!-- EXAMPLE MATHEMATICS DOCUMENT -->
+
+                    <article
+                        class="card document-card"
+                        data-category="mathematics"
+                    >
+
+                        <div class="card-icon">📐</div>
+
+                        <h3>
+                            Mathematics Documents
+                        </h3>
+
+                        <p>
+                            Mathematics notes, assignments and academic materials
+                            will be published here.
+                        </p>
+
+                        <a
+                            href="documents/mathematics/"
+                            class="btn btn-small"
+                        >
+                            Mathematics Folder
+                        </a>
+
+                    </article>
+
+
+                    <!-- EXAMPLE ICT DOCUMENT -->
+
+                    <article
+                        class="card document-card"
+                        data-category="ict"
+                    >
+
+                        <div class="card-icon">💻</div>
+
+                        <h3>
+                            ICT Documents
+                        </h3>
+
+                        <p>
+                            ICT, programming and technology documents.
+                        </p>
+
+                        <a
+                            href="documents/ict/"
+                            class="btn btn-small"
+                        >
+                            ICT Folder
+                        </a>
+
+                    </article>
+
+
+                    <!-- EDUCATION -->
+
+                    <article
+                        class="card document-card"
+                        data-category="education"
+                    >
+
+                        <div class="card-icon">🎓</div>
+
+                        <h3>
+                            Education Documents
+                        </h3>
+
+                        <p>
+                            Lesson plans, teaching materials and educational
+                            resources.
+                        </p>
+
+                        <a
+                            href="documents/education/"
+                            class="btn btn-small"
+                        >
+                            Education Folder
+                        </a>
+
+                    </article>
+
+
+                    <!-- REPORTS -->
+
+                    <article
+                        class="card document-card"
+                        data-category="reports"
+                    >
+
+                        <div class="card-icon">📊</div>
+
+                        <h3>
+                            Academic Reports
+                        </h3>
+
+                        <p>
+                            Academic reports and professional educational reports.
+                        </p>
+
+                        <a
+                            href="documents/reports/"
+                            class="btn btn-small"
+                        >
+                            Reports Folder
+                        </a>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="footer">
+
+        <div class="footer-bottom">
+
+            <p>
+                © <span id="currentYear"></span>
+                Yakubu Sualisu Ahmed.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="javascript/script.js"></script>
+
+<footer>
+
+    <p>
+        ©
+        <span id="currentYear"></span>
+        Yakubu Sualisu Ahmed.
+        All Rights Reserved.
+    </p>
+
+    <p>
+        Developed by
+        Yakubu Sualisu Ahmed
+    </p>
+
+</footer>
+
+<script src="javascript/script.js"></script>
+</body>
+
+</html>
