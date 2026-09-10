@@ -1,81 +1,102 @@
+```html
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>Presentations | YASU Tech</title>
+<title>Presentations | YASU Tech</title>
 
-    <link rel="stylesheet" href="css/styles.css">
+<meta
+    name="description"
+    content="Explore academic, educational, Mathematics and ICT presentations published on YASU Tech."
+>
+
+<link rel="stylesheet" href="css/styles.css">
 
 </head>
 
-
 <body>
 
-    <header class="header">
+<!-- HEADER -->
+<header class="header">
 
-        <div class="container nav-container">
+    <div class="container nav-container">
 
-            <a href="index.html" class="logo">
-                YSA<span>.</span>
-            </a>
+        <a href="index.html" class="logo">
+            YASU<span>Tech</span>
+        </a>
 
-            <button class="menu-toggle" id="menuToggle">
-                ☰
-            </button>
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Open navigation menu"
+        >
+            ☰
+        </button>
 
-            <nav class="navbar" id="navbar">
+        <nav class="navbar" id="navbar">
 
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="documents.html">Documents</a>
-                <a href="speeches.html">Speeches</a>
-                <a href="presentations.html" class="active">Presentations</a>
-                <a href="writings.html">Writings</a>
-                <a href="programming.html">Programming</a>
-                <a href="contact.html">Contact</a>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="documents.html">Documents</a>
+            <a href="speeches.html">Speeches</a>
+            <a href="presentations.html" class="active">Presentations</a>
+            <a href="writings.html">Writings</a>
+            <a href="programming.html">Programming</a>
+            <a href="contact.html">Contact</a>
 
-            </nav>
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- MAIN CONTENT -->
+<main>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+
+        <div class="container">
+
+            <p class="section-subtitle">
+                YASU TECH PRESENTATIONS
+            </p>
+
+            <h1>
+                Academic Presentations
+            </h1>
+
+            <p>
+                PowerPoint presentations and educational presentation materials.
+            </p>
 
         </div>
 
-    </header>
+    </section>
 
 
-    <main>
+    <!-- PRESENTATION CATEGORIES -->
+    <section class="section">
 
-        <section class="page-hero">
+        <div class="container">
 
-            <div class="container">
-
-                <p class="section-subtitle">
-                    PRESENTATIONS
-                </p>
-
-                <h1>
-                    Academic Presentations
-                </h1>
-
-                <p>
-                    PowerPoint presentations and educational presentation materials.
-                </p>
-
-            </div>
-
-        </section>
+            <div class="card-grid">
 
 
-        <section class="section">
-
-            <div class="container">
-
-                <div class="card-grid">
-
+                <!-- MATHEMATICS PRESENTATIONS -->
+                <a
+                    href="content.html?category=presentations&subcategory=mathematics"
+                >
 
                     <article class="card">
 
@@ -91,6 +112,13 @@
 
                     </article>
 
+                </a>
+
+
+                <!-- ICT PRESENTATIONS -->
+                <a
+                    href="content.html?category=presentations&subcategory=ict"
+                >
 
                     <article class="card">
 
@@ -106,6 +134,13 @@
 
                     </article>
 
+                </a>
+
+
+                <!-- EDUCATION PRESENTATIONS -->
+                <a
+                    href="content.html?category=presentations&subcategory=education"
+                >
 
                     <article class="card">
 
@@ -121,58 +156,79 @@
 
                     </article>
 
-                </div>
-
-
-                <div class="journey-box">
-
-                    <p>
-                        New presentations will be added here as my academic
-                        and professional portfolio continues to grow.
-                    </p>
-
-                </div>
+                </a>
 
             </div>
 
-        </section>
 
-    </main>
+            <!-- FUTURE PRESENTATIONS -->
+            <div class="journey-box">
+
+                <p>
+                    New presentations will be added here as the YASU Tech
+                    academic and professional portfolio continues to grow.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
 
 
-    <footer class="footer">
+<!-- FOOTER -->
+<footer class="footer">
 
-        <div class="footer-bottom">
+    <div class="container footer-container">
+
+        <div>
+
+            <h3>YASU Tech</h3>
 
             <p>
-                © <span id="currentYear"></span>
-                Yakubu Sualisu Ahmed.
+                Education, Technology & Programming
+                <br>
+                Academic and Professional Digital Portfolio
             </p>
 
         </div>
 
-    </footer>
+
+        <div class="footer-links">
+
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="documents.html">Documents</a>
+            <a href="programming.html">Programming</a>
+            <a href="contact.html">Contact</a>
+
+        </div>
+
+    </div>
 
 
-    <script src="javascript/script.js"></script>
+    <div class="footer-bottom">
 
-<footer>
+        <p>
+            © <span id="currentYear"></span>
+            YASU Tech. All Rights Reserved.
+        </p>
 
-    <p>
-        ©
-        <span id="currentYear"></span>
-        Yakubu Sualisu Ahmed.
-        All Rights Reserved.
-    </p>
+        <p>
+            Powered by Yakubu Sualisu Ahmed
+        </p>
 
-    <p>
-        Developed by
-        Yakubu Sualisu Ahmed
-    </p>
+    </div>
 
 </footer>
 
-<script src="javascript/script.js"></script>
+
+<!-- JAVASCRIPT -->
+<script src="javascript/scripts.js"></script>
+
 </body>
 
 </html>
+```

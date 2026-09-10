@@ -1,252 +1,1300 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+```
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>Login | YASU Tech</title>
+<meta
+    name="description"
+    content="Secure login page for YASU Tech."
+>
 
-    <link
-        rel="stylesheet"
-        href="css/styles.css"
-    >
+<title>Login | YASU Tech</title>
+
+
+<style>
+
+    /* =========================================
+       PAGE
+    ========================================== */
+
+    * {
+        box-sizing: border-box;
+    }
+
+
+    body {
+
+        margin: 0;
+
+        min-height: 100vh;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif;
+
+        background:
+            linear-gradient(
+                135deg,
+                #eff6ff,
+                #ffffff
+            );
+
+        color: #111827;
+
+    }
+
+
+    .auth-page {
+
+        min-height: 100vh;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding: 30px 20px;
+
+    }
+
+
+    /* =========================================
+       LOGIN CONTAINER
+    ========================================== */
+
+    .auth-container {
+
+        width: 100%;
+
+        max-width: 450px;
+
+        background: #ffffff;
+
+        padding: 42px 38px;
+
+        border-radius: 18px;
+
+        box-shadow:
+            0 20px 50px
+            rgba(15, 23, 42, 0.10);
+
+        border:
+            1px solid
+            #e5e7eb;
+
+    }
+
+
+    /* =========================================
+       YASU TECH LOGO
+    ========================================== */
+
+    .auth-logo {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 12px;
+
+        margin-bottom: 28px;
+
+    }
+
+
+    .logo-mark {
+
+        width: 58px;
+
+        height: 58px;
+
+        border-radius: 14px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        background:
+            linear-gradient(
+                135deg,
+                #111827,
+                #2563eb
+            );
+
+        box-shadow:
+            0 8px 20px
+            rgba(37, 99, 235, 0.20);
+
+    }
+
+
+    .logo-mark svg {
+
+        width: 38px;
+
+        height: 38px;
+
+        fill: none;
+
+        stroke: #ffffff;
+
+        stroke-width: 3;
+
+        stroke-linecap: round;
+
+        stroke-linejoin: round;
+
+    }
+
+
+    .logo-text {
+
+        font-size: 30px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.8px;
+
+        color: #111827;
+
+    }
+
+
+    .logo-text span {
+
+        color: #2563eb;
+
+    }
+
+
+    /* =========================================
+       HEADING
+    ========================================== */
+
+    .auth-container h1 {
+
+        margin:
+
+            0 0 10px;
+
+        text-align: center;
+
+        font-size: 28px;
+
+        line-height: 1.25;
+
+        color: #111827;
+
+    }
+
+
+    .auth-container > p {
+
+        margin:
+
+            0 0 28px;
+
+        text-align: center;
+
+        color: #6b7280;
+
+        font-size: 15px;
+
+        line-height: 1.6;
+
+    }
+
+
+    /* =========================================
+       FORM
+    ========================================== */
+
+    #loginForm {
+
+        width: 100%;
+
+    }
+
+
+    #loginForm > label:not(.checkbox-label) {
+
+        display: block;
+
+        margin:
+
+            0 0 8px;
+
+        font-size: 14px;
+
+        font-weight: 600;
+
+        color: #374151;
+
+    }
+
+
+    .input-wrapper {
+
+        position: relative;
+
+        margin-bottom: 20px;
+
+    }
+
+
+    .input-icon {
+
+        position: absolute;
+
+        left: 14px;
+
+        top: 50%;
+
+        transform:
+            translateY(-50%);
+
+        width: 20px;
+
+        height: 20px;
+
+        fill: none;
+
+        stroke: #6b7280;
+
+        stroke-width: 2;
+
+        stroke-linecap: round;
+
+        stroke-linejoin: round;
+
+        pointer-events: none;
+
+    }
+
+
+    .input-wrapper input {
+
+        width: 100%;
+
+        height: 50px;
+
+        padding:
+
+            0 46px;
+
+        border:
+
+            1px solid
+            #d1d5db;
+
+        border-radius: 10px;
+
+        background: #ffffff;
+
+        color: #111827;
+
+        font-size: 15px;
+
+        outline: none;
+
+        transition:
+
+            border-color 0.2s ease,
+
+            box-shadow 0.2s ease;
+
+    }
+
+
+    .input-wrapper input:focus {
+
+        border-color: #2563eb;
+
+        box-shadow:
+            0 0 0 3px
+            rgba(37, 99, 235, 0.12);
+
+    }
+
+
+    .input-wrapper input::placeholder {
+
+        color: #9ca3af;
+
+    }
+
+
+    /* =========================================
+       PASSWORD SHOW / HIDE
+    ========================================== */
+
+    .password-toggle {
+
+        position: absolute;
+
+        right: 13px;
+
+        top: 50%;
+
+        transform:
+            translateY(-50%);
+
+        border: none;
+
+        background: transparent;
+
+        cursor: pointer;
+
+        padding: 5px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+    }
+
+
+    .password-toggle svg {
+
+        width: 20px;
+
+        height: 20px;
+
+        stroke: #6b7280;
+
+        fill: none;
+
+        stroke-width: 2;
+
+        stroke-linecap: round;
+
+        stroke-linejoin: round;
+
+    }
+
+
+    .password-toggle:hover svg {
+
+        stroke: #2563eb;
+
+    }
+
+
+    /* =========================================
+       REMEMBER ME
+    ========================================== */
+
+    .checkbox-label {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        margin:
+
+            5px 0 22px;
+
+        font-size: 14px;
+
+        color: #4b5563;
+
+        cursor: pointer;
+
+    }
+
+
+    .checkbox-label input {
+
+        width: 16px;
+
+        height: 16px;
+
+        cursor: pointer;
+
+    }
+
+
+    /* =========================================
+       LOGIN BUTTON
+    ========================================== */
+
+    #loginForm button[type="submit"] {
+
+        width: 100%;
+
+        height: 50px;
+
+        border: none;
+
+        border-radius: 10px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #111827,
+                #2563eb
+            );
+
+        color: #ffffff;
+
+        font-size: 16px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        transition:
+
+            transform 0.2s ease,
+
+            box-shadow 0.2s ease;
+
+    }
+
+
+    #loginForm button[type="submit"]:hover {
+
+        transform:
+            translateY(-1px);
+
+        box-shadow:
+            0 8px 20px
+            rgba(37, 99, 235, 0.25);
+
+    }
+
+
+    #loginForm button[type="submit"]:active {
+
+        transform:
+            translateY(0);
+
+    }
+
+
+    #loginForm button[type="submit"]:disabled {
+
+        opacity: 0.7;
+
+        cursor: not-allowed;
+
+        transform: none;
+
+        box-shadow: none;
+
+    }
+
+
+    /* =========================================
+       MESSAGE
+    ========================================== */
+
+    #message {
+
+        margin:
+
+            15px 0 0;
+
+        text-align: center;
+
+        font-size: 14px;
+
+        min-height: 20px;
+
+        color: #dc2626;
+
+    }
+
+
+    /* =========================================
+       CREATE ACCOUNT
+    ========================================== */
+
+    .register-text {
+
+        margin:
+
+            24px 0 0;
+
+        text-align: center;
+
+        color: #6b7280;
+
+        font-size: 14px;
+
+    }
+
+
+    .register-text a {
+
+        color: #2563eb;
+
+        font-weight: 600;
+
+        text-decoration: none;
+
+    }
+
+
+    .register-text a:hover {
+
+        text-decoration: underline;
+
+    }
+
+
+    /* =========================================
+       ADMINISTRATOR LOGIN
+    ========================================== */
+
+    .admin-login-text {
+
+        margin:
+
+            14px 0 0;
+
+        text-align: center;
+
+        color: #6b7280;
+
+        font-size: 14px;
+
+    }
+
+
+    .admin-login-text a {
+
+        color: #111827;
+
+        font-weight: 600;
+
+        text-decoration: none;
+
+    }
+
+
+    .admin-login-text a:hover {
+
+        color: #2563eb;
+
+        text-decoration: underline;
+
+    }
+
+
+    /* =========================================
+       MOBILE RESPONSIVE DESIGN
+    ========================================== */
+
+    @media (max-width: 480px) {
+
+        .auth-container {
+
+            padding:
+                32px 22px;
+
+            border-radius: 15px;
+
+        }
+
+
+        .logo-text {
+
+            font-size: 26px;
+
+        }
+
+
+        .logo-mark {
+
+            width: 52px;
+
+            height: 52px;
+
+        }
+
+
+        .auth-container h1 {
+
+            font-size: 25px;
+
+        }
+
+    }
+
+</style>
+```
 
 </head>
 
-
 <body>
-
 
 <main class="auth-page">
 
-    <section class="auth-container">
-
-        <h1>Welcome</h1>
-
-        <p>
-            Log in to access the website.
-        </p>
+```
+<section class="auth-container">
 
 
-        <form id="loginForm">
+    <!-- =====================================
+         YASU TECH LOGO
+    ====================================== -->
 
-            <label for="username">
-                Username
-            </label>
+    <div class="auth-logo">
+
+
+        <div class="logo-mark">
+
+            <svg
+                viewBox="0 0 48 48"
+                aria-hidden="true"
+            >
+
+                <!-- Y -->
+
+                <path
+                    d="M10 9 L18 21 L26 9"
+                />
+
+                <path
+                    d="M18 21 L18 37"
+                />
+
+
+                <!-- T -->
+
+                <path
+                    d="M29 9 L43 9"
+                />
+
+                <path
+                    d="M36 9 L36 37"
+                />
+
+            </svg>
+
+        </div>
+
+
+        <div class="logo-text">
+
+            YASU<span>Tech</span>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================
+         LOGIN HEADING
+    ====================================== -->
+
+    <h1>
+        Welcome Back
+    </h1>
+
+
+    <p>
+        Log in to your YASU Tech account.
+    </p>
+
+
+    <!-- =====================================
+         LOGIN FORM
+    ====================================== -->
+
+    <form id="loginForm">
+
+
+        <!-- USERNAME -->
+
+        <label for="username">
+            Username
+        </label>
+
+
+        <div class="input-wrapper">
+
+
+            <svg
+                class="input-icon"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+
+                <circle
+                    cx="12"
+                    cy="8"
+                    r="4"
+                />
+
+                <path
+                    d="M4 21
+                       C4 16.5
+                       7.5 14
+                       12 14
+                       C16.5 14
+                       20 16.5
+                       20 21"
+                />
+
+            </svg>
+
 
             <input
                 type="text"
                 id="username"
                 name="username"
+                placeholder="Enter your username"
                 autocomplete="username"
                 required
             >
 
+        </div>
 
-            <label for="password">
-                Password
-            </label>
+
+        <!-- PASSWORD -->
+
+        <label for="password">
+            Password
+        </label>
+
+
+        <div class="input-wrapper">
+
+
+            <svg
+                class="input-icon"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+
+                <rect
+                    x="5"
+                    y="10"
+                    width="14"
+                    height="10"
+                    rx="2"
+                />
+
+                <path
+                    d="M8 10 V7
+                       A4 4 0 0 1 16 7
+                       V10"
+                />
+
+            </svg>
+
 
             <input
                 type="password"
                 id="password"
                 name="password"
+                placeholder="Enter your password"
                 autocomplete="current-password"
                 required
             >
 
 
-            <label class="checkbox-label">
+            <button
+                type="button"
+                class="password-toggle"
+                id="passwordToggle"
+                aria-label="Show password"
+            >
 
-                <input
-                    type="checkbox"
-                    id="rememberMe"
+                <svg
+                    id="eyeIcon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
                 >
 
-                Remember me
+                    <path
+                        d="M2 12
+                           C5 7
+                           8.5 5
+                           12 5
+                           C15.5 5
+                           19 7
+                           22 12
+                           C19 17
+                           15.5 19
+                           12 19
+                           C8.5 19
+                           5 17
+                           2 12Z"
+                    />
 
-            </label>
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="3"
+                    />
 
+                </svg>
 
-            <button type="submit">
-                Login
             </button>
 
 
-            <p id="message"></p>
+        </div>
 
 
-        </form>
+        <!-- REMEMBER ME -->
+
+        <label class="checkbox-label">
+
+            <input
+                type="checkbox"
+                id="rememberMe"
+            >
+
+            <span>
+                Remember me
+            </span>
+
+        </label>
 
 
-        <p>
-            Don't have an account?
+        <!-- LOGIN BUTTON -->
 
-            <a href="register.html">
-                Register here
-            </a>
-        </p>
+        <button
+            type="submit"
+            id="loginButton"
+        >
+            Login
+        </button>
 
 
-    </section>
+        <p id="message"></p>
+
+
+    </form>
+
+
+    <!-- =====================================
+         CREATE ACCOUNT
+    ====================================== -->
+
+    <p class="register-text">
+
+        Don't have an account?
+
+        <a href="register.html">
+            Create Account
+        </a>
+
+    </p>
+
+
+    <!-- =====================================
+         ADMINISTRATOR LOGIN
+    ====================================== -->
+
+    <p class="admin-login-text">
+
+        Administrator?
+
+        <a href="admin/login.html">
+            Administrator Login
+        </a>
+
+    </p>
+
+
+</section>
+```
 
 </main>
 
-
 <script>
 
-const loginForm =
-    document.getElementById(
-        "loginForm"
-    );
+
+    /* =========================================
+       LOGIN ELEMENTS
+    ========================================== */
+
+    const loginForm =
+        document.getElementById(
+            "loginForm"
+        );
 
 
-const message =
-    document.getElementById(
-        "message"
-    );
+    const message =
+        document.getElementById(
+            "message"
+        );
 
 
-loginForm.addEventListener(
-    "submit",
-    async function(event) {
-
-        event.preventDefault();
-
-        const username =
-            document
-                .getElementById(
-                    "username"
-                )
-                .value
-                .trim();
+    const password =
+        document.getElementById(
+            "password"
+        );
 
 
-        const password =
-            document
-                .getElementById(
-                    "password"
-                )
-                .value;
+    const passwordToggle =
+        document.getElementById(
+            "passwordToggle"
+        );
 
 
-        const rememberMe =
-            document
-                .getElementById(
-                    "rememberMe"
-                )
-                .checked;
+    const eyeIcon =
+        document.getElementById(
+            "eyeIcon"
+        );
 
 
-        message.textContent =
-            "Logging in...";
+    const loginButton =
+        document.getElementById(
+            "loginButton"
+        );
 
 
-        try {
+    /* =========================================
+       SHOW / HIDE PASSWORD
+    ========================================== */
 
-            const response =
-                await fetch(
-                    "/api/auth/login",
-                    {
-                        method: "POST",
+    passwordToggle.addEventListener(
+        "click",
+        function () {
 
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
+            if (
+                password.type === "password"
+            ) {
 
-                        body:
-                            JSON.stringify({
-                                username,
-                                password,
-                                rememberMe
-                            })
-                    }
+                password.type =
+                    "text";
+
+
+                passwordToggle.setAttribute(
+                    "aria-label",
+                    "Hide password"
                 );
 
 
-            const data =
-                await response.json();
+                eyeIcon.innerHTML = `
+
+                    <path
+                        d="M2 12
+                           C5 7
+                           8.5 5
+                           12 5
+                           C15.5 5
+                           19 7
+                           22 12
+                           C19 17
+                           15.5 19
+                           12 19
+                           C8.5 19
+                           5 17
+                           2 12Z"
+                    />
+
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="3"
+                    />
+
+                    <path
+                        d="M4 4 L20 20"
+                    />
+
+                `;
+
+            }
+
+            else {
+
+                password.type =
+                    "password";
 
 
-            if (!response.ok) {
+                passwordToggle.setAttribute(
+                    "aria-label",
+                    "Show password"
+                );
 
-                if (
-                    data.needsVerification
-                ) {
 
-                    sessionStorage.setItem(
-                        "verificationEmail",
-                        data.email
+                eyeIcon.innerHTML = `
+
+                    <path
+                        d="M2 12
+                           C5 7
+                           8.5 5
+                           12 5
+                           C15.5 5
+                           19 7
+                           22 12
+                           C19 17
+                           15.5 19
+                           12 19
+                           C8.5 19
+                           5 17
+                           2 12Z"
+                    />
+
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="3"
+                    />
+
+                `;
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       NORMAL USER LOGIN
+    ========================================== */
+
+    loginForm.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const username =
+                document
+                    .getElementById(
+                        "username"
+                    )
+                    .value
+                    .trim();
+
+
+            const passwordValue =
+                document
+                    .getElementById(
+                        "password"
+                    )
+                    .value;
+
+
+            const rememberMe =
+                document
+                    .getElementById(
+                        "rememberMe"
+                    )
+                    .checked;
+
+
+            message.textContent =
+                "Logging in...";
+
+            message.style.color =
+                "#2563eb";
+
+
+            loginButton.disabled =
+                true;
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/auth/login",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    username,
+                                    password:
+                                        passwordValue,
+                                    rememberMe
+                                })
+                        }
                     );
 
-                    window.location.href =
-                        "verify-otp.html";
+
+                const data =
+                    await response.json();
+
+
+                /* =================================
+                   LOGIN ERROR
+                ================================== */
+
+                if (!response.ok) {
+
+                    if (
+                        data.needsVerification
+                    ) {
+
+                        sessionStorage.setItem(
+                            "verificationEmail",
+                            data.email
+                        );
+
+
+                        window.location.href =
+                            "verify-otp.html";
+
+
+                        return;
+
+                    }
+
+
+                    message.style.color =
+                        "#dc2626";
+
+
+                    message.textContent =
+                        data.message ||
+                        "Incorrect username or password.";
+
+
+                    loginButton.disabled =
+                        false;
+
 
                     return;
+
                 }
 
-                message.textContent =
-                    data.message;
 
-                return;
+                /* =================================
+                   STORE USER SESSION
+                ================================== */
+
+                const storage =
+                    rememberMe
+                        ? localStorage
+                        : sessionStorage;
+
+
+                storage.setItem(
+                    "userToken",
+                    data.token
+                );
+
+
+                if (
+                    data.user
+                    &&
+                    data.user.username
+                ) {
+
+                    storage.setItem(
+                        "username",
+                        data.user.username
+                    );
+
+                }
+
+
+                if (
+                    data.user
+                    &&
+                    data.user.role
+                ) {
+
+                    storage.setItem(
+                        "userRole",
+                        data.user.role
+                    );
+
+                }
+
+
+                /* =================================
+                   LOGIN SUCCESS
+                ================================== */
+
+                message.style.color =
+                    "#16a34a";
+
+
+                message.textContent =
+                    "Login successful. Redirecting...";
+
+
+                /*
+                    The main public website is
+                    index.html.
+
+                    Administrators are sent to
+                    the administrator dashboard.
+                */
+
+                if (
+                    data.user
+                    &&
+                    data.user.role === "admin"
+                ) {
+
+                    window.location.href =
+                        "admin/dashboard.html";
+
+                }
+
+                else {
+
+                    window.location.href =
+                        "index.html";
+
+                }
+
             }
 
 
-            /*
-            Remember Me:
-            localStorage persists after
-            the browser is closed.
+            catch (error) {
 
-            sessionStorage is cleared
-            when the browser session ends.
-            */
-
-            const storage =
-                rememberMe
-                    ? localStorage
-                    : sessionStorage;
+                console.error(
+                    "Login error:",
+                    error
+                );
 
 
-            storage.setItem(
-                "userToken",
-                data.token
-            );
+                message.style.color =
+                    "#dc2626";
 
 
-            storage.setItem(
-                "username",
-                data.user.username
-            );
+                message.textContent =
+                    "Unable to connect to the server.";
 
 
-            storage.setItem(
-                "userRole",
-                data.user.role
-            );
+                loginButton.disabled =
+                    false;
 
+            }
 
-            window.location.href =
-                "index.html";
-
-
-        } catch (error) {
-
-            message.textContent =
-                "Unable to connect to the server.";
         }
+    );
 
-    }
-);
 
 </script>
-
 
 </body>
 

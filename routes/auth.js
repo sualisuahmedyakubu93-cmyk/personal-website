@@ -53,6 +53,25 @@ function generateOTP() {
 
 /*
 ==========================================
+STRONG PASSWORD VALIDATION
+==========================================
+*/
+
+function isStrongPassword(password) {
+
+    return (
+        password.length >= 8 &&
+        /[A-Z]/.test(password) &&
+        /[a-z]/.test(password) &&
+        /[0-9]/.test(password) &&
+        /[^A-Za-z0-9]/.test(password)
+    );
+
+}
+
+
+/*
+==========================================
 SEND OTP EMAIL
 ==========================================
 */
@@ -72,13 +91,13 @@ async function sendOTP(
             email,
 
         subject:
-            "Verify Your Personal Website Account",
+            "Verify Your YASU Tech Account",
 
         html: `
             <h2>Hello ${username},</h2>
 
             <p>
-                Thank you for registering.
+                Thank you for registering with YASU Tech.
             </p>
 
             <p>
@@ -147,13 +166,19 @@ router.post(
             }
 
 
+            /*
+            ==========================================
+            STRONG PASSWORD CHECK
+            ==========================================
+            */
+
             if (
-                password.length < 6
+                !isStrongPassword(password)
             ) {
 
                 return response.status(400).json({
                     message:
-                        "Password must contain at least 6 characters."
+                        "Password does not meet the required security standard."
                 });
 
             }
@@ -723,3 +748,4 @@ router.get(
 
 
 module.exports = router;
+

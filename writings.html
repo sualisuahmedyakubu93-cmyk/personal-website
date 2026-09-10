@@ -1,81 +1,102 @@
+```html
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>Writings | YASU Tech</title>
+<title>Writings | YASU Tech</title>
 
-    <link rel="stylesheet" href="css/styles.css">
+<meta
+    name="description"
+    content="Explore articles, reflections, academic thoughts and personal writings published on YASU Tech."
+>
+
+<link rel="stylesheet" href="css/styles.css">
 
 </head>
 
-
 <body>
 
-    <header class="header">
+<!-- HEADER -->
+<header class="header">
 
-        <div class="container nav-container">
+    <div class="container nav-container">
 
-            <a href="index.html" class="logo">
-                YSA<span>.</span>
-            </a>
+        <a href="index.html" class="logo">
+            YASU<span>Tech</span>
+        </a>
 
-            <button class="menu-toggle" id="menuToggle">
-                ☰
-            </button>
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Open navigation menu"
+        >
+            ☰
+        </button>
 
-            <nav class="navbar" id="navbar">
+        <nav class="navbar" id="navbar">
 
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="documents.html">Documents</a>
-                <a href="speeches.html">Speeches</a>
-                <a href="presentations.html">Presentations</a>
-                <a href="writings.html" class="active">Writings</a>
-                <a href="programming.html">Programming</a>
-                <a href="contact.html">Contact</a>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="documents.html">Documents</a>
+            <a href="speeches.html">Speeches</a>
+            <a href="presentations.html">Presentations</a>
+            <a href="writings.html" class="active">Writings</a>
+            <a href="programming.html">Programming</a>
+            <a href="contact.html">Contact</a>
 
-            </nav>
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- MAIN CONTENT -->
+<main>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+
+        <div class="container">
+
+            <p class="section-subtitle">
+                YASU TECH WRITINGS
+            </p>
+
+            <h1>
+                Articles & Reflections
+            </h1>
+
+            <p>
+                Personal writings, reflections and academic thoughts.
+            </p>
 
         </div>
 
-    </header>
+    </section>
 
 
-    <main>
+    <!-- WRITING CATEGORIES -->
+    <section class="section">
 
-        <section class="page-hero">
+        <div class="container">
 
-            <div class="container">
-
-                <p class="section-subtitle">
-                    WRITINGS
-                </p>
-
-                <h1>
-                    Articles & Reflections
-                </h1>
-
-                <p>
-                    My personal writings, reflections and academic thoughts.
-                </p>
-
-            </div>
-
-        </section>
+            <div class="card-grid">
 
 
-        <section class="section">
-
-            <div class="container">
-
-                <div class="card-grid">
-
+                <!-- ACADEMIC WRITINGS -->
+                <a
+                    href="content.html?category=writings&subcategory=academic"
+                >
 
                     <article class="card">
 
@@ -92,6 +113,13 @@
 
                     </article>
 
+                </a>
+
+
+                <!-- TECHNOLOGY AND PROGRAMMING -->
+                <a
+                    href="content.html?category=writings&subcategory=technology"
+                >
 
                     <article class="card">
 
@@ -102,12 +130,19 @@
                         </h3>
 
                         <p>
-                            My thoughts and experiences in technology
+                            Thoughts and experiences in technology
                             and software development.
                         </p>
 
                     </article>
 
+                </a>
+
+
+                <!-- PERSONAL REFLECTIONS -->
+                <a
+                    href="content.html?category=writings&subcategory=reflections"
+                >
 
                     <article class="card">
 
@@ -119,54 +154,73 @@
 
                         <p>
                             Personal learning experiences and reflections
-                            from my academic journey.
+                            from an academic and professional journey.
                         </p>
 
                     </article>
 
-                </div>
+                </a>
 
             </div>
 
-        </section>
+        </div>
 
-    </main>
+    </section>
+
+</main>
 
 
-    <footer class="footer">
+<!-- FOOTER -->
+<footer class="footer">
 
-        <div class="footer-bottom">
+    <div class="container footer-container">
+
+        <div>
+
+            <h3>YASU Tech</h3>
 
             <p>
-                © <span id="currentYear"></span>
-                Yakubu Sualisu Ahmed.
+                Education, Technology & Programming
+                <br>
+                Academic and Professional Digital Portfolio
             </p>
 
         </div>
 
-    </footer>
+
+        <div class="footer-links">
+
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="documents.html">Documents</a>
+            <a href="programming.html">Programming</a>
+            <a href="contact.html">Contact</a>
+
+        </div>
+
+    </div>
 
 
-    <script src="javascript/script.js"></script>
+    <div class="footer-bottom">
 
-<footer>
+        <p>
+            © <span id="currentYear"></span>
+            YASU Tech. All Rights Reserved.
+        </p>
 
-    <p>
-        ©
-        <span id="currentYear"></span>
-        Yakubu Sualisu Ahmed.
-        All Rights Reserved.
-    </p>
+        <p>
+            Powered by Yakubu Sualisu Ahmed
+        </p>
 
-    <p>
-        Developed by
-        Yakubu Sualisu Ahmed
-    </p>
+    </div>
 
 </footer>
 
-<script src="javascript/script.js"></script>
+
+<!-- JAVASCRIPT -->
+<script src="javascript/scripts.js"></script>
 
 </body>
 
 </html>
+```

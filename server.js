@@ -1,4 +1,4 @@
-require("dotenv").config();
+﻿require("dotenv").config();
 
 const express = require("express");
 const path = require("path");
@@ -8,32 +8,24 @@ const {
     initializeDatabase
 } = require("./database/database");
 
-const {
-    authenticateToken
-} = require("./middleware/authMiddleware");
-
-const authRoutes =
-    require("./routes/auth");
-
-const uploadRoutes =
-    require("./routes/uploads");
-
-const contentRoutes =
-    require("./routes/content");
-
-const contactRoutes =
-    require("./routes/contact");
-
+const authRoutes = require("./routes/auth");
+const uploadRoutes = require("./routes/uploads");
+const contentRoutes = require("./routes/content");
+const contactRoutes = require("./routes/contact");
+const pagesRoutes = require("./routes/pages");
 
 const app = express();
 
-const PORT =
-    process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 
-app.use(
-    express.json()
-);
+/*
+==========================================
+REQUEST BODY PARSING
+==========================================
+*/
+
+app.use(express.json());
 
 app.use(
     express.urlencoded({
@@ -44,36 +36,45 @@ app.use(
 
 /*
 ==========================================
-STATIC FILES
+PUBLIC STATIC ASSETS
 ==========================================
 */
 
 app.use(
     "/css",
     express.static(
-        path.join(
-            __dirname,
-            "css"
-        )
+        path.join(__dirname, "css")
     )
 );
 
 app.use(
     "/javascript",
     express.static(
-        path.join(
-            __dirname,
-            "javascript"
-        )
+        path.join(__dirname, "javascript")
     )
 );
 
 app.use(
     "/images",
     express.static(
+        path.join(__dirname, "images")
+    )
+);
+
+
+/*
+==========================================
+ADMIN STATIC ASSETS
+==========================================
+*/
+
+app.use(
+    "/admin/css",
+    express.static(
         path.join(
             __dirname,
-            "images"
+            "admin",
+            "css"
         )
     )
 );
@@ -105,16 +106,21 @@ app.use(
     contactRoutes
 );
 
+app.use(
+    "/api/pages",
+    pagesRoutes
+);
+
 
 /*
 ==========================================
-PUBLIC AUTHENTICATION PAGES
+PUBLIC LOGIN
 ==========================================
 */
 
 app.get(
     "/",
-    (request, response) => {
+    function (request, response) {
         response.sendFile(
             path.join(
                 __dirname,
@@ -126,7 +132,7 @@ app.get(
 
 app.get(
     "/login.html",
-    (request, response) => {
+    function (request, response) {
         response.sendFile(
             path.join(
                 __dirname,
@@ -136,9 +142,16 @@ app.get(
     }
 );
 
+
+/*
+==========================================
+REGISTRATION
+==========================================
+*/
+
 app.get(
     "/register.html",
-    (request, response) => {
+    function (request, response) {
         response.sendFile(
             path.join(
                 __dirname,
@@ -148,9 +161,16 @@ app.get(
     }
 );
 
+
+/*
+==========================================
+OTP VERIFICATION
+==========================================
+*/
+
 app.get(
     "/verify-otp.html",
-    (request, response) => {
+    function (request, response) {
         response.sendFile(
             path.join(
                 __dirname,
@@ -163,43 +183,114 @@ app.get(
 
 /*
 ==========================================
-PROTECTED UPLOADED FILES
+ADMINISTRATOR LOGIN
+==========================================
+*/
+
+app.get(
+    "/admin",
+    function (request, response) {
+        response.sendFile(
+            path.join(
+                __dirname,
+                "admin",
+                "login.html"
+            )
+        );
+    }
+);
+
+app.get(
+    "/admin/",
+    function (request, response) {
+        response.sendFile(
+            path.join(
+                __dirname,
+                "admin",
+                "login.html"
+            )
+        );
+    }
+);
+
+app.get(
+    "/admin/login.html",
+    function (request, response) {
+        response.sendFile(
+            path.join(
+                __dirname,
+                "admin",
+                "login.html"
+            )
+        );
+    }
+);
+
+
+/*
+==========================================
+ADMINISTRATOR DASHBOARD
+==========================================
+*/
+
+app.get(
+    "/admin/dashboard.html",
+    function (request, response) {
+        response.sendFile(
+            path.join(
+                __dirname,
+                "admin",
+                "dashboard.html"
+            )
+        );
+    }
+);
+
+
+/*
+==========================================
+PUBLIC UPLOADED FILES
 ==========================================
 */
 
 app.get(
     "/uploads/:category/:filename",
-    authenticateToken,
-
-    (request, response) => {
+    function (request, response) {
 
         const allowedCategories = [
             "documents",
             "speeches",
             "presentations",
-            "writings"
+            "writings",
+            "pages"
         ];
 
-        const {
-            category,
-            filename
-        } = request.params;
+        const category =
+            request.params.category;
+
+        const filename =
+            request.params.filename;
+
 
         if (
             !allowedCategories.includes(
                 category
             )
         ) {
-            return response.status(400).json({
-                message:
-                    "Invalid category."
-            });
+            return response
+                .status(400)
+                .json({
+                    message:
+                        "Invalid category."
+                });
         }
+
 
         const safeFilename =
             path.basename(
                 filename
             );
+
 
         const filePath =
             path.join(
@@ -209,16 +300,20 @@ app.get(
                 safeFilename
             );
 
+
         if (
             !fs.existsSync(
                 filePath
             )
         ) {
-            return response.status(404).json({
-                message:
-                    "File not found."
-            });
+            return response
+                .status(404)
+                .json({
+                    message:
+                        "File not found."
+                });
         }
+
 
         response.sendFile(
             filePath
@@ -229,7 +324,7 @@ app.get(
 
 /*
 ==========================================
-ALL FRONTEND FILES
+PUBLIC FRONTEND FILES
 ==========================================
 */
 
@@ -242,33 +337,84 @@ app.use(
 
 /*
 ==========================================
-404
+404 HANDLER
 ==========================================
 */
 
 app.use(
-    (request, response) => {
-
-        response.status(404).send(
-            "Page not found."
-        );
+    function (request, response) {
+        response
+            .status(404)
+            .send(
+                "Page not found."
+            );
     }
 );
 
 
+/*
+==========================================
+START SERVER
+==========================================
+*/
+
 async function startServer() {
 
-    await initializeDatabase();
+    try {
 
-    app.listen(
-        PORT,
-        () => {
-            console.log(
-                `Server running at http://localhost:${PORT}`
-            );
-        }
-    );
+        await initializeDatabase();
+
+        app.listen(
+            PORT,
+            function () {
+
+                console.log(
+                    "=========================================="
+                );
+
+                console.log(
+                    "YASU Tech Server"
+                );
+
+                console.log(
+                    "=========================================="
+                );
+
+                console.log(
+                    "Server running at http://localhost:" +
+                    PORT
+                );
+
+                console.log(
+                    "Administrator login: http://localhost:" +
+                    PORT +
+                    "/admin/login.html"
+                );
+
+                console.log(
+                    "Administrator dashboard: http://localhost:" +
+                    PORT +
+                    "/admin/dashboard.html"
+                );
+
+                console.log(
+                    "=========================================="
+                );
+            }
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Failed to start server:"
+        );
+
+        console.error(
+            error
+        );
+
+        process.exit(1);
+    }
 }
-
 
 startServer();

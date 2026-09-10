@@ -1,6 +1,48 @@
-/* =========================
-   GENERAL SETTINGS
-========================= */
+/* =========================================================
+   YASU TECH
+   Main Website Stylesheet
+   ========================================================= */
+
+
+/* =========================================================
+   1. ROOT VARIABLES
+   ========================================================= */
+
+:root {
+    --primary-color: #0b3d91;
+    --primary-dark: #082c68;
+    --primary-light: #eaf2ff;
+
+    --accent-color: #00a896;
+
+    --text-color: #1f2937;
+    --text-light: #64748b;
+
+    --white: #ffffff;
+    --light-bg: #f6f8fc;
+    --border-color: #e2e8f0;
+
+    --success-color: #16803c;
+    --error-color: #c62828;
+
+    --container-width: 1180px;
+
+    --shadow-small:
+        0 4px 12px rgba(15, 23, 42, 0.06);
+
+    --shadow-medium:
+        0 10px 30px rgba(15, 23, 42, 0.10);
+
+    --shadow-large:
+        0 20px 50px rgba(15, 23, 42, 0.14);
+
+    --transition: 0.3s ease;
+}
+
+
+/* =========================================================
+   2. GLOBAL RESET
+   ========================================================= */
 
 * {
     margin: 0;
@@ -15,10 +57,18 @@ html {
 
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.6;
-    color: #222;
-    background-color: #ffffff;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background-color: var(--white);
+
+    color: var(--text-color);
+
+    line-height: 1.7;
+
+    min-height: 100vh;
 }
 
 
@@ -29,510 +79,1261 @@ img {
 
 
 a {
+    color: inherit;
     text-decoration: none;
 }
 
 
-.container {
-    width: min(1100px, 90%);
-    margin: auto;
+button,
+input,
+textarea {
+    font: inherit;
 }
 
 
-/* =========================
-   HEADER
-========================= */
+/* =========================================================
+   3. CONTAINER
+   ========================================================= */
+
+.container {
+    width: min(
+        92%,
+        var(--container-width)
+    );
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   4. HEADER
+   ========================================================= */
 
 .header {
-    background-color: #ffffff;
-    border-bottom: 1px solid #dddddd;
     position: sticky;
+
     top: 0;
+
     z-index: 1000;
+
+    background-color: var(--white);
+
+    border-bottom:
+        1px solid var(--border-color);
+
+    box-shadow:
+        0 2px 10px rgba(15, 23, 42, 0.05);
 }
 
 
 .nav-container {
-    min-height: 70px;
+    min-height: 76px;
+
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
+
+    gap: 30px;
 }
 
 
+/* =========================================================
+   5. LOGO
+   ========================================================= */
+
 .logo {
     font-size: 1.7rem;
-    font-weight: bold;
-    color: #222;
+
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+
+    color: var(--primary-color);
+
+    white-space: nowrap;
+
+    transition:
+        color var(--transition);
 }
 
 
 .logo span {
-    color: #2563eb;
+    color: var(--accent-color);
 }
 
 
+.logo:hover {
+    color: var(--primary-dark);
+}
+
+
+/* =========================================================
+   6. NAVIGATION
+   ========================================================= */
+
 .navbar {
     display: flex;
-    gap: 18px;
+
     align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 5px;
 }
 
 
 .navbar a {
-    color: #333;
-    font-size: 0.95rem;
+    position: relative;
+
+    padding: 10px 12px;
+
+    color: var(--text-color);
+
+    font-size: 0.94rem;
+
+    font-weight: 600;
+
+    border-radius: 6px;
+
+    transition:
+        color var(--transition),
+        background-color var(--transition);
 }
 
 
-.navbar a:hover,
-.navbar .active {
-    color: #2563eb;
+.navbar a:hover {
+    color: var(--primary-color);
+
+    background-color:
+        var(--primary-light);
 }
 
+
+.navbar a.active {
+    color: var(--primary-color);
+}
+
+
+.navbar a.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 12px;
+
+    right: 12px;
+
+    bottom: 3px;
+
+    height: 2px;
+
+    background-color:
+        var(--primary-color);
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   7. MOBILE MENU BUTTON
+   ========================================================= */
 
 .menu-toggle {
     display: none;
+
     border: none;
-    background: none;
+
+    background: transparent;
+
+    color: var(--primary-color);
+
     font-size: 1.8rem;
+
     cursor: pointer;
+
+    padding: 5px;
 }
 
 
-/* =========================
-   HERO
-========================= */
+/* =========================================================
+   8. HOME HERO
+   ========================================================= */
 
 .hero {
-    padding: 90px 0;
-    background: linear-gradient(
-        135deg,
-        #f8fafc,
-        #e0f2fe
-    );
+    background:
+        linear-gradient(
+            135deg,
+            #f7faff 0%,
+            #edf5ff 100%
+        );
+
+    padding:
+        100px 0 90px;
+
+    border-bottom:
+        1px solid var(--border-color);
 }
 
 
 .hero-container {
     display: grid;
-    grid-template-columns: 1.3fr 0.7fr;
-    gap: 60px;
+
+    grid-template-columns:
+        minmax(0, 1.3fr)
+        minmax(280px, 0.7fr);
+
     align-items: center;
+
+    gap: 80px;
 }
 
 
-.welcome-text,
-.section-subtitle {
-    color: #2563eb;
-    font-weight: bold;
-    letter-spacing: 1px;
+.hero-text {
+    max-width: 720px;
+}
+
+
+.welcome-text {
     margin-bottom: 12px;
+
+    color: var(--accent-color);
+
+    font-size: 0.9rem;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
 }
 
 
 .hero h1 {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
     margin-bottom: 15px;
+
+    color: var(--primary-color);
+
+    font-size:
+        clamp(2.5rem, 6vw, 4.8rem);
+
+    line-height: 1.05;
+
+    letter-spacing: -2px;
 }
 
 
 .hero h2 {
-    font-size: 1.4rem;
-    font-weight: normal;
-    margin-bottom: 20px;
-    color: #444;
+    margin-bottom: 25px;
+
+    color: var(--text-color);
+
+    font-size:
+        clamp(1.25rem, 2.5vw, 1.8rem);
+
+    line-height: 1.45;
+
+    font-weight: 600;
 }
 
 
 .hero-description {
-    max-width: 650px;
+    max-width: 700px;
+
+    margin-bottom: 32px;
+
+    color: var(--text-light);
+
     font-size: 1.05rem;
-    margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   9. HERO BUTTONS
+   ========================================================= */
+
+.hero-buttons {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 14px;
+}
+
+
+/* =========================================================
+   10. PROFILE IMAGE
+   ========================================================= */
+
+.hero-image {
+    display: flex;
+
+    justify-content: center;
 }
 
 
 .hero-image img {
-    width: 350px;
-    height: 350px;
+    width: 310px;
+
+    height: 310px;
+
     object-fit: cover;
+
     border-radius: 50%;
-    margin: auto;
-    border: 8px solid #ffffff;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+
+    border:
+        7px solid var(--white);
+
+    box-shadow:
+        var(--shadow-large);
 }
 
 
-/* =========================
-   BUTTONS
-========================= */
+/* =========================================================
+   11. BUTTONS
+   ========================================================= */
 
 .btn {
-    display: inline-block;
-    padding: 12px 22px;
-    background-color: #2563eb;
-    color: white;
-    border-radius: 6px;
-    border: none;
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 46px;
+
+    padding:
+        11px 22px;
+
+    border:
+        2px solid var(--primary-color);
+
+    border-radius: 7px;
+
+    background-color:
+        var(--primary-color);
+
+    color: var(--white);
+
+    font-weight: 700;
+
+    font-size: 0.95rem;
+
     cursor: pointer;
-    transition: 0.3s;
+
+    transition:
+        background-color var(--transition),
+        border-color var(--transition),
+        color var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
 }
 
 
 .btn:hover {
-    background-color: #1d4ed8;
+    background-color:
+        var(--primary-dark);
+
+    border-color:
+        var(--primary-dark);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        var(--shadow-small);
 }
 
 
 .btn-outline {
-    background-color: transparent;
-    border: 2px solid #2563eb;
-    color: #2563eb;
-    margin-left: 10px;
+    background-color:
+        transparent;
+
+    color: var(--primary-color);
 }
 
 
 .btn-outline:hover {
-    color: white;
+    background-color:
+        var(--primary-color);
+
+    color: var(--white);
 }
 
 
 .btn-small {
-    padding: 9px 16px;
-    font-size: 0.9rem;
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding:
+        9px 15px;
+
+    font-size: 0.88rem;
 }
 
 
-.hero-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+/* =========================================================
+   12. PAGE HERO
+   ========================================================= */
+
+.page-hero {
+    padding:
+        85px 0;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f7faff 0%,
+            #edf5ff 100%
+        );
+
+    border-bottom:
+        1px solid var(--border-color);
 }
 
 
-.text-link {
-    color: #2563eb;
-    font-weight: bold;
+.page-hero .container {
+    max-width: 850px;
 }
 
 
-/* =========================
-   SECTIONS
-========================= */
+.page-hero .section-subtitle {
+    margin-bottom: 10px;
+}
+
+
+.page-hero h1 {
+    margin-bottom: 15px;
+
+    color: var(--primary-color);
+
+    font-size:
+        clamp(2.2rem, 5vw, 3.8rem);
+
+    line-height: 1.15;
+
+    letter-spacing: -1px;
+}
+
+
+.page-hero p:last-child {
+    color: var(--text-light);
+
+    font-size: 1.05rem;
+}
+
+
+/* =========================================================
+   13. GENERAL SECTIONS
+   ========================================================= */
 
 .section {
-    padding: 80px 0;
+    padding:
+        85px 0;
 }
 
 
 .section-light {
-    background-color: #f8fafc;
+    background-color:
+        var(--light-bg);
 }
 
 
+/* =========================================================
+   14. SECTION HEADINGS
+   ========================================================= */
+
 .section-heading {
+    max-width: 780px;
+
+    margin:
+        0 auto 45px;
+
     text-align: center;
-    max-width: 750px;
-    margin: 0 auto 45px;
+}
+
+
+.section-subtitle {
+    margin-bottom: 8px;
+
+    color: var(--accent-color);
+
+    font-size: 0.82rem;
+
+    font-weight: 800;
+
+    letter-spacing: 1.8px;
+
+    text-transform: uppercase;
 }
 
 
 .section-heading h2 {
-    font-size: 2rem;
+    color: var(--primary-color);
+
+    font-size:
+        clamp(1.8rem, 4vw, 2.6rem);
+
+    line-height: 1.25;
+
+    margin-bottom: 12px;
 }
 
 
+.section-heading > p:last-child {
+    color: var(--text-light);
+}
+
+
+/* =========================================================
+   15. INTRODUCTION
+   ========================================================= */
+
 .intro-content {
-    max-width: 800px;
-    margin: auto;
+    max-width: 850px;
+
+    margin: 0 auto;
+
     text-align: center;
 }
 
 
 .intro-content p {
-    margin-bottom: 18px;
+    margin-bottom: 20px;
+
+    color: var(--text-light);
+
+    font-size: 1.04rem;
 }
 
 
-/* =========================
-   CARDS
-========================= */
+.text-link {
+    display: inline-block;
+
+    margin-top: 8px;
+
+    color: var(--primary-color);
+
+    font-weight: 700;
+
+    transition:
+        color var(--transition);
+}
+
+
+.text-link:hover {
+    color: var(--accent-color);
+}
+
+
+/* =========================================================
+   16. CARD GRID
+   ========================================================= */
 
 .card-grid {
     display: grid;
+
     grid-template-columns:
-        repeat(auto-fit, minmax(240px, 1fr));
+        repeat(3, minmax(0, 1fr));
+
     gap: 25px;
 }
 
 
+/* =========================================================
+   17. CARDS
+   ========================================================= */
+
 .card {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    border: 1px solid #e5e7eb;
-    transition: 0.3s;
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    padding:
+        30px;
+
+    background-color:
+        var(--white);
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius: 12px;
+
+    box-shadow:
+        var(--shadow-small);
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition),
+        border-color var(--transition);
 }
 
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+    transform:
+        translateY(-6px);
+
+    box-shadow:
+        var(--shadow-medium);
+
+    border-color:
+        #cbd5e1;
 }
 
 
 .card-icon {
-    font-size: 2.2rem;
-    margin-bottom: 15px;
+    width: 58px;
+
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom: 20px;
+
+    border-radius: 12px;
+
+    background-color:
+        var(--primary-light);
+
+    font-size: 1.8rem;
 }
 
 
 .card h3 {
     margin-bottom: 12px;
+
+    color: var(--primary-color);
+
+    font-size: 1.25rem;
+
+    line-height: 1.35;
 }
 
 
 .card p {
-    margin-bottom: 18px;
+    margin-bottom: 8px;
+
+    color: var(--text-light);
+
+    font-size: 0.96rem;
 }
 
 
-.card a {
-    color: #2563eb;
-    font-weight: bold;
+.card > a:not(.btn) {
+    display: inline-block;
+
+    margin-top: auto;
+
+    padding-top: 15px;
+
+    color: var(--primary-color);
+
+    font-weight: 700;
+
+    transition:
+        color var(--transition);
 }
 
 
-/* =========================
-   PAGE HERO
-========================= */
-
-.page-hero {
-    padding: 90px 0;
-    background-color: #eff6ff;
-    text-align: center;
+.card > a:not(.btn):hover {
+    color: var(--accent-color);
 }
 
 
-.page-hero h1 {
-    font-size: clamp(2.4rem, 5vw, 4rem);
-    margin-bottom: 15px;
-}
-
-
-/* =========================
-   ABOUT
-========================= */
-
-.about-grid {
-    display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: 60px;
-    align-items: center;
-}
-
-
-.about-image img {
-    border-radius: 15px;
-    width: 100%;
-}
-
-
-.about-grid h2 {
-    margin-bottom: 20px;
-}
-
-
-.about-grid p {
-    margin-bottom: 18px;
-}
-
-
-/* =========================
-   JOURNEY
-========================= */
+/* =========================================================
+   18. JOURNEY BOX
+   ========================================================= */
 
 .journey-box {
-    max-width: 850px;
-    margin: 40px auto 0;
-    padding: 35px;
-    background-color: #eff6ff;
-    border-left: 5px solid #2563eb;
+    max-width: 900px;
+
+    margin:
+        45px auto 0;
+
+    padding:
+        30px 35px;
+
+    background-color:
+        var(--primary-light);
+
+    border-left:
+        5px solid var(--primary-color);
+
     border-radius: 8px;
 }
 
 
 .journey-box p {
+    color: var(--text-color);
+
     margin-bottom: 15px;
 }
 
 
-/* =========================
-   DOCUMENTS
-========================= */
-
-.search-input {
-    width: 100%;
-    padding: 15px;
-    border: 1px solid #cccccc;
-    border-radius: 7px;
-    font-size: 1rem;
-    margin-bottom: 25px;
+.journey-box p:last-child {
+    margin-bottom: 0;
 }
 
 
-.filter-buttons {
+/* =========================================================
+   19. ABOUT PAGE
+   ========================================================= */
+
+.about-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(250px, 0.75fr)
+        minmax(0, 1.25fr);
+
+    align-items: center;
+
+    gap: 70px;
+}
+
+
+.about-image {
     display: flex;
+
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 35px;
 }
 
 
-.filter-btn {
-    padding: 9px 18px;
-    border: none;
-    background-color: #e5e7eb;
-    border-radius: 20px;
-    cursor: pointer;
+.about-image img {
+    width: 330px;
+
+    height: 390px;
+
+    object-fit: cover;
+
+    border-radius: 14px;
+
+    box-shadow:
+        var(--shadow-medium);
 }
 
 
-.filter-btn:hover,
-.active-filter {
-    background-color: #2563eb;
-    color: white;
+.about-grid h2 {
+    margin-bottom: 20px;
+
+    color: var(--primary-color);
+
+    font-size: 2rem;
 }
 
 
-/* =========================
-   SKILLS
-========================= */
+.about-grid p {
+    margin-bottom: 18px;
+
+    color: var(--text-light);
+}
+
+
+/* =========================================================
+   20. SKILLS
+   ========================================================= */
 
 .skills-list {
     display: flex;
+
     flex-wrap: wrap;
+
     justify-content: center;
-    gap: 15px;
+
+    gap: 12px;
 }
 
 
 .skills-list span {
-    padding: 12px 20px;
-    background-color: #eff6ff;
-    border-radius: 25px;
-    border: 1px solid #bfdbfe;
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding:
+        10px 18px;
+
+    background-color:
+        var(--white);
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius: 30px;
+
+    color: var(--primary-color);
+
+    font-weight: 700;
+
+    box-shadow:
+        var(--shadow-small);
+
+    transition:
+        transform var(--transition),
+        background-color var(--transition),
+        color var(--transition);
 }
 
 
-/* =========================
-   CONTACT
-========================= */
+.skills-list span:hover {
+    transform:
+        translateY(-3px);
+
+    background-color:
+        var(--primary-color);
+
+    color: var(--white);
+}
+
+
+/* =========================================================
+   21. CONTACT PAGE
+   ========================================================= */
 
 .contact-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
+
+    grid-template-columns:
+        minmax(0, 0.9fr)
+        minmax(0, 1.1fr);
+
+    gap: 60px;
+
+    align-items: start;
+}
+
+
+.contact-info h2,
+.contact-form h2 {
+    margin-bottom: 18px;
+
+    color: var(--primary-color);
+
+    font-size: 1.9rem;
+}
+
+
+.contact-info > p {
+    margin-bottom: 30px;
+
+    color: var(--text-light);
 }
 
 
 .contact-item {
-    margin-top: 30px;
+    margin-bottom: 25px;
+
+    padding-bottom: 20px;
+
+    border-bottom:
+        1px solid var(--border-color);
 }
 
 
+.contact-item:last-child {
+    border-bottom: none;
+}
+
+
+.contact-item h3 {
+    margin-bottom: 7px;
+
+    color: var(--primary-color);
+
+    font-size: 1.05rem;
+}
+
+
+.contact-item p {
+    color: var(--text-light);
+}
+
+
+.contact-item a {
+    color: var(--primary-color);
+
+    font-weight: 600;
+}
+
+
+.contact-item a:hover {
+    color: var(--accent-color);
+}
+
+
+/* =========================================================
+   22. CONTACT FORM
+   ========================================================= */
+
 .contact-form {
-    display: flex;
-    flex-direction: column;
+    padding:
+        35px;
+
+    background-color:
+        var(--white);
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius: 12px;
+
+    box-shadow:
+        var(--shadow-small);
 }
 
 
 .contact-form label {
-    margin-top: 15px;
-    margin-bottom: 6px;
+    display: block;
+
+    margin:
+        18px 0 7px;
+
+    color: var(--text-color);
+
+    font-weight: 700;
 }
 
 
 .contact-form input,
 .contact-form textarea {
-    padding: 12px;
-    border: 1px solid #cccccc;
-    border-radius: 6px;
-    font-family: inherit;
+    width: 100%;
+
+    padding:
+        12px 14px;
+
+    border:
+        1px solid #cbd5e1;
+
+    border-radius: 7px;
+
+    background-color:
+        var(--white);
+
+    color: var(--text-color);
+
+    outline: none;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition);
 }
 
 
-.contact-form button {
-    margin-top: 20px;
+.contact-form input {
+    min-height: 46px;
+}
+
+
+.contact-form textarea {
+    min-height: 150px;
+
+    resize: vertical;
+}
+
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color:
+        var(--primary-color);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(11, 61, 145, 0.10);
+}
+
+
+.contact-form .btn {
+    width: 100%;
+
+    margin-top: 22px;
 }
 
 
 #formMessage {
     margin-top: 15px;
-    font-weight: bold;
+
+    font-weight: 600;
+
+    text-align: center;
 }
 
 
-/* =========================
-   FOOTER
-========================= */
+/* =========================================================
+   23. FOOTER
+   ========================================================= */
 
 .footer {
-    background-color: #111827;
-    color: white;
-    padding-top: 50px;
+    margin-top: 0;
+
+    background-color:
+        #0b1730;
+
+    color:
+        #dbe5f5;
+
+    text-align: center;
 }
 
 
 .footer-container {
     display: flex;
-    justify-content: space-between;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
     gap: 30px;
-    padding-bottom: 35px;
+
+    padding:
+        60px 0;
+}
+
+
+.footer-container > div {
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.footer h3 {
+    margin-bottom: 12px;
+
+    color: var(--white);
+
+    font-size: 1.35rem;
+}
+
+
+.footer p {
+    color:
+        #aebdd3;
+
+    font-size: 0.93rem;
 }
 
 
 .footer-links {
     display: flex;
+
     flex-wrap: wrap;
-    gap: 15px;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px 22px;
+
+    max-width: 850px;
 }
 
 
 .footer-links a {
-    color: #d1d5db;
+    color:
+        #c5d1e2;
+
+    font-size: 0.92rem;
+
+    transition:
+        color var(--transition);
 }
 
 
 .footer-links a:hover {
-    color: white;
+    color:
+        var(--white);
 }
 
 
 .footer-bottom {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    width: min(
+        92%,
+        var(--container-width)
+    );
+
+    margin: 0 auto;
+
+    padding:
+        20px 0;
+
+    border-top:
+        1px solid
+        rgba(255, 255, 255, 0.12);
+
     text-align: center;
-    padding: 20px;
-    border-top: 1px solid #374151;
-    color: #d1d5db;
 }
 
 
-/* =========================
-   MOBILE RESPONSIVENESS
-========================= */
+.footer-bottom p {
+    color:
+        #94a6c0;
 
-@media (max-width: 850px) {
+    font-size: 0.85rem;
+}
 
-    .hero-container,
-    .about-grid,
-    .contact-grid {
-        grid-template-columns: 1fr;
+
+/* =========================================================
+   24. RESPONSIVE TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .navbar {
+        gap: 0;
+    }
+
+
+    .navbar a {
+        padding:
+            9px 8px;
+
+        font-size: 0.86rem;
+    }
+
+
+    .hero-container {
+        gap: 45px;
+    }
+
+
+    .card-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .about-grid {
+        gap: 45px;
+    }
+
+}
+
+
+/* =========================================================
+   25. RESPONSIVE MOBILE NAVIGATION
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .nav-container {
+        min-height: 68px;
+    }
+
+
+    .menu-toggle {
+        display: block;
+    }
+
+
+    .navbar {
+        position: absolute;
+
+        top: 68px;
+
+        left: 0;
+
+        right: 0;
+
+        display: none;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 0;
+
+        padding:
+            10px 4% 18px;
+
+        background-color:
+            var(--white);
+
+        border-bottom:
+            1px solid var(--border-color);
+
+        box-shadow:
+            var(--shadow-medium);
+    }
+
+
+    .navbar.show {
+        display: flex;
+    }
+
+
+    .navbar a {
+        width: 100%;
+
+        padding:
+            13px 15px;
+
+        border-radius: 5px;
+    }
+
+
+    .navbar a.active::after {
+        display: none;
+    }
+
+
+    .navbar a.active {
+        background-color:
+            var(--primary-light);
     }
 
 
     .hero {
+        padding:
+            70px 0;
+    }
+
+
+    .hero-container {
+        grid-template-columns: 1fr;
+
         text-align: center;
+
+        gap: 45px;
+    }
+
+
+    .hero-text {
+        margin: 0 auto;
+    }
+
+
+    .hero-buttons {
+        justify-content: center;
     }
 
 
@@ -543,40 +1344,202 @@ a {
 
     .hero-image img {
         width: 250px;
+
         height: 250px;
     }
 
 
-    .hero-buttons {
-        justify-content: center;
+    .page-hero {
+        padding:
+            65px 0;
     }
 
 
-    .navbar {
-        display: none;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        width: 100%;
-        background-color: white;
-        flex-direction: column;
-        padding: 25px;
-        border-bottom: 1px solid #dddddd;
+    .section {
+        padding:
+            65px 0;
     }
 
 
-    .navbar.show {
-        display: flex;
+    .about-grid {
+        grid-template-columns: 1fr;
+
+        text-align: center;
     }
 
 
-    .menu-toggle {
-        display: block;
+    .about-image img {
+        width: 280px;
+
+        height: 330px;
+    }
+
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+
+        gap: 45px;
     }
 
 
     .footer-container {
+        gap: 30px;
+
+        text-align: center;
+    }
+
+
+    .footer-links {
+        max-width: 500px;
+
+        width: 100%;
+
+        margin: 0 auto;
+    }
+
+
+    .footer-bottom {
+        text-align: center;
+    }
+
+}
+
+
+/* =========================================================
+   26. SMALL MOBILE DEVICES
+   ========================================================= */
+
+@media (max-width: 520px) {
+
+    .container {
+        width: 90%;
+    }
+
+
+    .logo {
+        font-size: 1.45rem;
+    }
+
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+
+    .hero h2 {
+        font-size: 1.15rem;
+    }
+
+
+    .hero-description {
+        font-size: 0.96rem;
+    }
+
+
+    .hero-buttons {
         flex-direction: column;
+
+        width: 100%;
+    }
+
+
+    .hero-buttons .btn {
+        width: 100%;
+    }
+
+
+    .hero-image img {
+        width: 210px;
+
+        height: 210px;
+    }
+
+
+    .page-hero h1 {
+        font-size: 2.25rem;
+    }
+
+
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .card {
+        padding:
+            25px;
+    }
+
+
+    .section-heading {
+        margin-bottom: 35px;
+    }
+
+
+    .journey-box {
+        padding:
+            24px;
+    }
+
+
+    .contact-form {
+        padding:
+            25px 20px;
+    }
+
+
+    .footer-links {
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+
+    .skills-list {
+        gap: 8px;
+    }
+
+
+    .skills-list span {
+        padding:
+            8px 14px;
+
+        font-size: 0.9rem;
+    }
+
+}
+
+
+/* =========================================================
+   27. ACCESSIBILITY
+   ========================================================= */
+
+:focus-visible {
+    outline:
+        3px solid
+        rgba(0, 168, 150, 0.45);
+
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   28. REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+
+        animation: none !important;
     }
 
 }

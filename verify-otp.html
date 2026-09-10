@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,12 +11,460 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-<title>Email Verification - YASU Tech</title>
+    <meta
+        name="description"
+        content="Verify your email address for YASU Tech."
+    >
+
+    <title>Email Verification | YASU Tech</title>
 
     <link
         rel="stylesheet"
         href="css/styles.css"
     >
+
+    <style>
+
+        /* =========================================
+           YASU TECH OTP VERIFICATION PAGE
+        ========================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f4f7fb,
+                    #e8eef7
+                );
+
+            color: #1f2937;
+        }
+
+
+        /* =========================================
+           AUTH PAGE
+        ========================================== */
+
+        .auth-page {
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 30px 15px;
+        }
+
+
+        /* =========================================
+           AUTH CONTAINER
+        ========================================== */
+
+        .auth-container {
+
+            width: 100%;
+
+            max-width: 430px;
+
+            background: #ffffff;
+
+            padding: 40px 35px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(0, 0, 0, 0.12);
+
+            text-align: center;
+        }
+
+
+        /* =========================================
+           YASU TECH LOGO
+        ========================================== */
+
+        .auth-logo {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .logo-mark {
+
+            width: 58px;
+
+            height: 58px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #111827,
+                    #2563eb
+                );
+
+            box-shadow:
+                0 8px 18px
+                rgba(37, 99, 235, 0.25);
+        }
+
+
+        .logo-mark svg {
+
+            width: 36px;
+
+            height: 36px;
+
+            fill: none;
+
+            stroke: #ffffff;
+
+            stroke-width: 2;
+
+            stroke-linecap: round;
+
+            stroke-linejoin: round;
+        }
+
+
+        .logo-text {
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            letter-spacing: -1px;
+
+            color: #111827;
+        }
+
+
+        .logo-text span {
+
+            color: #2563eb;
+        }
+
+
+        /* =========================================
+           HEADING
+        ========================================== */
+
+        .auth-container h1 {
+
+            margin: 5px 0 8px;
+
+            font-size: 28px;
+
+            color: #111827;
+        }
+
+
+        .auth-container > p {
+
+            margin-bottom: 28px;
+
+            color: #6b7280;
+
+            font-size: 15px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================
+           OTP FORM
+        ========================================== */
+
+        #otpForm {
+
+            text-align: left;
+        }
+
+
+        #otpForm label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #374151;
+        }
+
+
+        /* =========================================
+           OTP INPUT WRAPPER
+        ========================================== */
+
+        .otp-wrapper {
+
+            position: relative;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================================
+           EMAIL / VERIFICATION ICON
+        ========================================== */
+
+        .otp-icon {
+
+            position: absolute;
+
+            left: 15px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 20px;
+
+            height: 20px;
+
+            pointer-events: none;
+
+            stroke: #6b7280;
+
+            fill: none;
+
+            stroke-width: 2;
+
+            stroke-linecap: round;
+
+            stroke-linejoin: round;
+        }
+
+
+        /* =========================================
+           OTP INPUT
+        ========================================== */
+
+        .otp-wrapper input {
+
+            width: 100%;
+
+            height: 55px;
+
+            padding:
+                0 18px
+                0 48px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 10px;
+
+            outline: none;
+
+            background: #ffffff;
+
+            color: #111827;
+
+            font-size: 22px;
+
+            font-weight: 700;
+
+            letter-spacing: 7px;
+
+            text-align: center;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .otp-wrapper input:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.12);
+        }
+
+
+        /* =========================================
+           VERIFY BUTTON
+        ========================================== */
+
+        #otpForm button[type="submit"] {
+
+            width: 100%;
+
+            height: 50px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #111827,
+                    #2563eb
+                );
+
+            color: #ffffff;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        #otpForm button[type="submit"]:hover {
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 8px 20px
+                rgba(37, 99, 235, 0.25);
+        }
+
+
+        /* =========================================
+           MESSAGE
+        ========================================== */
+
+        #message {
+
+            margin: 15px 0 0;
+
+            min-height: 20px;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            color: #374151;
+        }
+
+
+        /* =========================================
+           RESEND OTP BUTTON
+        ========================================== */
+
+        #resendButton {
+
+            width: 100%;
+
+            height: 48px;
+
+            margin-top: 18px;
+
+            border: 1px solid #2563eb;
+
+            border-radius: 10px;
+
+            background: #ffffff;
+
+            color: #2563eb;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+        }
+
+
+        #resendButton:hover {
+
+            background: #2563eb;
+
+            color: #ffffff;
+        }
+
+
+        /* =========================================
+           MOBILE RESPONSIVE DESIGN
+        ========================================== */
+
+        @media (max-width: 480px) {
+
+            .auth-container {
+
+                padding:
+                    32px 22px;
+
+                border-radius: 15px;
+            }
+
+
+            .logo-text {
+
+                font-size: 26px;
+            }
+
+
+            .logo-mark {
+
+                width: 52px;
+
+                height: 52px;
+            }
+
+
+            .auth-container h1 {
+
+                font-size: 25px;
+            }
+
+
+            .otp-wrapper input {
+
+                font-size: 20px;
+
+                letter-spacing: 5px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
@@ -25,160 +474,360 @@
 
 <main class="auth-page">
 
+
     <section class="auth-container">
 
-        <h1>Email Verification</h1>
+
+        <!-- =====================================
+             YASU TECH LOGO
+        ====================================== -->
+
+        <div class="auth-logo">
+
+
+            <div class="logo-mark">
+
+                <svg
+                    viewBox="0 0 48 48"
+                    aria-hidden="true"
+                >
+
+                    <!-- Y -->
+
+                    <path
+                        d="M10 9 L18 21 L26 9"
+                    />
+
+                    <path
+                        d="M18 21 L18 37"
+                    />
+
+
+                    <!-- T -->
+
+                    <path
+                        d="M29 9 L43 9"
+                    />
+
+                    <path
+                        d="M36 9 L36 37"
+                    />
+
+                </svg>
+
+            </div>
+
+
+            <div class="logo-text">
+                YASU<span>Tech</span>
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================
+             VERIFICATION HEADING
+        ====================================== -->
+
+        <h1>
+            Verify Your Email
+        </h1>
+
 
         <p>
-            Enter the OTP code sent to your email address.
+            Enter the 6-digit verification code
+            sent to your email address.
         </p>
 
 
+
+        <!-- =====================================
+             OTP FORM
+        ====================================== -->
+
         <form id="otpForm">
+
 
             <label for="otp">
                 Verification Code
             </label>
 
-            <input
-                type="text"
-                id="otp"
-                maxlength="6"
-                inputmode="numeric"
-                required
-            >
 
+            <div class="otp-wrapper">
+
+
+                <!-- Verification Icon -->
+
+                <svg
+                    class="otp-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+
+                    <rect
+                        x="3"
+                        y="5"
+                        width="18"
+                        height="14"
+                        rx="2"
+                    />
+
+                    <path
+                        d="M3 7
+                           L12 13
+                           L21 7"
+                    />
+
+                    <path
+                        d="M8 16
+                           L10 18
+                           L16 12"
+                    />
+
+                </svg>
+
+
+                <input
+                    type="text"
+                    id="otp"
+                    name="otp"
+                    maxlength="6"
+                    inputmode="numeric"
+                    autocomplete="one-time-code"
+                    placeholder="000000"
+                    pattern="[0-9]{6}"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- =================================
+                 VERIFY BUTTON
+            ================================== -->
 
             <button type="submit">
                 Verify Email
             </button>
 
 
+            <!-- MESSAGE -->
+
             <p id="message"></p>
+
 
         </form>
 
 
+
+        <!-- =====================================
+             RESEND OTP
+        ====================================== -->
+
         <button
+            type="button"
             id="resendButton"
         >
-            Resend OTP
+            Resend Verification Code
         </button>
 
 
     </section>
 
+
 </main>
+
 
 
 <script>
 
-const email =
-    sessionStorage.getItem(
-        "verificationEmail"
-    );
+    /* =========================================
+       GET VERIFICATION EMAIL
+    ========================================== */
+
+    const email =
+        sessionStorage.getItem(
+            "verificationEmail"
+        );
 
 
-const message =
-    document.getElementById(
-        "message"
-    );
+    const message =
+        document.getElementById(
+            "message"
+        );
 
 
-if (!email) {
-
-    window.location.href =
-        "register.html";
-
-}
+    const otpInput =
+        document.getElementById(
+            "otp"
+        );
 
 
-document
-    .getElementById(
-        "otpForm"
-    )
-    .addEventListener(
-        "submit",
-        async function(event) {
-
-            event.preventDefault();
+    const resendButton =
+        document.getElementById(
+            "resendButton"
+        );
 
 
-            const otp =
-                document
-                    .getElementById(
-                        "otp"
+    /* =========================================
+       CHECK EMAIL
+    ========================================== */
+
+    if (!email) {
+
+        window.location.href =
+            "register.html";
+
+    }
+
+
+
+    /* =========================================
+       ALLOW NUMBERS ONLY
+    ========================================== */
+
+    otpInput.addEventListener(
+        "input",
+        function() {
+
+            this.value =
+                this.value
+                    .replace(
+                        /[^0-9]/g,
+                        ""
                     )
-                    .value
-                    .trim();
-
-
-            try {
-
-                const response =
-                    await fetch(
-                        "/api/auth/verify-otp",
-                        {
-                            method:
-                                "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body:
-                                JSON.stringify({
-                                    email,
-                                    otp
-                                })
-                        }
-                    );
-
-
-                const data =
-                    await response.json();
-
-
-                message.textContent =
-                    data.message;
-
-
-                if (response.ok) {
-
-                    sessionStorage.removeItem(
-                        "verificationEmail"
-                    );
-
-
-                    setTimeout(
-                        function() {
-
-                            window.location.href =
-                                "login.html";
-
-                        },
-                        1500
-                    );
-                }
-
-            } catch (error) {
-
-                message.textContent =
-                    "Unable to verify OTP.";
-            }
+                    .slice(0, 6);
 
         }
     );
 
 
-document
-    .getElementById(
-        "resendButton"
-    )
-    .addEventListener(
+
+    /* =========================================
+       VERIFY OTP
+    ========================================== */
+
+    document
+        .getElementById(
+            "otpForm"
+        )
+        .addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const otp =
+                    otpInput
+                        .value
+                        .trim();
+
+
+                if (
+                    !/^\d{6}$/.test(otp)
+                ) {
+
+                    message.textContent =
+                        "Please enter the 6-digit verification code.";
+
+                    return;
+
+                }
+
+
+                message.textContent =
+                    "Verifying your email...";
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "/api/auth/verify-otp",
+                            {
+                                method:
+                                    "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:
+                                    JSON.stringify({
+                                        email,
+                                        otp
+                                    })
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    message.textContent =
+                        data.message;
+
+
+                    /* =============================
+                       VERIFICATION SUCCESSFUL
+                    ============================== */
+
+                    if (response.ok) {
+
+                        sessionStorage.removeItem(
+                            "verificationEmail"
+                        );
+
+
+                        setTimeout(
+                            function() {
+
+                                window.location.href =
+                                    "login.html";
+
+                            },
+                            1500
+                        );
+
+                    }
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "OTP verification error:",
+                        error
+                    );
+
+
+                    message.textContent =
+                        "Unable to verify OTP.";
+
+                }
+
+            }
+        );
+
+
+
+    /* =========================================
+       RESEND OTP
+    ========================================== */
+
+    resendButton.addEventListener(
         "click",
         async function() {
+
+            message.textContent =
+                "Sending a new verification code...";
+
 
             try {
 
@@ -209,10 +858,19 @@ document
                 message.textContent =
                     data.message;
 
-            } catch (error) {
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Resend OTP error:",
+                    error
+                );
+
 
                 message.textContent =
                     "Unable to resend OTP.";
+
             }
 
         }
@@ -224,3 +882,4 @@ document
 </body>
 
 </html>
+```

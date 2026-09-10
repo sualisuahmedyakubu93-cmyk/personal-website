@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -19,6 +20,481 @@
         href="../css/styles.css"
     >
 
+    <style>
+
+        /*
+        ==========================================
+        CONTENT METHOD
+        ==========================================
+        */
+
+        .content-method {
+
+            margin-top: 20px;
+            margin-bottom: 20px;
+
+        }
+
+
+        .method-options {
+
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+
+        }
+
+
+        .method-option {
+
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 10px 15px;
+
+            border: 1px solid #ccc;
+            border-radius: 6px;
+
+            cursor: pointer;
+
+        }
+
+
+        /*
+        ==========================================
+        EDITOR
+        ==========================================
+        */
+
+        #editorSection {
+
+            margin-top: 20px;
+
+        }
+
+
+        .editor-toolbar {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 5px;
+
+            padding: 10px;
+
+            border: 1px solid #ccc;
+
+            border-bottom: none;
+
+            background: #f5f5f5;
+
+        }
+
+
+        .editor-toolbar button,
+        .editor-toolbar select {
+
+            padding: 7px 9px;
+
+            border: 1px solid #bbb;
+
+            border-radius: 4px;
+
+            background: white;
+
+            cursor: pointer;
+
+        }
+
+
+        .editor-toolbar button:hover {
+
+            background: #e9e9e9;
+
+        }
+
+
+        #editor {
+
+            min-height: 500px;
+
+            padding: 20px;
+
+            border: 1px solid #ccc;
+
+            background: white;
+
+            outline: none;
+
+            line-height: 1.7;
+
+            font-size: 16px;
+
+        }
+
+
+        #editor:focus {
+
+            border-color: #555;
+
+        }
+
+
+        #editor.fullscreen-editor {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            right: 0;
+
+            bottom: 0;
+
+            z-index: 9999;
+
+            min-height: 100vh;
+
+            overflow-y: auto;
+
+            margin: 0;
+
+            box-sizing: border-box;
+
+            padding: 40px;
+
+        }
+
+
+        .editor-fullscreen-active {
+
+            overflow: hidden;
+
+        }
+
+
+        .editor-help {
+
+            margin-top: 8px;
+
+            color: #666;
+
+            font-size: 14px;
+
+        }
+
+
+        /*
+        ==========================================
+        HIDDEN ELEMENT
+        ==========================================
+        */
+
+        .hidden {
+
+            display: none !important;
+
+        }
+
+
+        /*
+        ==========================================
+        WRITTEN CONTENT PREVIEW
+        ==========================================
+        */
+
+        .written-content-preview {
+
+            padding: 15px;
+
+            margin-top: 10px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 5px;
+
+            background: #fafafa;
+
+        }
+
+
+        /*
+        ==========================================
+        FULLSCREEN TOOLBAR
+        ==========================================
+        */
+
+        .editor-toolbar.fullscreen-toolbar {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            right: 0;
+
+            z-index: 10000;
+
+            border: none;
+
+            border-bottom: 1px solid #ccc;
+
+        }
+    /*
+    ==========================================
+    WEBSITE PAGES STYLES
+    ==========================================
+    */
+
+    .website-pages-section {
+        margin-top: 32px;
+        margin-bottom: 32px;
+    }
+
+
+    .website-pages-header {
+        margin-bottom: 24px;
+    }
+
+
+    .website-pages-header .section-label {
+        display: inline-block;
+        margin-bottom: 8px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        opacity: 0.7;
+    }
+
+
+    .website-pages-header h2 {
+        margin: 0 0 8px;
+    }
+
+
+    .website-pages-header p {
+        margin: 0;
+        opacity: 0.75;
+    }
+
+
+    .website-pages-grid {
+        display: grid;
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(300px, 1fr)
+        );
+        gap: 24px;
+    }
+
+
+    .website-page-card {
+        padding: 24px;
+        border: 1px solid rgba(128, 128, 128, 0.25);
+        border-radius: 16px;
+        background: rgba(128, 128, 128, 0.04);
+        box-sizing: border-box;
+    }
+
+
+    .website-page-card-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 22px;
+    }
+
+
+    .website-page-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 46px;
+        height: 46px;
+        flex: 0 0 46px;
+        border-radius: 12px;
+        background: rgba(128, 128, 128, 0.12);
+        font-size: 1.35rem;
+    }
+
+
+    .website-page-card-header h3 {
+        margin: 0 0 5px;
+    }
+
+
+    .website-page-card-header p {
+        margin: 0;
+        font-size: 0.9rem;
+        opacity: 0.7;
+    }
+
+
+    .website-page-form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+
+    .website-page-form input[type="text"],
+    .website-page-form textarea,
+    .website-page-form input[type="file"] {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+
+    .website-page-form textarea {
+        min-height: 90px;
+        resize: vertical;
+    }
+
+
+    .website-page-method {
+        margin-top: 8px;
+        padding: 14px;
+        border-radius: 10px;
+        background: rgba(128, 128, 128, 0.06);
+    }
+
+
+    .website-page-method-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 10px;
+    }
+
+
+    .website-page-method-options label {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        cursor: pointer;
+    }
+
+
+    .website-page-file-section,
+    .website-page-editor-section {
+        margin-top: 4px;
+    }
+
+
+    .website-page-editor-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 8px;
+        padding: 10px;
+        border: 1px solid rgba(128, 128, 128, 0.25);
+        border-bottom: none;
+        border-radius: 10px 10px 0 0;
+        background: rgba(128, 128, 128, 0.06);
+    }
+
+
+    .website-page-editor-toolbar button {
+        min-width: 38px;
+        padding: 7px 10px;
+        border: 1px solid rgba(128, 128, 128, 0.3);
+        border-radius: 7px;
+        background: transparent;
+        cursor: pointer;
+    }
+
+
+    .website-page-editor-toolbar button:hover {
+        background: rgba(128, 128, 128, 0.12);
+    }
+
+
+    .website-page-editor {
+        min-height: 220px;
+        padding: 14px;
+        border: 1px solid rgba(128, 128, 128, 0.25);
+        border-radius: 0 0 10px 10px;
+        background: rgba(128, 128, 128, 0.03);
+        outline: none;
+        line-height: 1.6;
+    }
+
+
+    .website-page-editor:focus {
+        border-color: currentColor;
+    }
+
+
+    .website-page-editor:empty::before {
+        content: attr(data-placeholder);
+        opacity: 0.45;
+        pointer-events: none;
+    }
+
+
+    .website-page-actions {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 8px;
+    }
+
+
+    .website-page-save-button {
+        padding: 10px 18px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 700;
+    }
+
+
+    .website-page-message {
+        min-height: 20px;
+        margin: 2px 0 0;
+        font-size: 0.9rem;
+    }
+
+
+    .website-page-status {
+        margin-top: 6px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(128, 128, 128, 0.2);
+        font-size: 0.85rem;
+        opacity: 0.75;
+    }
+
+
+    .website-page-status-text {
+        margin-left: 4px;
+    }
+
+
+    @media (max-width: 700px) {
+
+        .website-pages-grid {
+            grid-template-columns: 1fr;
+        }
+
+
+        .website-page-card {
+            padding: 18px;
+        }
+
+
+        .website-page-method-options {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+    }
+    </style>
+
 </head>
 
 
@@ -27,12 +503,20 @@
 
 <main class="container">
 
+
     <h1>
-        Personal Website Dashboard
+        YASU Tech Administrator Dashboard
     </h1>
 
 
+    <p>
+        Manage and publish documents, speeches,
+        presentations and writings.
+    </p>
+
+
     <button
+        type="button"
         onclick="logout()"
     >
         Logout
@@ -42,6 +526,12 @@
     <hr>
 
 
+    <!--
+    ==========================================
+    CREATE NEW CONTENT
+    ==========================================
+    -->
+
     <h2>
         Upload New Content
     </h2>
@@ -49,7 +539,10 @@
 
     <form id="uploadForm">
 
-        <label>
+
+        <!-- TITLE -->
+
+        <label for="title">
             Title
         </label>
 
@@ -60,7 +553,9 @@
         >
 
 
-        <label>
+        <!-- DESCRIPTION -->
+
+        <label for="description">
             Description
         </label>
 
@@ -69,8 +564,10 @@
         ></textarea>
 
 
-        <label>
-            Category
+        <!-- MAIN CATEGORY -->
+
+        <label for="category">
+            Main Category
         </label>
 
         <select
@@ -101,23 +598,462 @@
         </select>
 
 
-        <label>
-            Select File
+        <!-- SUBCATEGORY -->
+
+        <label for="subcategory">
+            Subcategory
         </label>
 
-        <input
-            type="file"
-            id="file"
+        <select
+            id="subcategory"
             required
+            disabled
         >
 
+            <option value="">
+                Select a category first
+            </option>
 
-        <br><br>
+        </select>
 
 
-        <button type="submit">
+        <!--
+        ==========================================
+        CONTENT METHOD
+        ==========================================
+        -->
+
+        <div
+            class="content-method"
+        >
+
+            <label>
+                <strong>
+                    Content Method
+                </strong>
+            </label>
+
+
+            <div class="method-options">
+
+
+                <label
+                    class="method-option"
+                >
+
+                    <input
+                        type="radio"
+                        name="contentMethod"
+                        value="file"
+                        checked
+                    >
+
+                    Upload File
+
+                </label>
+
+
+                <label
+                    class="method-option"
+                >
+
+                    <input
+                        type="radio"
+                        name="contentMethod"
+                        value="write"
+                    >
+
+                    Write Content
+
+                </label>
+
+
+            </div>
+
+        </div>
+
+
+        <!--
+        ==========================================
+        FILE UPLOAD SECTION
+        ==========================================
+        -->
+
+        <div
+            id="fileSection"
+        >
+
+            <label for="file">
+                Select File
+            </label>
+
+            <input
+                type="file"
+                id="file"
+            >
+
+        </div>
+
+
+        <!--
+        ==========================================
+        RICH TEXT EDITOR SECTION
+        ==========================================
+        -->
+
+        <div
+            id="editorSection"
+            class="hidden"
+        >
+
+            <label>
+
+                <strong>
+                    Write Your Content
+                </strong>
+
+            </label>
+
+
+            <!--
+            EDITOR TOOLBAR
+            -->
+
+            <div
+                id="editorToolbar"
+                class="editor-toolbar"
+            >
+
+
+                <!-- UNDO -->
+
+                <button
+                    type="button"
+                    data-command="undo"
+                    title="Undo"
+                >
+                    â†¶
+                </button>
+
+
+                <!-- REDO -->
+
+                <button
+                    type="button"
+                    data-command="redo"
+                    title="Redo"
+                >
+                    â†·
+                </button>
+
+
+                <!-- BOLD -->
+
+                <button
+                    type="button"
+                    data-command="bold"
+                    title="Bold"
+                >
+                    <strong>
+                        B
+                    </strong>
+                </button>
+
+
+                <!-- ITALIC -->
+
+                <button
+                    type="button"
+                    data-command="italic"
+                    title="Italic"
+                >
+                    <em>
+                        I
+                    </em>
+                </button>
+
+
+                <!-- UNDERLINE -->
+
+                <button
+                    type="button"
+                    data-command="underline"
+                    title="Underline"
+                >
+                    <u>
+                        U
+                    </u>
+                </button>
+
+
+                <!-- STRIKETHROUGH -->
+
+                <button
+                    type="button"
+                    data-command="strikeThrough"
+                    title="Strikethrough"
+                >
+                    <s>
+                        S
+                    </s>
+                </button>
+
+
+                <!-- FORMAT -->
+
+                <select
+                    id="formatBlock"
+                    title="Text style"
+                >
+
+                    <option value="">
+                        Style
+                    </option>
+
+                    <option value="P">
+                        Paragraph
+                    </option>
+
+                    <option value="H1">
+                        Heading 1
+                    </option>
+
+                    <option value="H2">
+                        Heading 2
+                    </option>
+
+                    <option value="H3">
+                        Heading 3
+                    </option>
+
+                    <option value="H4">
+                        Heading 4
+                    </option>
+
+                    <option value="BLOCKQUOTE">
+                        Quote
+                    </option>
+
+                </select>
+
+
+                <!-- FONT SIZE -->
+
+                <select
+                    id="fontSize"
+                    title="Font size"
+                >
+
+                    <option value="">
+                        Font Size
+                    </option>
+
+                    <option value="1">
+                        Small
+                    </option>
+
+                    <option value="3">
+                        Normal
+                    </option>
+
+                    <option value="4">
+                        Large
+                    </option>
+
+                    <option value="5">
+                        Larger
+                    </option>
+
+                    <option value="6">
+                        Very Large
+                    </option>
+
+                    <option value="7">
+                        Huge
+                    </option>
+
+                </select>
+
+
+                <!-- ALIGN LEFT -->
+
+                <button
+                    type="button"
+                    data-command="justifyLeft"
+                    title="Align left"
+                >
+                    â˜°
+                </button>
+
+
+                <!-- ALIGN CENTER -->
+
+                <button
+                    type="button"
+                    data-command="justifyCenter"
+                    title="Align center"
+                >
+                    â‰¡
+                </button>
+
+
+                <!-- ALIGN RIGHT -->
+
+                <button
+                    type="button"
+                    data-command="justifyRight"
+                    title="Align right"
+                >
+                    â˜·
+                </button>
+
+
+                <!-- JUSTIFY -->
+
+                <button
+                    type="button"
+                    data-command="justifyFull"
+                    title="Justify"
+                >
+                    â˜·
+                </button>
+
+
+                <!-- BULLET LIST -->
+
+                <button
+                    type="button"
+                    data-command="insertUnorderedList"
+                    title="Bullet list"
+                >
+                    â€¢ List
+                </button>
+
+
+                <!-- NUMBERED LIST -->
+
+                <button
+                    type="button"
+                    data-command="insertOrderedList"
+                    title="Numbered list"
+                >
+                    1. List
+                </button>
+
+
+                <!-- INDENT -->
+
+                <button
+                    type="button"
+                    data-command="indent"
+                    title="Increase indentation"
+                >
+                    â†’
+                </button>
+
+
+                <!-- OUTDENT -->
+
+                <button
+                    type="button"
+                    data-command="outdent"
+                    title="Decrease indentation"
+                >
+                    â†
+                </button>
+
+
+                <!-- HIGHLIGHT -->
+
+                <button
+                    type="button"
+                    id="highlightButton"
+                    title="Highlight selected text"
+                >
+                    Highlight
+                </button>
+
+
+                <!-- LINK -->
+
+                <button
+                    type="button"
+                    id="linkButton"
+                    title="Insert link"
+                >
+                    Link
+                </button>
+
+
+                <!-- REMOVE LINK -->
+
+                <button
+                    type="button"
+                    data-command="unlink"
+                    title="Remove link"
+                >
+                    Unlink
+                </button>
+
+
+                <!-- CLEAR FORMAT -->
+
+                <button
+                    type="button"
+                    data-command="removeFormat"
+                    title="Clear formatting"
+                >
+                    Clear
+                </button>
+
+
+                <!-- FULLSCREEN -->
+
+                <button
+                    type="button"
+                    id="fullscreenButton"
+                    title="Full screen"
+                >
+                    Full Screen
+                </button>
+
+
+            </div>
+
+
+            <!--
+            EDITOR
+            -->
+
+            <div
+                id="editor"
+                contenteditable="true"
+                spellcheck="true"
+                aria-label="Rich text editor"
+            ></div>
+
+
+            <p class="editor-help">
+
+                Write your speech, presentation or
+                writing directly here. You can format
+                the content using the toolbar.
+
+            </p>
+
+        </div>
+
+
+        <br>
+
+
+        <button
+            type="submit"
+            id="submitButton"
+        >
             Upload Content
         </button>
+
 
     </form>
 
@@ -128,14 +1064,210 @@
     <hr>
 
 
+    <!--
+    ==========================================
+    UPLOADED CONTENT
+    ==========================================
+    -->
+
     <h2>
         Uploaded Content
     </h2>
 
 
     <div id="contentList">
+
         Loading...
+
     </div>
+
+    <hr>
+
+    <!--
+    ==========================================
+    WEBSITE PAGES
+    ==========================================
+    -->
+
+        <section id="websitePagesSection" class="website-pages-section">
+
+        <div class="website-pages-header">
+            <div>
+                <span class="section-label">WEBSITE PAGES</span>
+                <h2>Manage Website Pages</h2>
+                <p>
+                    Create and manage multiple content items for the main
+                    YASU Tech website pages.
+                </p>
+            </div>
+        </div>
+
+        <div class="website-pages-grid">
+
+            <!-- HOME PAGE -->
+
+            <article class="website-page-card" data-page-container="home">
+
+                <div class="website-page-card-header">
+
+                    <div class="website-page-icon">
+                        ðŸ 
+                    </div>
+
+                    <div>
+                        <h3>Home</h3>
+                        <p>Main landing page of YASU Tech.</p>
+                    </div>
+
+                </div>
+
+                <div
+                    class="website-page-items"
+                    data-page-items="home"
+                ></div>
+
+                <div class="website-page-add-content">
+                    <button
+                        type="button"
+                        class="website-page-add-button"
+                        data-add-page-content="home"
+                    >
+                        + Add Another Content
+                    </button>
+                </div>
+
+                <p
+                    class="website-page-message"
+                    data-page-message="home"
+                ></p>
+
+                <div class="website-page-status">
+
+                    <strong>Current Status:</strong>
+
+                    <span
+                        class="website-page-status-text"
+                        data-page-status="home"
+                    >
+                        Loading...
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <!-- ABOUT PAGE -->
+
+            <article class="website-page-card" data-page-container="about">
+
+                <div class="website-page-card-header">
+
+                    <div class="website-page-icon">
+                        ðŸ‘¤
+                    </div>
+
+                    <div>
+                        <h3>About</h3>
+                        <p>About Yakubu Sualisu Ahmed and YASU Tech.</p>
+                    </div>
+
+                </div>
+
+                <div
+                    class="website-page-items"
+                    data-page-items="about"
+                ></div>
+
+                <div class="website-page-add-content">
+                    <button
+                        type="button"
+                        class="website-page-add-button"
+                        data-add-page-content="about"
+                    >
+                        + Add Another Content
+                    </button>
+                </div>
+
+                <p
+                    class="website-page-message"
+                    data-page-message="about"
+                ></p>
+
+                <div class="website-page-status">
+
+                    <strong>Current Status:</strong>
+
+                    <span
+                        class="website-page-status-text"
+                        data-page-status="about"
+                    >
+                        Loading...
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <!-- PROGRAMMING PAGE -->
+
+            <article
+                class="website-page-card"
+                data-page-container="programming"
+            >
+
+                <div class="website-page-card-header">
+
+                    <div class="website-page-icon">
+                        ðŸ’»
+                    </div>
+
+                    <div>
+                        <h3>Programming</h3>
+                        <p>Programming projects, skills and resources.</p>
+                    </div>
+
+                </div>
+
+                <div
+                    class="website-page-items"
+                    data-page-items="programming"
+                ></div>
+
+                <div class="website-page-add-content">
+                    <button
+                        type="button"
+                        class="website-page-add-button"
+                        data-add-page-content="programming"
+                    >
+                        + Add Another Content
+                    </button>
+                </div>
+
+                <p
+                    class="website-page-message"
+                    data-page-message="programming"
+                ></p>
+
+                <div class="website-page-status">
+
+                    <strong>Current Status:</strong>
+
+                    <span
+                        class="website-page-status-text"
+                        data-page-status="programming"
+                    >
+                        Loading...
+                    </span>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
 
 
 </main>
@@ -143,112 +1275,2610 @@
 
 <script>
 
+
+/*
+==========================================
+GET AUTHENTICATION TOKEN
+==========================================
+*/
+
 const token =
+
     localStorage.getItem(
         "userToken"
-    ) ||
+    )
+
+    ||
+
     sessionStorage.getItem(
         "userToken"
     );
 
+
+/*
+==========================================
+GET USER ROLE
+==========================================
+*/
 
 const role =
+
     localStorage.getItem(
         "userRole"
-    ) ||
+    )
+
+    ||
+
     sessionStorage.getItem(
         "userRole"
     );
 
 
+/*
+==========================================
+PROTECT ADMIN DASHBOARD
+==========================================
+*/
+
 if (
-    !token ||
+
+    !token
+
+    ||
+
     role !== "admin"
+
 ) {
 
     window.location.href =
-        "login.html";
+        "../login.html";
 
 }
 
+
+/*
+==========================================
+CATEGORY STRUCTURE
+==========================================
+*/
+
+const categoryStructure = {
+
+    documents: [
+
+        {
+            value: "mathematics",
+            label: "Mathematics"
+        },
+
+        {
+            value: "ict",
+            label: "ICT"
+        },
+
+        {
+            value: "education",
+            label: "Education"
+        },
+
+        {
+            value: "reports",
+            label: "Reports"
+        }
+
+    ],
+
+
+    speeches: [
+
+        {
+            value: "khutbah",
+            label: "Friday Khutbahs"
+        },
+
+        {
+            value: "public",
+            label: "Public Speeches"
+        },
+
+        {
+            value: "academic",
+            label: "Academic Speeches"
+        }
+
+    ],
+
+
+    presentations: [
+
+        {
+            value: "mathematics",
+            label: "Mathematics"
+        },
+
+        {
+            value: "ict",
+            label: "ICT"
+        },
+
+        {
+            value: "education",
+            label: "Education"
+        }
+
+    ],
+
+
+    writings: [
+
+        {
+            value: "academic",
+            label: "Academic Writings"
+        },
+
+        {
+            value: "technology",
+            label: "Technology & Programming"
+        },
+
+        {
+            value: "reflections",
+            label: "Personal Reflections"
+        }
+
+    ]
+
+};
+
+
+/*
+==========================================
+LOGOUT
+==========================================
+*/
 
 function logout() {
 
     localStorage.clear();
+
     sessionStorage.clear();
 
+
     window.location.href =
-        "login.html";
+        "../login.html";
+
 }
 
 
+/*
+==========================================
+ELEMENT REFERENCES
+==========================================
+*/
+
+const categorySelect =
+    document.getElementById(
+        "category"
+    );
+
+
+const subcategorySelect =
+    document.getElementById(
+        "subcategory"
+    );
+
+
+const fileSection =
+    document.getElementById(
+        "fileSection"
+    );
+
+
+const editorSection =
+    document.getElementById(
+        "editorSection"
+    );
+
+
+const fileInput =
+    document.getElementById(
+        "file"
+    );
+
+
+const editor =
+    document.getElementById(
+        "editor"
+    );
+
+
+const editorToolbar =
+    document.getElementById(
+        "editorToolbar"
+    );
+
+
+const submitButton =
+    document.getElementById(
+        "submitButton"
+    );
+
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+
+/*
+==========================================
+UPDATE SUBCATEGORIES
+==========================================
+*/
+
+categorySelect.addEventListener(
+
+    "change",
+
+    function() {
+
+        const selectedCategory =
+            categorySelect.value;
+
+
+        /*
+        CLEAR EXISTING OPTIONS
+        */
+
+        subcategorySelect.innerHTML =
+            "";
+
+
+        /*
+        NO CATEGORY SELECTED
+        */
+
+        if (
+            !selectedCategory
+        ) {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                "";
+
+
+            option.textContent =
+                "Select a category first";
+
+
+            subcategorySelect.appendChild(
+                option
+            );
+
+
+            subcategorySelect.disabled =
+                true;
+
+
+            updateContentMethodAvailability();
+
+            return;
+
+        }
+
+
+        /*
+        ENABLE SUBCATEGORY SELECTOR
+        */
+
+        subcategorySelect.disabled =
+            false;
+
+
+        /*
+        DEFAULT OPTION
+        */
+
+        const defaultOption =
+            document.createElement(
+                "option"
+            );
+
+
+        defaultOption.value =
+            "";
+
+
+        defaultOption.textContent =
+            "Select Subcategory";
+
+
+        subcategorySelect.appendChild(
+            defaultOption
+        );
+
+
+        /*
+        ADD SUBCATEGORY OPTIONS
+        */
+
+        categoryStructure[
+            selectedCategory
+        ].forEach(
+
+            subcategory => {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                option.value =
+                    subcategory.value;
+
+
+                option.textContent =
+                    subcategory.label;
+
+
+                subcategorySelect.appendChild(
+                    option
+                );
+
+            }
+
+        );
+
+
+        updateContentMethodAvailability();
+
+    }
+
+);
+
+
+/*
+==========================================
+CONTENT METHOD RADIO BUTTONS
+==========================================
+*/
+
+const methodRadios =
+    document.querySelectorAll(
+        'input[name="contentMethod"]'
+    );
+
+
+methodRadios.forEach(
+
+    radio => {
+
+        radio.addEventListener(
+            "change",
+            updateContentMethod
+        );
+
+    }
+
+);
+
+
+/*
+==========================================
+CHECK WHETHER CATEGORY ALLOWS WRITING
+==========================================
+*/
+
+function isWritableCategory() {
+
+    const category =
+        categorySelect.value;
+
+
+    return (
+
+        category === "speeches"
+
+        ||
+
+        category === "presentations"
+
+        ||
+
+        category === "writings"
+
+    );
+
+}
+
+
+/*
+==========================================
+ENABLE / DISABLE WRITE OPTION
+==========================================
+*/
+
+function updateContentMethodAvailability() {
+
+    const writeRadio =
+        document.querySelector(
+            'input[name="contentMethod"][value="write"]'
+        );
+
+
+    if (!writeRadio) {
+
+        return;
+
+    }
+
+
+    const writeLabel =
+        writeRadio.closest(
+            ".method-option"
+        );
+
+
+    if (
+        !isWritableCategory()
+    ) {
+
+        writeRadio.checked =
+            false;
+
+
+        writeRadio.disabled =
+            true;
+
+
+        writeLabel.classList.add(
+            "hidden"
+        );
+
+
+        const fileRadio =
+            document.querySelector(
+                'input[name="contentMethod"][value="file"]'
+            );
+
+
+        fileRadio.checked =
+            true;
+
+
+        updateContentMethod();
+
+
+        return;
+
+    }
+
+
+    writeRadio.disabled =
+        false;
+
+
+    writeLabel.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/*
+==========================================
+CHANGE CONTENT METHOD
+==========================================
+*/
+
+function updateContentMethod() {
+
+    const selectedMethod =
+        document.querySelector(
+            'input[name="contentMethod"]:checked'
+        ).value;
+
+
+    if (
+        selectedMethod === "write"
+    ) {
+
+        fileSection.classList.add(
+            "hidden"
+        );
+
+
+        editorSection.classList.remove(
+            "hidden"
+        );
+
+
+        fileInput.required =
+            false;
+
+
+        submitButton.textContent =
+            "Publish Content";
+
+
+        editor.focus();
+
+    } else {
+
+        fileSection.classList.remove(
+            "hidden"
+        );
+
+
+        editorSection.classList.add(
+            "hidden"
+        );
+
+
+        fileInput.required =
+            true;
+
+
+        submitButton.textContent =
+            "Upload Content";
+
+    }
+
+}
+
+
+/*
+==========================================
+EDITOR COMMANDS
+==========================================
+*/
+
+document.querySelectorAll(
+
+    "[data-command]"
+
+).forEach(
+
+    button => {
+
+        button.addEventListener(
+
+            "click",
+
+            function() {
+
+                const command =
+                    this.dataset.command;
+
+
+                editor.focus();
+
+
+                document.execCommand(
+                    command,
+                    false,
+                    null
+                );
+
+            }
+
+        );
+
+    }
+
+);
+
+
+/*
+==========================================
+FORMAT BLOCK
+==========================================
+*/
+
+document.getElementById(
+    "formatBlock"
+).addEventListener(
+
+    "change",
+
+    function() {
+
+        if (
+            !this.value
+        ) {
+
+            return;
+
+        }
+
+
+        editor.focus();
+
+
+        document.execCommand(
+
+            "formatBlock",
+
+            false,
+
+            this.value
+
+        );
+
+
+        this.value =
+            "";
+
+    }
+
+);
+
+
+/*
+==========================================
+FONT SIZE
+==========================================
+*/
+
+document.getElementById(
+    "fontSize"
+).addEventListener(
+
+    "change",
+
+    function() {
+
+        if (
+            !this.value
+        ) {
+
+            return;
+
+        }
+
+
+        editor.focus();
+
+
+        document.execCommand(
+
+            "fontSize",
+
+            false,
+
+            this.value
+
+        );
+
+
+        this.value =
+            "";
+
+    }
+
+);
+
+
+/*
+==========================================
+HIGHLIGHT
+==========================================
+*/
+
+document.getElementById(
+    "highlightButton"
+).addEventListener(
+
+    "click",
+
+    function() {
+
+        editor.focus();
+
+
+        document.execCommand(
+
+            "hiliteColor",
+
+            false,
+
+            "yellow"
+
+        );
+
+    }
+
+);
+
+
+/*
+==========================================
+INSERT LINK
+==========================================
+*/
+
+document.getElementById(
+    "linkButton"
+).addEventListener(
+
+    "click",
+
+    function() {
+
+        editor.focus();
+
+
+        const url =
+            prompt(
+                "Enter the URL:"
+            );
+
+
+        if (
+            !url
+        ) {
+
+            return;
+
+        }
+
+
+        document.execCommand(
+
+            "createLink",
+
+            false,
+
+            url
+
+        );
+
+    }
+
+);
+
+
+/*
+==========================================
+FULLSCREEN EDITOR
+==========================================
+*/
+
+document.getElementById(
+    "fullscreenButton"
+).addEventListener(
+
+    "click",
+
+    function() {
+
+        const fullscreen =
+            editor.classList.toggle(
+                "fullscreen-editor"
+            );
+
+
+        document.body.classList.toggle(
+            "editor-fullscreen-active",
+            fullscreen
+        );
+
+
+        editorToolbar.classList.toggle(
+            "fullscreen-toolbar",
+            fullscreen
+        );
+
+
+        this.textContent =
+            fullscreen
+                ? "Exit Full Screen"
+                : "Full Screen";
+
+    }
+
+);
+
+
+/*
+==========================================
+ESCAPE FULLSCREEN WITH ESC KEY
+==========================================
+*/
+
+document.addEventListener(
+
+    "keydown",
+
+    function(event) {
+
+        if (
+            event.key !== "Escape"
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            !editor.classList.contains(
+                "fullscreen-editor"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        editor.classList.remove(
+            "fullscreen-editor"
+        );
+
+
+        editorToolbar.classList.remove(
+            "fullscreen-toolbar"
+        );
+
+
+        document.body.classList.remove(
+            "editor-fullscreen-active"
+        );
+
+
+        document.getElementById(
+            "fullscreenButton"
+        ).textContent =
+            "Full Screen";
+
+    }
+
+);
+
+
+/*
+==========================================
+UPLOAD / WRITE FORM
+==========================================
+*/
+
 document
+
     .getElementById(
         "uploadForm"
     )
+
     .addEventListener(
+
         "submit",
+
         async function(event) {
 
             event.preventDefault();
 
 
-            const formData =
-                new FormData();
+            const selectedMethod =
+
+                document.querySelector(
+                    'input[name="contentMethod"]:checked'
+                ).value;
 
 
-            formData.append(
-                "title",
-                document
-                    .getElementById(
-                        "title"
-                    )
-                    .value
+            const selectedCategory =
+                categorySelect.value;
+
+
+            const selectedSubcategory =
+                subcategorySelect.value;
+
+
+            const title =
+                document.getElementById(
+                    "title"
+                ).value.trim();
+
+
+            const description =
+                document.getElementById(
+                    "description"
+                ).value.trim();
+
+
+            /*
+            ======================================
+            BASIC VALIDATION
+            ======================================
+            */
+
+            if (
+                !title
+            ) {
+
+                message.textContent =
+                    "Please enter a title.";
+
+                return;
+
+            }
+
+
+            if (
+                !selectedCategory
+            ) {
+
+                message.textContent =
+                    "Please select a main category.";
+
+                return;
+
+            }
+
+
+            if (
+                !selectedSubcategory
+            ) {
+
+                message.textContent =
+                    "Please select a subcategory.";
+
+                return;
+
+            }
+
+
+            /*
+            ======================================
+            FILE MODE
+            ======================================
+            */
+
+            if (
+                selectedMethod === "file"
+            ) {
+
+                const selectedFile =
+
+                    fileInput.files[0];
+
+
+                if (
+                    !selectedFile
+                ) {
+
+                    message.textContent =
+                        "Please select a file.";
+
+                    return;
+
+                }
+
+
+                const formData =
+                    new FormData();
+
+
+                formData.append(
+                    "title",
+                    title
+                );
+
+
+                formData.append(
+                    "description",
+                    description
+                );
+
+
+                formData.append(
+                    "category",
+                    selectedCategory
+                );
+
+
+                formData.append(
+                    "subcategory",
+                    selectedSubcategory
+                );
+
+
+                formData.append(
+                    "contentMode",
+                    "file"
+                );
+
+
+                formData.append(
+                    "file",
+                    selectedFile
+                );
+
+
+                await submitContent(
+                    formData,
+                    "upload"
+                );
+
+
+                return;
+
+            }
+
+
+            /*
+            ======================================
+            WRITE MODE
+            ======================================
+            */
+
+            if (
+                selectedMethod === "write"
+            ) {
+
+                if (
+                    !isWritableCategory()
+                ) {
+
+                    message.textContent =
+                        "Direct writing is available for Speeches, Presentations and Writings.";
+
+                    return;
+
+                }
+
+
+                const writtenContent =
+                    editor.innerHTML.trim();
+
+
+                /*
+                Remove empty HTML
+                */
+
+                const temporaryDiv =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                temporaryDiv.innerHTML =
+                    writtenContent;
+
+
+                const plainText =
+                    temporaryDiv.textContent
+                        .replace(
+                            /\u00a0/g,
+                            " "
+                        )
+                        .trim();
+
+
+                if (
+                    !plainText
+                ) {
+
+                    message.textContent =
+                        "Please write some content before publishing.";
+
+                    editor.focus();
+
+                    return;
+
+                }
+
+
+                const formData =
+                    new FormData();
+
+
+                formData.append(
+                    "title",
+                    title
+                );
+
+
+                formData.append(
+                    "description",
+                    description
+                );
+
+
+                formData.append(
+                    "category",
+                    selectedCategory
+                );
+
+
+                formData.append(
+                    "subcategory",
+                    selectedSubcategory
+                );
+
+
+                formData.append(
+                    "contentMode",
+                    "write"
+                );
+
+
+                formData.append(
+                    "content",
+                    writtenContent
+                );
+
+
+                await submitContent(
+                    formData,
+                    "publish"
+                );
+
+            }
+
+        }
+
+    );
+
+
+/*
+==========================================
+SUBMIT CONTENT TO SERVER
+==========================================
+*/
+
+async function submitContent(
+    formData,
+    mode
+) {
+
+    message.textContent =
+        mode === "publish"
+            ? "Publishing content..."
+            : "Uploading content...";
+
+
+    submitButton.disabled =
+        true;
+
+
+    try {
+
+        const response =
+
+            await fetch(
+
+                "/api/uploads",
+
+                {
+
+                    method:
+                        "POST",
+
+                    headers: {
+
+                        Authorization:
+                            `Bearer ${token}`
+
+                    },
+
+                    body:
+                        formData
+
+                }
+
             );
 
 
-            formData.append(
-                "description",
-                document
-                    .getElementById(
-                        "description"
-                    )
-                    .value
+        const data =
+            await response.json();
+
+
+        message.textContent =
+
+            data.message
+
+            ||
+
+            (
+                response.ok
+                    ? "Content saved successfully."
+                    : "An error occurred."
             );
 
 
-            formData.append(
-                "category",
-                document
-                    .getElementById(
-                        "category"
-                    )
-                    .value
+        if (
+            response.ok
+        ) {
+
+            document
+
+                .getElementById(
+                    "uploadForm"
+                )
+
+                .reset();
+
+
+            /*
+            RESET SUBCATEGORY
+            */
+
+            subcategorySelect.innerHTML =
+                `
+                <option value="">
+                    Select a category first
+                </option>
+                `;
+
+
+            subcategorySelect.disabled =
+                true;
+
+
+            /*
+            RESET EDITOR
+            */
+
+            editor.innerHTML =
+                "";
+
+
+            /*
+            RESET METHOD
+            */
+
+            document.querySelector(
+                'input[name="contentMethod"][value="file"]'
+            ).checked =
+                true;
+
+
+            updateContentMethod();
+
+
+            updateContentMethodAvailability();
+
+
+            /*
+            LOAD CONTENT
+            */
+
+            loadContent();
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        message.textContent =
+            "Unable to connect to the server.";
+
+    } finally {
+
+        submitButton.disabled =
+            false;
+
+    }
+
+}
+
+
+/*
+==========================================
+LOAD CONTENT
+==========================================
+*/
+
+async function loadContent() {
+
+    const contentList =
+
+        document.getElementById(
+            "contentList"
+        );
+
+
+    try {
+
+        const response =
+
+            await fetch(
+
+                "/api/content",
+
+                {
+
+                    headers: {
+
+                        Authorization:
+                            `Bearer ${token}`
+
+                    }
+
+                }
+
             );
 
+
+        if (
+            !response.ok
+        ) {
+
+            throw new Error(
+                "Unable to retrieve content."
+            );
+
+        }
+
+
+        const contents =
+            await response.json();
+
+
+        contentList.innerHTML =
+            "";
+
+
+        /*
+        NO CONTENT
+        */
+
+        if (
+            contents.length === 0
+        ) {
+
+            contentList.innerHTML =
+                `
+                <p>
+                    No uploaded content yet.
+                </p>
+                `;
+
+
+            return;
+
+        }
+
+
+        /*
+        DISPLAY CONTENT
+        */
+
+        contents.forEach(
+
+            content => {
+
+                const element =
+
+                    document.createElement(
+                        "div"
+                    );
+
+
+                const isWrittenContent =
+
+                    !content.filename
+                    &&
+                    content.content;
+
+
+                element.innerHTML =
+
+                    `
+                    <h3>
+                        ${escapeHtml(content.title)}
+                    </h3>
+
+                    <p>
+                        ${
+                            content.description
+                                ?
+                                escapeHtml(
+                                    content.description
+                                )
+                                :
+                                ""
+                        }
+                    </p>
+
+                    <p>
+                        <strong>
+                            Category:
+                        </strong>
+
+                        ${escapeHtml(content.category)}
+                    </p>
+
+                    <p>
+                        <strong>
+                            Subcategory:
+                        </strong>
+
+                        ${
+                            content.subcategory
+                                ?
+                                escapeHtml(
+                                    content.subcategory
+                                )
+                                :
+                                "Not specified"
+                        }
+                    </p>
+
+                    ${
+                        isWrittenContent
+
+                            ?
+
+                            `
+                            <p>
+                                <strong>
+                                    Content:
+                                </strong>
+                            </p>
+
+                            <div
+                                class="written-content-preview"
+                            >
+                                ${content.content}
+                            </div>
+                            `
+
+                            :
+
+                            `
+                            <p>
+                                <strong>
+                                    File:
+                                </strong>
+
+                                ${
+                                    content.original_name
+                                        ?
+                                        escapeHtml(
+                                            content.original_name
+                                        )
+                                        :
+                                        ""
+                                }
+                            </p>
+                            `
+
+                    }
+
+                    <br>
+
+                    <button
+                        type="button"
+                        onclick="deleteContent(${content.id})"
+                    >
+                        Delete
+                    </button>
+
+                    <hr>
+                    `;
+
+
+                contentList.appendChild(
+                    element
+                );
+
+            }
+
+        );
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        contentList.innerHTML =
+            `
+            <p>
+                Unable to load uploaded content.
+            </p>
+            `;
+
+    }
+
+}
+
+
+/*
+==========================================
+DELETE CONTENT
+==========================================
+*/
+
+async function deleteContent(id) {
+
+    const confirmed =
+
+        confirm(
+            "Are you sure you want to delete this item?"
+        );
+
+
+    if (
+        !confirmed
+    ) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+
+            await fetch(
+
+                `/api/uploads/${id}`,
+
+                {
+
+                    method:
+                        "DELETE",
+
+                    headers: {
+
+                        Authorization:
+                            `Bearer ${token}`
+
+                    }
+
+                }
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        alert(
+
+            data.message
+
+            ||
+
+            "Unable to delete content."
+
+        );
+
+
+        if (
+            response.ok
+        ) {
+
+            loadContent();
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        alert(
+            "Unable to connect to the server."
+        );
+
+    }
+
+}
+
+
+/*
+==========================================
+ESCAPE HTML
+==========================================
+*/
+
+function escapeHtml(value) {
+
+    const text =
+        String(
+            value
+        );
+
+
+    return text
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/*
+==========================================
+INITIAL CONTENT METHOD STATE
+==========================================
+*/
+
+updateContentMethodAvailability();
+
+updateContentMethod();
+
+
+/*
+==========================================
+INITIAL CONTENT LOAD
+==========================================
+*/
+
+loadContent();
+/*
+==========================================
+WEBSITE PAGES MANAGEMENT
+==========================================
+*/
+
+(function () {
+
+    const pageKeys = [
+        "home",
+        "about",
+        "programming"
+    ];
+
+    /*
+    ==========================================
+    AUTHENTICATION
+    ==========================================
+    */
+
+    function getAuthToken() {
+
+        const possibleKeys = [
+            "token",
+            "authToken",
+            "accessToken",
+            "jwt",
+            "adminToken"
+        ];
+
+        for (const key of possibleKeys) {
+
+            const value =
+                localStorage.getItem(key) ||
+                sessionStorage.getItem(key);
+
+            if (
+                value &&
+                typeof value === "string" &&
+                value.split(".").length === 3
+            ) {
+                return value;
+            }
+        }
+
+        /*
+        Fallback:
+        Look through storage for a JWT-shaped value.
+        */
+
+        const storageSources = [
+            localStorage,
+            sessionStorage
+        ];
+
+        for (const storage of storageSources) {
+
+            for (let i = 0; i < storage.length; i++) {
+
+                const key = storage.key(i);
+
+                if (!key) {
+                    continue;
+                }
+
+                const value = storage.getItem(key);
+
+                if (
+                    value &&
+                    typeof value === "string" &&
+                    value.split(".").length === 3
+                ) {
+                    return value;
+                }
+            }
+        }
+
+        return null;
+    }
+
+
+    function getHeaders(includeJson = false) {
+
+        const headers = {};
+
+        const token = getAuthToken();
+
+        if (token) {
+            headers.Authorization =
+                "Bearer " + token;
+        }
+
+        if (includeJson) {
+            headers["Content-Type"] =
+                "application/json";
+        }
+
+        return headers;
+    }
+
+
+    /*
+    ==========================================
+    HTML ESCAPING
+    ==========================================
+    */
+
+    function escapeHtml(value) {
+
+        if (value === null || value === undefined) {
+            return "";
+        }
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+
+    /*
+    ==========================================
+    PAGE INFORMATION
+    ==========================================
+    */
+
+    function getPageName(pageKey) {
+
+        const names = {
+            home: "Home",
+            about: "About",
+            programming: "Programming"
+        };
+
+        return names[pageKey] || pageKey;
+    }
+
+
+    /*
+    ==========================================
+    MESSAGE
+    ==========================================
+    */
+
+    function showPageMessage(
+        pageKey,
+        message,
+        type = ""
+    ) {
+
+        const element =
+            document.querySelector(
+                `[data-page-message="${pageKey}"]`
+            );
+
+        if (!element) {
+            return;
+        }
+
+        element.textContent =
+            message || "";
+
+        element.className =
+            "website-page-message";
+
+        if (type) {
+            element.classList.add(type);
+        }
+    }
+
+
+    /*
+    ==========================================
+    STATUS
+    ==========================================
+    */
+
+    function updatePageStatus(
+        pageKey,
+        text
+    ) {
+
+        const element =
+            document.querySelector(
+                `[data-page-status="${pageKey}"]`
+            );
+
+        if (!element) {
+            return;
+        }
+
+        element.textContent =
+            text || "Not saved yet.";
+    }
+
+
+    /*
+    ==========================================
+    EDITOR TOOLBAR
+    ==========================================
+    */
+
+    function setupEditorToolbar(
+        form
+    ) {
+
+        const toolbar =
+            form.querySelector(
+                ".website-page-editor-toolbar"
+            );
+
+        const editor =
+            form.querySelector(
+                ".website-page-editor"
+            );
+
+        if (!toolbar || !editor) {
+            return;
+        }
+
+        toolbar
+            .querySelectorAll("button[data-command]")
+            .forEach(button => {
+
+                button.addEventListener(
+                    "click",
+                    function (event) {
+
+                        event.preventDefault();
+
+                        const command =
+                            this.dataset.command;
+
+                        const value =
+                            this.dataset.value ||
+                            null;
+
+                        editor.focus();
+
+                        try {
+
+                            document.execCommand(
+                                command,
+                                false,
+                                value
+                            );
+
+                        } catch (error) {
+
+                            console.error(
+                                "Editor command error:",
+                                error
+                            );
+                        }
+                    }
+                );
+            });
+    }
+
+
+    /*
+    ==========================================
+    CONTENT METHOD TOGGLE
+    ==========================================
+    */
+
+    function updateContentMethod(
+        form
+    ) {
+
+        const fileSection =
+            form.querySelector(
+                ".website-page-file-section"
+            );
+
+        const editorSection =
+            form.querySelector(
+                ".website-page-editor-section"
+            );
+
+        const selected =
+            form.querySelector(
+                'input[name="contentMethod"]:checked'
+            );
+
+        if (!fileSection || !editorSection) {
+            return;
+        }
+
+        if (selected && selected.value === "write") {
+
+            fileSection.classList.add("hidden");
+
+            editorSection.classList.remove("hidden");
+
+        } else {
+
+            fileSection.classList.remove("hidden");
+
+            editorSection.classList.add("hidden");
+        }
+    }
+
+
+    /*
+    ==========================================
+    CONTENT ITEM FORM
+    ==========================================
+    */
+
+    function createContentForm(
+        pageKey,
+        item = null
+    ) {
+
+        const form =
+            document.createElement("form");
+
+        form.className =
+            "website-page-form website-page-content-item";
+
+        form.dataset.pageKey =
+            pageKey;
+
+        if (item && item.id) {
+            form.dataset.itemId =
+                item.id;
+        }
+
+        const itemId =
+            item && item.id
+                ? item.id
+                : "new-" + Date.now() + "-" +
+                  Math.random()
+                    .toString(36)
+                    .substring(2, 8);
+
+        const methodName =
+            "contentMethod-" +
+            pageKey +
+            "-" +
+            itemId;
+
+        const existingContent =
+            item && item.content
+                ? item.content
+                : "";
+
+        const existingTitle =
+            item && item.title
+                ? item.title
+                : "";
+
+        const existingDescription =
+            item && item.description
+                ? item.description
+                : "";
+
+        const existingFile =
+            item && item.filename
+                ? item.filename
+                : "";
+
+        const existingOriginalName =
+            item && item.original_name
+                ? item.original_name
+                : "";
+
+        form.innerHTML = `
+            <div class="website-page-content-item-header">
+
+                <div>
+                    <span class="website-page-content-item-number">
+                        Content Item
+                    </span>
+
+                    <h4>
+                        ${escapeHtml(
+                            existingTitle ||
+                            "New Content"
+                        )}
+                    </h4>
+                </div>
+
+                <div class="website-page-content-item-actions">
+
+                    ${
+                        item && item.id
+                            ? `
+                                <button
+                                    type="button"
+                                    class="website-page-delete-button"
+                                    data-delete-content
+                                >
+                                    Delete
+                                </button>
+                              `
+                            : ""
+                    }
+
+                </div>
+
+            </div>
+
+
+            <label>
+                Page Title
+            </label>
+
+            <input
+                type="text"
+                class="website-page-title"
+                placeholder="${escapeHtml(
+                    getPageName(pageKey)
+                )} content title"
+                value="${escapeHtml(existingTitle)}"
+                required
+            >
+
+
+            <label>
+                Description
+            </label>
+
+            <textarea
+                class="website-page-description"
+                placeholder="Brief description of this content"
+            >${escapeHtml(existingDescription)}</textarea>
+
+
+            <div class="website-page-method">
+
+                <label>
+                    <strong>Content Method</strong>
+                </label>
+
+                <div class="website-page-method-options">
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="${methodName}"
+                            value="file"
+                            ${existingFile || !existingContent
+                                ? "checked"
+                                : ""}
+                        >
+                        Upload File
+                    </label>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="${methodName}"
+                            value="write"
+                            ${existingContent && !existingFile
+                                ? "checked"
+                                : ""}
+                        >
+                        Write Content
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div class="website-page-file-section">
+
+                <label>
+                    Select File
+                </label>
+
+                <input
+                    type="file"
+                    class="website-page-file"
+                >
+
+                ${
+                    existingOriginalName
+                        ? `
+                            <p class="website-page-existing-file">
+                                Current file:
+                                <strong>
+                                    ${escapeHtml(
+                                        existingOriginalName
+                                    )}
+                                </strong>
+                            </p>
+                          `
+                        : ""
+                }
+
+            </div>
+
+
+            <div class="website-page-editor-section hidden">
+
+                <label>
+                    <strong>
+                        Write ${escapeHtml(
+                            getPageName(pageKey)
+                        )} Content
+                    </strong>
+                </label>
+
+
+                <div class="website-page-editor-toolbar">
+
+                    <button
+                        type="button"
+                        data-command="bold"
+                        title="Bold"
+                    >
+                        B
+                    </button>
+
+                    <button
+                        type="button"
+                        data-command="italic"
+                        title="Italic"
+                    >
+                        I
+                    </button>
+
+                    <button
+                        type="button"
+                        data-command="underline"
+                        title="Underline"
+                    >
+                        U
+                    </button>
+
+                    <button
+                        type="button"
+                        data-command="insertUnorderedList"
+                        title="Bullet List"
+                    >
+                        â€¢ List
+                    </button>
+
+                    <button
+                        type="button"
+                        data-command="insertOrderedList"
+                        title="Numbered List"
+                    >
+                        1. List
+                    </button>
+
+                    <button
+                        type="button"
+                        data-command="formatBlock"
+                        data-value="h2"
+                        title="Heading"
+                    >
+                        H2
+                    </button>
+
+                    <button
+                        type="button"
+                        data-command="formatBlock"
+                        data-value="p"
+                        title="Paragraph"
+                    >
+                        P
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="website-page-editor"
+                    contenteditable="true"
+                    spellcheck="true"
+                    data-placeholder="Write the content here..."
+                >${existingContent}</div>
+
+            </div>
+
+
+            <div class="website-page-actions">
+
+                <button
+                    type="submit"
+                    class="website-page-save-button"
+                >
+                    ${
+                        item && item.id
+                            ? "Update Content"
+                            : "Save Content"
+                    }
+                </button>
+
+            </div>
+
+
+            <p class="website-page-item-message"></p>
+
+
+            <div class="website-page-item-status">
+
+                <strong>Status:</strong>
+
+                <span>
+                    ${
+                        item && item.id
+                            ? "Saved"
+                            : "New content"
+                    }
+                </span>
+
+            </div>
+        `;
+
+
+        /*
+        ==========================================
+        UPDATE ITEM HEADING WHEN TITLE CHANGES
+        ==========================================
+        */
+
+        const titleInput =
+            form.querySelector(
+                ".website-page-title"
+            );
+
+        const itemHeading =
+            form.querySelector(
+                ".website-page-content-item-header h4"
+            );
+
+        if (titleInput && itemHeading) {
+
+            titleInput.addEventListener(
+                "input",
+                function () {
+
+                    itemHeading.textContent =
+                        this.value.trim() ||
+                        "New Content";
+                }
+            );
+        }
+
+
+        /*
+        ==========================================
+        CONTENT METHOD RADIO BUTTONS
+        ==========================================
+        */
+
+        form.querySelectorAll(
+            'input[name="' +
+            methodName +
+            '"]'
+        ).forEach(radio => {
+
+            radio.addEventListener(
+                "change",
+                function () {
+
+                    updateContentMethod(
+                        form
+                    );
+                }
+            );
+        });
+
+
+        /*
+        ==========================================
+        EDITOR
+        ==========================================
+        */
+
+        setupEditorToolbar(form);
+
+
+        /*
+        ==========================================
+        SAVE
+        ==========================================
+        */
+
+        form.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+                await saveContentItem(
+                    form
+                );
+            }
+        );
+
+
+        /*
+        ==========================================
+        DELETE
+        ==========================================
+        */
+
+        const deleteButton =
+            form.querySelector(
+                "[data-delete-content]"
+            );
+
+        if (deleteButton) {
+
+            deleteButton.addEventListener(
+                "click",
+                async function () {
+
+                    await deleteContentItem(
+                        form,
+                        pageKey
+                    );
+                }
+            );
+        }
+
+
+        /*
+        ==========================================
+        INITIAL METHOD STATE
+        ==========================================
+        */
+
+        updateContentMethod(form);
+
+
+        return form;
+    }
+
+
+    /*
+    ==========================================
+    SAVE CONTENT ITEM
+    ==========================================
+    */
+
+    async function saveContentItem(
+        form
+    ) {
+
+        const pageKey =
+            form.dataset.pageKey;
+
+        const itemId =
+            form.dataset.itemId;
+
+        const title =
+            form.querySelector(
+                ".website-page-title"
+            ).value.trim();
+
+        const description =
+            form.querySelector(
+                ".website-page-description"
+            ).value.trim();
+
+        const selectedMethod =
+            form.querySelector(
+                'input[name^="contentMethod-"]:checked'
+            );
+
+        const contentMode =
+            selectedMethod
+                ? selectedMethod.value
+                : "file";
+
+        const fileInput =
+            form.querySelector(
+                ".website-page-file"
+            );
+
+        const editor =
+            form.querySelector(
+                ".website-page-editor"
+            );
+
+        const messageElement =
+            form.querySelector(
+                ".website-page-item-message"
+            );
+
+        const statusElement =
+            form.querySelector(
+                ".website-page-item-status span"
+            );
+
+        const saveButton =
+            form.querySelector(
+                ".website-page-save-button"
+            );
+
+
+        if (!title) {
+
+            messageElement.textContent =
+                "Please enter a title.";
+
+            messageElement.className =
+                "website-page-item-message error";
+
+            return;
+        }
+
+
+        if (
+            contentMode === "file" &&
+            !itemId &&
+            (!fileInput ||
+             !fileInput.files ||
+             !fileInput.files.length)
+        ) {
+
+            messageElement.textContent =
+                "Please select a file.";
+
+            messageElement.className =
+                "website-page-item-message error";
+
+            return;
+        }
+
+
+        if (
+            contentMode === "write" &&
+            (!editor ||
+             !editor.innerHTML.trim())
+        ) {
+
+            messageElement.textContent =
+                "Please write some content.";
+
+            messageElement.className =
+                "website-page-item-message error";
+
+            return;
+        }
+
+
+        const formData =
+            new FormData();
+
+        formData.append(
+            "pageKey",
+            pageKey
+        );
+
+        formData.append(
+            "title",
+            title
+        );
+
+        formData.append(
+            "description",
+            description
+        );
+
+        formData.append(
+            "contentMode",
+            contentMode
+        );
+
+
+        if (contentMode === "write") {
+
+            formData.append(
+                "content",
+                editor.innerHTML
+            );
+
+        } else if (
+            fileInput &&
+            fileInput.files &&
+            fileInput.files.length
+        ) {
 
             formData.append(
                 "file",
-                document
-                    .getElementById(
-                        "file"
-                    )
-                    .files[0]
+                fileInput.files[0]
             );
+        }
 
+
+        const isUpdate =
+            Boolean(itemId);
+
+
+        const url =
+            isUpdate
+                ? "/api/pages/item/" + itemId
+                : "/api/pages";
+
+
+        const method =
+            isUpdate
+                ? "PUT"
+                : "POST";
+
+
+        if (saveButton) {
+
+            saveButton.disabled = true;
+
+            saveButton.textContent =
+                isUpdate
+                    ? "Updating..."
+                    : "Saving...";
+        }
+
+
+        messageElement.textContent =
+            "Saving content...";
+
+        messageElement.className =
+            "website-page-item-message";
+
+
+        try {
 
             const response =
                 await fetch(
-                    "/api/uploads",
+                    url,
                     {
-                        method:
-                            "POST",
-
-                        headers: {
-                            Authorization:
-                                `Bearer ${token}`
-                        },
-
+                        method,
+                        headers:
+                            getHeaders(),
                         body:
                             formData
                     }
@@ -256,143 +3886,510 @@ document
 
 
             const data =
-                await response.json();
+                await response.json()
+                    .catch(() => ({}));
 
 
-            document
-                .getElementById(
-                    "message"
-                )
-                .textContent =
-                    data.message;
+            if (!response.ok) {
 
-
-            if (response.ok) {
-
-                document
-                    .getElementById(
-                        "uploadForm"
-                    )
-                    .reset();
-
-
-                loadContent();
+                throw new Error(
+                    data.message ||
+                    "Unable to save content."
+                );
             }
 
-        }
-    );
 
-
-async function loadContent() {
-
-    const response =
-        await fetch(
-            "/api/content",
-            {
-                headers: {
-                    Authorization:
-                        `Bearer ${token}`
-                }
-            }
-        );
-
-
-    const contents =
-        await response.json();
-
-
-    const contentList =
-        document.getElementById(
-            "contentList"
-        );
-
-
-    contentList.innerHTML =
-        "";
-
-
-    contents.forEach(
-        content => {
-
-            const element =
-                document.createElement(
-                    "div"
+            messageElement.textContent =
+                data.message ||
+                (
+                    isUpdate
+                        ? "Content updated successfully."
+                        : "Content saved successfully."
                 );
 
-
-            element.innerHTML =
-                `
-                <h3>
-                    ${content.title}
-                </h3>
-
-                <p>
-                    ${content.description || ""}
-                </p>
-
-                <p>
-                    Category:
-                    ${content.category}
-                </p>
-
-                <button
-                    onclick="deleteContent(${content.id})"
-                >
-                    Delete
-                </button>
-
-                <hr>
-                `;
+            messageElement.className =
+                "website-page-item-message success";
 
 
-            contentList.appendChild(
-                element
+            if (statusElement) {
+
+                statusElement.textContent =
+                    "Saved successfully";
+            }
+
+
+            /*
+            Reload the page's items so that
+            the database becomes the source
+            of truth.
+            */
+
+            await loadWebsitePage(
+                pageKey
             );
+
+
+        } catch (error) {
+
+            console.error(
+                "Website page content save error:",
+                error
+            );
+
+            messageElement.textContent =
+                error.message ||
+                "Unable to save content.";
+
+            messageElement.className =
+                "website-page-item-message error";
+
+
+        } finally {
+
+            if (saveButton) {
+
+                saveButton.disabled = false;
+
+                saveButton.textContent =
+                    isUpdate
+                        ? "Update Content"
+                        : "Save Content";
+            }
         }
-    );
-}
-
-
-async function deleteContent(id) {
-
-    if (
-        !confirm(
-            "Are you sure you want to delete this item?"
-        )
-    ) {
-        return;
     }
 
 
-    const response =
-        await fetch(
-            `/api/uploads/${id}`,
-            {
-                method:
-                    "DELETE",
+    /*
+    ==========================================
+    DELETE CONTENT ITEM
+    ==========================================
+    */
 
-                headers: {
-                    Authorization:
-                        `Bearer ${token}`
-                }
+    async function deleteContentItem(
+        form,
+        pageKey
+    ) {
+
+        const itemId =
+            form.dataset.itemId;
+
+        if (!itemId) {
+
+            form.remove();
+
+            return;
+        }
+
+
+        const title =
+            form.querySelector(
+                ".website-page-title"
+            ).value.trim() ||
+            "this content";
+
+
+        const confirmed =
+            window.confirm(
+                'Are you sure you want to delete "' +
+                title +
+                '"?'
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        const messageElement =
+            form.querySelector(
+                ".website-page-item-message"
+            );
+
+        const deleteButton =
+            form.querySelector(
+                "[data-delete-content]"
+            );
+
+
+        if (deleteButton) {
+            deleteButton.disabled = true;
+            deleteButton.textContent =
+                "Deleting...";
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/pages/item/" +
+                    itemId,
+                    {
+                        method: "DELETE",
+                        headers:
+                            getHeaders()
+                    }
+                );
+
+
+            const data =
+                await response.json()
+                    .catch(() => ({}));
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.message ||
+                    "Unable to delete content."
+                );
             }
+
+
+            messageElement.textContent =
+                data.message ||
+                "Content deleted successfully.";
+
+            messageElement.className =
+                "website-page-item-message success";
+
+
+            await loadWebsitePage(
+                pageKey
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Website page content delete error:",
+                error
+            );
+
+            messageElement.textContent =
+                error.message ||
+                "Unable to delete content.";
+
+            messageElement.className =
+                "website-page-item-message error";
+
+
+            if (deleteButton) {
+
+                deleteButton.disabled = false;
+
+                deleteButton.textContent =
+                    "Delete";
+            }
+        }
+    }
+
+
+    /*
+    ==========================================
+    LOAD ONE PAGE
+    ==========================================
+    */
+
+    async function loadWebsitePage(
+        pageKey
+    ) {
+
+        const container =
+            document.querySelector(
+                `[data-page-items="${pageKey}"]`
+            );
+
+        if (!container) {
+            return;
+        }
+
+
+        container.innerHTML =
+            '<div class="website-page-loading">' +
+            'Loading content...' +
+            '</div>';
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/pages",
+                    {
+                        method: "GET",
+                        headers:
+                            getHeaders()
+                    }
+                );
+
+
+            const data =
+                await response.json()
+                    .catch(() => ({}));
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.message ||
+                    "Unable to load Website Pages."
+                );
+            }
+
+
+            const allPages =
+                Array.isArray(data.pages)
+                    ? data.pages
+                    : [];
+
+
+            const pageItems =
+                allPages
+                    .filter(
+                        item =>
+                            item.page_key === pageKey
+                    )
+                    .sort(
+                        (a, b) => {
+
+                            const orderA =
+                                Number(
+                                    a.display_order || 0
+                                );
+
+                            const orderB =
+                                Number(
+                                    b.display_order || 0
+                                );
+
+                            if (
+                                orderA !== orderB
+                            ) {
+                                return (
+                                    orderA -
+                                    orderB
+                                );
+                            }
+
+                            return (
+                                Number(a.id || 0) -
+                                Number(b.id || 0)
+                            );
+                        }
+                    );
+
+
+            container.innerHTML = "";
+
+
+            if (!pageItems.length) {
+
+                const empty =
+                    document.createElement(
+                        "div"
+                    );
+
+                empty.className =
+                    "website-page-empty";
+
+                empty.textContent =
+                    "No content has been added yet. Click â€œ+ Add Another Contentâ€ to create the first content item.";
+
+                container.appendChild(
+                    empty
+                );
+
+
+                updatePageStatus(
+                    pageKey,
+                    "No content saved yet."
+                );
+
+                return;
+            }
+
+
+            pageItems.forEach(
+                item => {
+
+                    const form =
+                        createContentForm(
+                            pageKey,
+                            item
+                        );
+
+                    container.appendChild(
+                        form
+                    );
+                }
+            );
+
+
+            updatePageStatus(
+                pageKey,
+                pageItems.length +
+                (
+                    pageItems.length === 1
+                        ? " content item"
+                        : " content items"
+                ) +
+                " saved"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Website page load error:",
+                error
+            );
+
+
+            container.innerHTML =
+                '<div class="website-page-empty error">' +
+                escapeHtml(
+                    error.message ||
+                    "Unable to load content."
+                ) +
+                '</div>';
+
+
+            updatePageStatus(
+                pageKey,
+                "Unable to load content."
+            );
+
+
+            showPageMessage(
+                pageKey,
+                error.message ||
+                "Unable to load Website Pages.",
+                "error"
+            );
+        }
+    }
+
+
+    /*
+    ==========================================
+    LOAD ALL WEBSITE PAGES
+    ==========================================
+    */
+
+    async function loadWebsitePages() {
+
+        for (const pageKey of pageKeys) {
+
+            await loadWebsitePage(
+                pageKey
+            );
+        }
+    }
+
+
+    /*
+    ==========================================
+    ADD ANOTHER CONTENT
+    ==========================================
+    */
+
+    function addAnotherContent(
+        pageKey
+    ) {
+
+        const container =
+            document.querySelector(
+                `[data-page-items="${pageKey}"]`
+            );
+
+        if (!container) {
+            return;
+        }
+
+
+        const emptyMessage =
+            container.querySelector(
+                ".website-page-empty"
+            );
+
+        if (emptyMessage) {
+            emptyMessage.remove();
+        }
+
+
+        const form =
+            createContentForm(
+                pageKey
+            );
+
+
+        container.appendChild(
+            form
         );
 
 
-    const data =
-        await response.json();
+        form.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
 
 
-    alert(
-        data.message
-    );
+        const titleInput =
+            form.querySelector(
+                ".website-page-title"
+            );
+
+        if (titleInput) {
+            titleInput.focus();
+        }
 
 
-    loadContent();
-}
+        showPageMessage(
+            pageKey,
+            "New content item added. Complete it and click Save Content.",
+            ""
+        );
+    }
 
 
-loadContent();
+    /*
+    ==========================================
+    ADD BUTTONS
+    ==========================================
+    */
+
+    document
+        .querySelectorAll(
+            "[data-add-page-content]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    const pageKey =
+                        this.dataset.addPageContent;
+
+                    addAnotherContent(
+                        pageKey
+                    );
+                }
+            );
+        });
+
+
+    /*
+    ==========================================
+    INITIAL WEBSITE PAGE LOAD
+    ==========================================
+    */
+
+    loadWebsitePages();
+
+})();
 
 </script>
 
@@ -400,3 +4397,5 @@ loadContent();
 </body>
 
 </html>
+
+

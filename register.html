@@ -1,80 +1,731 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+```
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>Register | YASU Tech</title>
+<meta
+    name="description"
+    content="Create an account on YASU Tech."
+>
 
-    <link
-        rel="stylesheet"
-        href="css/styles.css"
-    >
+<title>Create Account | YASU Tech</title>
+
+<link
+    rel="stylesheet"
+    href="css/styles.css"
+>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif;
+
+        background:
+            linear-gradient(
+                135deg,
+                #f4f7fb,
+                #e8eef7
+            );
+
+        color: #1f2937;
+    }
+
+
+    /* =========================================
+       REGISTRATION PAGE
+    ========================================== */
+
+    .auth-page {
+        min-height: 100vh;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding: 30px 15px;
+    }
+
+
+    /* =========================================
+       REGISTRATION CONTAINER
+    ========================================== */
+
+    .auth-container {
+        width: 100%;
+
+        max-width: 430px;
+
+        background: #ffffff;
+
+        padding: 40px 35px;
+
+        border-radius: 18px;
+
+        box-shadow:
+            0 15px 40px
+            rgba(0, 0, 0, 0.12);
+
+        text-align: center;
+    }
+
+
+    /* =========================================
+       YASU TECH LOGO
+    ========================================== */
+
+    .auth-logo {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 12px;
+
+        margin-bottom: 25px;
+    }
+
+
+    .logo-mark {
+        width: 58px;
+
+        height: 58px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 15px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #111827,
+                #2563eb
+            );
+
+        box-shadow:
+            0 8px 18px
+            rgba(37, 99, 235, 0.25);
+    }
+
+
+    .logo-mark svg {
+        width: 36px;
+
+        height: 36px;
+
+        fill: none;
+
+        stroke: #ffffff;
+
+        stroke-width: 2;
+
+        stroke-linecap: round;
+
+        stroke-linejoin: round;
+    }
+
+
+    .logo-text {
+        font-size: 30px;
+
+        font-weight: 800;
+
+        letter-spacing: -1px;
+
+        color: #111827;
+    }
+
+
+    .logo-text span {
+        color: #2563eb;
+    }
+
+
+    /* =========================================
+       HEADING
+    ========================================== */
+
+    .auth-container h1 {
+        margin: 5px 0 8px;
+
+        font-size: 28px;
+
+        color: #111827;
+    }
+
+
+    .auth-container > p {
+        margin-bottom: 28px;
+
+        color: #6b7280;
+
+        font-size: 15px;
+
+        line-height: 1.6;
+    }
+
+
+    /* =========================================
+       FORM
+    ========================================== */
+
+    #registerForm {
+        text-align: left;
+    }
+
+
+    #registerForm > label {
+        display: block;
+
+        margin-bottom: 8px;
+
+        font-size: 14px;
+
+        font-weight: 600;
+
+        color: #374151;
+    }
+
+
+    /* =========================================
+       INPUT WRAPPER
+    ========================================== */
+
+    .input-wrapper {
+        position: relative;
+
+        margin-bottom: 20px;
+    }
+
+
+    /* =========================================
+       INPUT ICON
+    ========================================== */
+
+    .input-icon {
+        position: absolute;
+
+        left: 15px;
+
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        width: 20px;
+
+        height: 20px;
+
+        pointer-events: none;
+
+        stroke: #6b7280;
+
+        fill: none;
+
+        stroke-width: 2;
+
+        stroke-linecap: round;
+
+        stroke-linejoin: round;
+    }
+
+
+    /* =========================================
+       INPUT FIELDS
+    ========================================== */
+
+    .input-wrapper input {
+        width: 100%;
+
+        height: 50px;
+
+        padding:
+            0 45px
+            0 48px;
+
+        border: 1px solid #d1d5db;
+
+        border-radius: 10px;
+
+        outline: none;
+
+        background: #ffffff;
+
+        color: #111827;
+
+        font-size: 15px;
+
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+
+    .input-wrapper input:focus {
+        border-color: #2563eb;
+
+        box-shadow:
+            0 0 0 3px
+            rgba(37, 99, 235, 0.12);
+    }
+
+
+    .input-wrapper input::placeholder {
+        color: #9ca3af;
+    }
+
+
+    /* =========================================
+       PASSWORD TOGGLE
+    ========================================== */
+
+    .password-toggle {
+        position: absolute;
+
+        right: 13px;
+
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        border: none;
+
+        background: transparent;
+
+        cursor: pointer;
+
+        padding: 5px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+    }
+
+
+    .password-toggle svg {
+        width: 20px;
+
+        height: 20px;
+
+        stroke: #6b7280;
+
+        fill: none;
+
+        stroke-width: 2;
+
+        stroke-linecap: round;
+
+        stroke-linejoin: round;
+    }
+
+
+    .password-toggle:hover svg {
+        stroke: #2563eb;
+    }
+
+
+    /* =========================================
+       REGISTER BUTTON
+    ========================================== */
+
+    #registerForm button[type="submit"] {
+        width: 100%;
+
+        height: 50px;
+
+        border: none;
+
+        border-radius: 10px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #111827,
+                #2563eb
+            );
+
+        color: #ffffff;
+
+        font-size: 16px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+
+    #registerForm button[type="submit"]:hover {
+        transform: translateY(-1px);
+
+        box-shadow:
+            0 8px 20px
+            rgba(37, 99, 235, 0.25);
+    }
+
+
+    #registerForm button[type="submit"]:active {
+        transform: translateY(0);
+    }
+
+
+    /* =========================================
+       MESSAGE
+    ========================================== */
+
+    #message {
+        margin: 15px 0 0;
+
+        text-align: center;
+
+        font-size: 14px;
+
+        min-height: 20px;
+
+        color: #dc2626;
+    }
+
+
+    /* =========================================
+       LOGIN LINK
+    ========================================== */
+
+    .login-text {
+        margin-top: 25px !important;
+
+        margin-bottom: 0 !important;
+
+        color: #6b7280;
+
+        font-size: 14px;
+    }
+
+
+    .login-text a {
+        color: #2563eb;
+
+        font-weight: 600;
+
+        text-decoration: none;
+    }
+
+
+    .login-text a:hover {
+        text-decoration: underline;
+    }
+
+
+    /* =========================================
+       MOBILE RESPONSIVE DESIGN
+    ========================================== */
+
+    @media (max-width: 480px) {
+
+        .auth-container {
+            padding: 32px 22px;
+
+            border-radius: 15px;
+        }
+
+
+        .logo-text {
+            font-size: 26px;
+        }
+
+
+        .logo-mark {
+            width: 52px;
+
+            height: 52px;
+        }
+
+
+        .auth-container h1 {
+            font-size: 25px;
+        }
+
+    }
+
+</style>
+```
 
 </head>
 
-
 <body>
 
-
+```
 <main class="auth-page">
 
     <section class="auth-container">
 
-        <h1>Create Account</h1>
+
+        <!-- YASU TECH LOGO -->
+
+        <div class="auth-logo">
+
+            <div class="logo-mark">
+
+                <svg
+                    viewBox="0 0 48 48"
+                    aria-hidden="true"
+                >
+
+                    <!-- Y -->
+
+                    <path
+                        d="M10 9 L18 21 L26 9"
+                    />
+
+                    <path
+                        d="M18 21 L18 37"
+                    />
+
+
+                    <!-- T -->
+
+                    <path
+                        d="M29 9 L43 9"
+                    />
+
+                    <path
+                        d="M36 9 L36 37"
+                    />
+
+                </svg>
+
+            </div>
+
+
+            <div class="logo-text">
+                YASU<span>Tech</span>
+            </div>
+
+        </div>
+
+
+        <!-- REGISTRATION HEADING -->
+
+        <h1>
+            Create Account
+        </h1>
+
 
         <p>
-            Register to access the website.
+            Create your account to access YASU Tech.
         </p>
 
 
+        <!-- REGISTRATION FORM -->
+
         <form id="registerForm">
 
+
+            <!-- USERNAME -->
 
             <label for="username">
                 Username
             </label>
 
-            <input
-                type="text"
-                id="username"
-                autocomplete="username"
-                required
-            >
 
+            <div class="input-wrapper">
+
+                <svg
+                    class="input-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+
+                    <circle
+                        cx="12"
+                        cy="8"
+                        r="4"
+                    />
+
+                    <path
+                        d="M4 21
+                           C4 16.5
+                           7.5 14
+                           12 14
+                           C16.5 14
+                           20 16.5
+                           20 21"
+                    />
+
+                </svg>
+
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Choose a username"
+                    autocomplete="username"
+                    required
+                >
+
+            </div>
+
+
+            <!-- EMAIL -->
 
             <label for="email">
                 Email Address
             </label>
 
-            <input
-                type="email"
-                id="email"
-                autocomplete="email"
-                required
-            >
 
+            <div class="input-wrapper">
+
+                <svg
+                    class="input-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+
+                    <rect
+                        x="3"
+                        y="5"
+                        width="18"
+                        height="14"
+                        rx="2"
+                    />
+
+                    <path
+                        d="M3 7
+                           L12 13
+                           L21 7"
+                    />
+
+                </svg>
+
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email address"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PASSWORD -->
 
             <label for="password">
                 Password
             </label>
 
-            <input
-                type="password"
-                id="password"
-                autocomplete="new-password"
-                required
-            >
 
+            <div class="input-wrapper">
+
+                <svg
+                    class="input-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+
+                    <rect
+                        x="5"
+                        y="10"
+                        width="14"
+                        height="10"
+                        rx="2"
+                    />
+
+                    <path
+                        d="M8 10 V7
+                           A4 4 0 0 1 16 7
+                           V10"
+                    />
+
+                </svg>
+
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Create a password"
+                    autocomplete="new-password"
+                    required
+                >
+
+
+                <button
+                    type="button"
+                    class="password-toggle"
+                    id="passwordToggle"
+                    aria-label="Show password"
+                >
+
+                    <svg
+                        id="eyeIcon"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <path
+                            d="M2 12
+                               C5 7
+                               8.5 5
+                               12 5
+                               C15.5 5
+                               19 7
+                               22 12
+                               C19 17
+                               15.5 19
+                               12 19
+                               C8.5 19
+                               5 17
+                               2 12Z"
+                        />
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="3"
+                        />
+
+                    </svg>
+
+                </button>
+
+            </div>
+
+
+            <!-- REGISTER BUTTON -->
 
             <button type="submit">
-                Register
+                Create Account
             </button>
 
 
@@ -84,12 +735,16 @@
         </form>
 
 
-        <p>
+        <!-- LOGIN LINK -->
+
+        <p class="login-text">
+
             Already have an account?
 
             <a href="login.html">
                 Login here
             </a>
+
         </p>
 
 
@@ -100,116 +755,313 @@
 
 <script>
 
-const registerForm =
-    document.getElementById(
-        "registerForm"
-    );
+    /* =========================================
+       REGISTRATION ELEMENTS
+    ========================================== */
+
+    const registerForm =
+        document.getElementById(
+            "registerForm"
+        );
 
 
-const message =
-    document.getElementById(
-        "message"
-    );
+    const message =
+        document.getElementById(
+            "message"
+        );
 
 
-registerForm.addEventListener(
-    "submit",
-    async function(event) {
-
-        event.preventDefault();
-
-
-        const username =
-            document
-                .getElementById(
-                    "username"
-                )
-                .value
-                .trim();
+    const password =
+        document.getElementById(
+            "password"
+        );
 
 
-        const email =
-            document
-                .getElementById(
-                    "email"
-                )
-                .value
-                .trim();
+    const passwordToggle =
+        document.getElementById(
+            "passwordToggle"
+        );
 
 
-        const password =
-            document
-                .getElementById(
-                    "password"
-                )
-                .value;
+    const eyeIcon =
+        document.getElementById(
+            "eyeIcon"
+        );
 
 
-        message.textContent =
-            "Creating your account...";
+    /* =========================================
+       PASSWORD VALIDATION
+    ========================================== */
+
+    function isStrongPassword(
+        passwordValue
+    ) {
+
+        const minimumLength =
+            passwordValue.length >= 8;
+
+        const hasUppercase =
+            /[A-Z]/.test(
+                passwordValue
+            );
+
+        const hasLowercase =
+            /[a-z]/.test(
+                passwordValue
+            );
+
+        const hasNumber =
+            /[0-9]/.test(
+                passwordValue
+            );
+
+        const hasSymbol =
+            /[^A-Za-z0-9]/.test(
+                passwordValue
+            );
 
 
-        try {
-
-            const response =
-                await fetch(
-                    "/api/auth/register",
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body:
-                            JSON.stringify({
-                                username,
-                                email,
-                                password
-                            })
-                    }
-                );
-
-
-            const data =
-                await response.json();
-
-
-            message.textContent =
-                data.message;
-
-
-            if (response.ok) {
-
-                sessionStorage.setItem(
-                    "verificationEmail",
-                    email
-                );
-
-
-                setTimeout(
-                    function() {
-
-                        window.location.href =
-                            "verify-otp.html";
-
-                    },
-                    1500
-                );
-            }
-
-        } catch (error) {
-
-            message.textContent =
-                "Unable to connect to the server.";
-        }
+        return (
+            minimumLength &&
+            hasUppercase &&
+            hasLowercase &&
+            hasNumber &&
+            hasSymbol
+        );
 
     }
-);
+
+
+    /* =========================================
+       SHOW / HIDE PASSWORD
+    ========================================== */
+
+    passwordToggle.addEventListener(
+        "click",
+        function () {
+
+            if (
+                password.type === "password"
+            ) {
+
+                password.type =
+                    "text";
+
+
+                passwordToggle.setAttribute(
+                    "aria-label",
+                    "Hide password"
+                );
+
+
+                eyeIcon.innerHTML = `
+
+                    <path
+                        d="M2 12
+                           C5 7
+                           8.5 5
+                           12 5
+                           C15.5 5
+                           19 7
+                           22 12
+                           C19 17
+                           15.5 19
+                           12 19
+                           C8.5 19
+                           5 17
+                           2 12Z"
+                    />
+
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="3"
+                    />
+
+                    <path
+                        d="M4 4 L20 20"
+                    />
+
+                `;
+
+            }
+
+            else {
+
+                password.type =
+                    "password";
+
+
+                passwordToggle.setAttribute(
+                    "aria-label",
+                    "Show password"
+                );
+
+
+                eyeIcon.innerHTML = `
+
+                    <path
+                        d="M2 12
+                           C5 7
+                           8.5 5
+                           12 5
+                           C15.5 5
+                           19 7
+                           22 12
+                           C19 17
+                           15.5 19
+                           12 19
+                           C8.5 19
+                           5 17
+                           2 12Z"
+                    />
+
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="3"
+                    />
+
+                `;
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       REGISTRATION SYSTEM
+    ========================================== */
+
+    registerForm.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const username =
+                document
+                    .getElementById(
+                        "username"
+                    )
+                    .value
+                    .trim();
+
+
+            const email =
+                document
+                    .getElementById(
+                        "email"
+                    )
+                    .value
+                    .trim();
+
+
+            const passwordValue =
+                password.value;
+
+
+            /* =================================
+               STRONG PASSWORD CHECK
+            ================================== */
+
+            if (
+                !isStrongPassword(
+                    passwordValue
+                )
+            ) {
+
+                message.textContent =
+                    "Password does not meet the required security standard.";
+
+                return;
+
+            }
+
+
+            message.textContent =
+                "Creating your account...";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/auth/register",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    username,
+                                    email,
+                                    password:
+                                        passwordValue
+                                })
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                message.textContent =
+                    data.message ||
+                    "Registration completed.";
+
+
+                /* =================================
+                   OTP VERIFICATION
+                ================================== */
+
+                if (response.ok) {
+
+                    sessionStorage.setItem(
+                        "verificationEmail",
+                        email
+                    );
+
+
+                    setTimeout(
+                        function() {
+
+                            window.location.href =
+                                "verify-otp.html";
+
+                        },
+                        1500
+                    );
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Registration error:",
+                    error
+                );
+
+
+                message.textContent =
+                    "Unable to connect to the server.";
+
+            }
+
+        }
+    );
 
 </script>
-
+```
 
 </body>
 
