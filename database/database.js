@@ -1,11 +1,13 @@
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
 const bcrypt = require("bcryptjs");
+const fs = require("fs");
+
+const dataDirectory = path.join(__dirname, "..", "data");
+fs.mkdirSync(dataDirectory, { recursive: true });
 
 const databasePath = path.join(
-    __dirname,
-    "..",
-    "data",
+    dataDirectory,
     "personalWebsite.db"
 );
 
