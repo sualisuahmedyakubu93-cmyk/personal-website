@@ -472,6 +472,23 @@ async function initializeDatabase() {
         */
 
         await run(`
+            CREATE TABLE IF NOT EXISTS website_page_content (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                page_key TEXT NOT NULL,
+                title TEXT NOT NULL,
+                description TEXT,
+                filename TEXT,
+                original_name TEXT,
+                content TEXT,
+                display_order INTEGER DEFAULT 0,
+                created_by INTEGER,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (created_by) REFERENCES users(id)
+            )
+        `);
+
+        await run(`
             CREATE TABLE IF NOT EXISTS contact_messages (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
