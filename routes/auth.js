@@ -1,7 +1,10 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
+
+const {
+    sendBrevoEmail
+} = require("../services/emailService");
 
 const {
     run,
@@ -13,30 +16,6 @@ const {
 } = require("../middleware/authMiddleware");
 
 const router = express.Router();
-
-
-/*
-==========================================
-EMAIL TRANSPORTER
-==========================================
-*/
-
-const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: Number(process.env.EMAIL_PORT),
-
-    secure:
-        process.env.EMAIL_SECURE === "true",
-
-    auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD
-},
-
-connectionTimeout: 15000,
-greetingTimeout: 15000,
-socketTimeout: 30000
-});
 
 
 /*
@@ -76,6 +55,24 @@ function isStrongPassword(password) {
 
 /*
 ==========================================
+ESCAPE HTML
+==========================================
+*/
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/*
+==========================================
 SEND OTP EMAIL
 ==========================================
 */
@@ -86,10 +83,7 @@ async function sendOTP(
     otp
 ) {
 
-    await transporter.sendMail({
-
-        from:
-            process.env.EMAIL_FROM,
+    await sendBrevoEmail({
 
         to:
             email,
@@ -97,27 +91,62 @@ async function sendOTP(
         subject:
             "Verify Your YASU Tech Account",
 
-        html: `
-            <h2>Hello ${username},</h2>
+        htmlContent: `
+            <div style="
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #222;
+                max-width: 600px;
+                margin: 0 auto;
+            ">
 
-            <p>
-                Thank you for registering with YASU Tech.
-            </p>
+                <h2>
+                    Hello ${escapeHtml(username)},
+                </h2>
 
-            <p>
-                Your verification code is:
-            </p>
+                <p>
+                    Thank you for registering with
+                    <strong>YASU Tech</strong>.
+                </p>
 
-            <h1>${otp}</h1>
+                <p>
+                    Your email verification code is:
+                </p>
 
-            <p>
-                This code will expire in 10 minutes.
-            </p>
+                <div style="
+                    font-size: 32px;
+                    font-weight: bold;
+                    letter-spacing: 8px;
+                    text-align: center;
+                    padding: 20px;
+                    background: #f5f5f5;
+                    border-radius: 8px;
+                    margin: 20px 0;
+                ">
+                    ${escapeHtml(otp)}
+                </div>
 
-            <p>
-                If you did not request this account,
-                please ignore this email.
-            </p>
+                <p>
+                    This code will expire in
+                    <strong>10 minutes</strong>.
+                </p>
+
+                <p>
+                    If you did not request this account,
+                    please ignore this email.
+                </p>
+
+                <hr>
+
+                <p style="
+                    font-size: 13px;
+                    color: #666;
+                ">
+                    YASU Tech<br>
+                    Powered by Yakubu Sualisu Ahmed
+                </p>
+
+            </div>
         `
     });
 
@@ -748,8 +777,8 @@ router.get(
         });
 
     }
+
 );
 
 
 module.exports = router;
-
