@@ -121,6 +121,8 @@ function logout() {
         "login.html";
 
 }
+
+
 /*
 ==========================================
 PUBLIC WEBSITE PAGE — HOME
@@ -304,4 +306,199 @@ LOAD MANAGED HOME CONTENT
 document.addEventListener(
     "DOMContentLoaded",
     loadManagedHomeContent
+);
+
+
+/*
+==========================================
+CONTACT FORM
+==========================================
+*/
+
+document.addEventListener(
+    "DOMContentLoaded",
+
+    () => {
+
+        const contactForm =
+            document.getElementById(
+                "contactForm"
+            );
+
+        const formMessage =
+            document.getElementById(
+                "formMessage"
+            );
+
+
+        if (
+            !contactForm
+        ) {
+            return;
+        }
+
+
+        contactForm.addEventListener(
+            "submit",
+
+            async (event) => {
+
+                event.preventDefault();
+
+
+                if (
+                    formMessage
+                ) {
+
+                    formMessage.textContent =
+                        "Sending message...";
+
+                }
+
+
+                const name =
+                    document.getElementById(
+                        "name"
+                    )?.value.trim();
+
+
+                const email =
+                    document.getElementById(
+                        "email"
+                    )?.value.trim();
+
+
+                const message =
+                    document.getElementById(
+                        "message"
+                    )?.value.trim();
+
+
+                if (
+                    !name ||
+                    !email ||
+                    !message
+                ) {
+
+                    if (
+                        formMessage
+                    ) {
+
+                        formMessage.textContent =
+                            "Please complete all required fields.";
+
+                    }
+
+                    return;
+
+                }
+
+
+                try {
+
+                    const token =
+                        localStorage.getItem(
+                            "userToken"
+                        ) ||
+                        sessionStorage.getItem(
+                            "userToken"
+                        );
+
+
+                    const response =
+                        await fetch(
+                            "/api/contact",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json",
+
+                                    ...(token
+                                        ? {
+                                            "Authorization":
+                                                `Bearer ${token}`
+                                        }
+                                        : {})
+                                },
+
+                                credentials:
+                                    "same-origin",
+
+                                body:
+                                    JSON.stringify({
+                                        name,
+                                        email,
+                                        subject: "",
+                                        message
+                                    })
+                            }
+                        );
+
+
+                    const data =
+                        await response
+                            .json()
+                            .catch(
+                                () => ({})
+                            );
+
+
+                    if (
+                        !response.ok
+                    ) {
+
+                        if (
+                            formMessage
+                        ) {
+
+                            formMessage.textContent =
+                                data.message ||
+                                "Unable to send your message.";
+
+                        }
+
+                        return;
+
+                    }
+
+
+                    if (
+                        formMessage
+                    ) {
+
+                        formMessage.textContent =
+                            data.message ||
+                            "Your message was sent successfully.";
+
+                    }
+
+
+                    contactForm.reset();
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "Contact form submission error:",
+                        error
+                    );
+
+
+                    if (
+                        formMessage
+                    ) {
+
+                        formMessage.textContent =
+                            "Unable to send your message. Please try again.";
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
 );
