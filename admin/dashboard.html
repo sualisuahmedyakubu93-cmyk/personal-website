@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
 
@@ -19,6 +19,8 @@
         rel="stylesheet"
         href="../CSS/styles.css"
     >
+
+ <link rel="stylesheet" href="dashboard.css">
 
     <style>
 
@@ -495,13 +497,156 @@
     }
     </style>
 
+    <link rel="stylesheet" href="dashboard-shell.css">
 </head>
 
 
 <body>
+    <div class="admin-shell">
+                <aside class="admin-sidebar">
+                                <button
+                type="button"
+                class="sidebar-toggle"
+                id="sidebarToggle"
+                aria-label="Collapse administrator navigation"
+                aria-expanded="true"
+                title="Collapse navigation"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+                    <path
+                        d="M4 7H20"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    /><path d="M4 12H20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 17H20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+
+            <div class="yasu-brand">
+
+                <div class="yasu-logo" aria-label="YASU Tech logo">
+                    <svg
+                        viewBox="0 0 64 64"
+                        role="img"
+                        aria-hidden="true"
+                    >
+                        <rect
+                            x="3"
+                            y="3"
+                            width="58"
+                            height="58"
+                            rx="16"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="3"
+                        />
+
+                        <path
+                            d="M16 18L25 34L25 46"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                        <path
+                            d="M34 18L34 34L48 46"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                        <path
+                            d="M34 34L48 18"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </div>
+
+                <div class="yasu-brand-text">
+                    <strong>YASU Tech</strong>
+                    <span>Administrator</span>
+                </div>
+
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <nav class="admin-navigation" aria-label="Administrator navigation">
+
+                <a
+                    href="#dashboard-top"
+                    class="admin-nav-link active"
+                >
+                    <span class="admin-nav-icon">⌂</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a
+                    href="#uploadForm"
+                    class="admin-nav-link"
+                >
+                    <span class="admin-nav-icon">＋</span>
+                    <span>Create Content</span>
+                </a>
+
+                <a
+                    href="#contentList"
+                    class="admin-nav-link"
+                >
+                    <span class="admin-nav-icon">▤</span>
+                    <span>Published Content</span>
+                </a>
+
+                <a
+                    href="#websitePagesSection"
+                    class="admin-nav-link"
+                >
+                    <span class="admin-nav-icon">◫</span>
+                    <span>Website Pages</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <div class="yasu-sidebar-message">
+                    <strong>YASU Tech</strong>
+                    <span>
+                        Innovating Today,<br>
+                        Engineering Tomorrow.
+                    </span>
+                </div>
+
+                <button
+                    type="button"
+                    class="sidebar-logout-button"
+                    onclick="logout()"
+                >
+                    <span class="admin-nav-icon">↪</span>
+                    <span>Logout</span>
+                </button>
+
+            </div>
+
+        </aside>
 
 
-<main class="container">
+
+
+<main id="dashboard-top" class="container">
 
 
     <h1>
@@ -1271,6 +1416,7 @@
 
 
 </main>
+</div>
 
 
 <script>
@@ -2969,6 +3115,7 @@ WEBSITE PAGES MANAGEMENT
     function getAuthToken() {
 
         const possibleKeys = [
+            "userToken",
             "token",
             "authToken",
             "accessToken",
@@ -3230,7 +3377,7 @@ WEBSITE PAGES MANAGEMENT
 
         const selected =
             form.querySelector(
-                'input[name="contentMethod"]:checked'
+                'input[name^="contentMethod-"]:checked'
             );
 
         if (!fileSection || !editorSection) {
@@ -4393,9 +4540,104 @@ WEBSITE PAGES MANAGEMENT
 
 </script>
 
+<script>
+    /* =========================================================
+       YASU TECH ADMINISTRATOR SIDEBAR TOGGLE
+       ========================================================= */
 
+    (function () {
+        const shell = document.querySelector(".admin-shell");
+        const toggle = document.getElementById("sidebarToggle");
+
+        if (!shell || !toggle) {
+            return;
+        }
+
+        const sidebar = shell.querySelector(".admin-sidebar");
+
+        if (sidebar && toggle.parentElement === sidebar) {
+            shell.insertBefore(toggle, sidebar);
+        }
+
+        const storageKey = "yasuTechAdminSidebarCollapsed";
+
+        function updateToggleState(isCollapsed) {
+            toggle.setAttribute(
+                "aria-expanded",
+                isCollapsed ? "false" : "true"
+            );
+
+            toggle.setAttribute(
+                "aria-label",
+                isCollapsed
+                    ? "Expand administrator navigation"
+                    : "Collapse administrator navigation"
+            );
+
+            toggle.setAttribute(
+                "title",
+                isCollapsed
+                    ? "Expand navigation"
+                    : "Collapse navigation"
+            );
+        }
+
+        function setSidebarCollapsed(isCollapsed, savePreference) {
+            shell.classList.toggle(
+                "sidebar-collapsed",
+                isCollapsed
+            );
+
+            updateToggleState(isCollapsed);
+
+            if (savePreference) {
+                try {
+                    localStorage.setItem(
+                        storageKey,
+                        isCollapsed ? "true" : "false"
+                    );
+                } catch (error) {
+                    /*
+                     * Ignore localStorage errors.
+                     * Sidebar still works normally.
+                     */
+                }
+            }
+        }
+
+        let savedPreference = null;
+
+        try {
+            savedPreference = localStorage.getItem(storageKey);
+        } catch (error) {
+            savedPreference = null;
+        }
+
+        setSidebarCollapsed(
+            savedPreference === "true",
+            false
+        );
+
+        toggle.addEventListener("click", function () {
+            const currentlyCollapsed =
+                shell.classList.contains("sidebar-collapsed");
+
+            setSidebarCollapsed(
+                !currentlyCollapsed,
+                true
+            );
+        });
+    })();
+</script>
 </body>
 
 </html>
+
+
+
+
+
+
+
 
 
