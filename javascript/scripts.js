@@ -49,7 +49,7 @@ if (
         () => {
 
             navbar.classList.toggle(
-                "active"
+                "show"
             );
 
         }
@@ -71,7 +71,7 @@ if (
                 () => {
 
                     navbar.classList.remove(
-                        "active"
+                        "show"
                     );
 
                 }
