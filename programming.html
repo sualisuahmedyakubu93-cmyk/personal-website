@@ -279,7 +279,38 @@
 
         </section>
 
-    </main>
+<!-- YASU_PUBLIC_PROGRAMMING_CONTENT -->
+<section
+    class="section managed-programming-section"
+    id="managedProgrammingContent"
+    hidden
+>
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="section-subtitle">
+                LATEST UPDATES
+            </p>
+
+            <h2>
+                Administrator Content
+            </h2>
+
+        </div>
+
+        <div
+            class="managed-programming-content"
+            id="managedProgrammingBody"
+        ></div>
+
+    </div>
+
+</section>
+<!-- END YASU_PUBLIC_PROGRAMMING_CONTENT -->
+
+</main>
 
 
     <footer class="footer">
@@ -332,6 +363,154 @@
 
     <script src="javascript/scripts.js"></script>
 
+<!-- YASU_PUBLIC_PROGRAMMING_LOADER -->
+<script>
+
+    async function loadPublicProgrammingPage() {
+
+        const section =
+            document.getElementById(
+                "managedProgrammingContent"
+            );
+
+        const bodyElement =
+            document.getElementById(
+                "managedProgrammingBody"
+            );
+
+        if (!section || !bodyElement) {
+            return;
+        }
+
+        try {
+
+            const response = await fetch(
+                "/api/pages/public/programming"
+            );
+
+            if (!response.ok) {
+
+                console.warn(
+                    "Saved Programming page content is not available yet."
+                );
+
+                return;
+            }
+
+            const data = await response.json();
+
+            if (
+                !data.success ||
+                !Array.isArray(data.pages) ||
+                data.pages.length === 0
+            ) {
+
+                return;
+            }
+
+
+            bodyElement.innerHTML = "";
+
+
+            data.pages.forEach(function(page) {
+
+                const article =
+                    document.createElement("article");
+
+                article.className = "card";
+
+
+                const title =
+                    document.createElement("h3");
+
+                title.textContent =
+                    page.title || "Programming Update";
+
+                article.appendChild(title);
+
+
+                if (page.description) {
+
+                    const description =
+                        document.createElement("p");
+
+                    description.textContent =
+                        page.description;
+
+                    article.appendChild(description);
+
+                }
+
+
+                if (page.content) {
+
+                    const content =
+                        document.createElement("div");
+
+                    content.className =
+                        "managed-page-rich-content";
+
+                    content.innerHTML =
+                        page.content;
+
+                    article.appendChild(content);
+
+                }
+
+
+                if (page.file_url) {
+
+                    const fileLink =
+                        document.createElement("a");
+
+                    fileLink.href =
+                        page.file_url;
+
+                    fileLink.target =
+                        "_blank";
+
+                    fileLink.rel =
+                        "noopener noreferrer";
+
+                    fileLink.className =
+                        "btn";
+
+                    fileLink.textContent =
+                        page.original_name
+                            ? "Open " + page.original_name
+                            : "Open File";
+
+                    article.appendChild(fileLink);
+
+                }
+
+
+                bodyElement.appendChild(article);
+
+            });
+
+
+            section.hidden = false;
+
+        } catch (error) {
+
+            console.error(
+                "Error loading public Programming page content:",
+                error
+            );
+
+        }
+
+    }
+
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        loadPublicProgrammingPage
+    );
+
+</script>
+<!-- END YASU_PUBLIC_PROGRAMMING_LOADER -->
 </body>
 
 </html>

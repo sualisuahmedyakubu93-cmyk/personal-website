@@ -310,7 +310,7 @@
 <script src="javascript/scripts.js"></script>
 
 
-<!-- LOAD SAVED ABOUT PAGE CONTENT -->
+<!-- YASU_PUBLIC_ABOUT_CONTENT_LOADER -->
 <script>
 
     async function loadPublicAboutPage() {
@@ -332,114 +332,150 @@
 
             const data = await response.json();
 
-            if (!data.success || !data.page) {
+            if (
+                !data.success ||
+                !Array.isArray(data.pages) ||
+                data.pages.length === 0
+            ) {
 
-                console.warn(
-                    "No saved About page content was returned."
+                console.info(
+                    "No administrator-created About content is available."
                 );
 
                 return;
             }
 
-            const page = data.page;
-
 
             /*
-             * Update the browser page title.
-             */
-            if (page.title) {
-
-                document.title =
-                    page.title + " | YASU Tech";
-
-            }
-
-
-            /*
-             * Update the meta description.
-             */
-            const pageDescription =
-                document.getElementById(
-                    "pageDescription"
-                );
-
-            if (
-                pageDescription &&
-                page.description
-            ) {
-
-                pageDescription.setAttribute(
-                    "content",
-                    page.description
-                );
-
-            }
-
-
-            /*
-             * Update the main About page title.
-             */
-            const titleElement =
-                document.getElementById(
-                    "aboutPageTitle"
-                );
-
-            if (
-                titleElement &&
-                page.title
-            ) {
-
-                titleElement.textContent =
-                    page.title;
-
-            }
-
-
-            /*
-             * Update the About page description.
-             */
-            const descriptionElement =
-                document.getElementById(
-                    "aboutPageDescription"
-                );
-
-            if (
-                descriptionElement &&
-                page.description
-            ) {
-
-                descriptionElement.textContent =
-                    page.description;
-
-            }
-
-
-            /*
-             * Update the main written content.
+             * The existing About page already contains
+             * the main hard-coded About content.
              *
-             * innerHTML is intentional here because the
-             * administrator's rich-text editor saves
-             * formatted HTML content.
+             * Administrator-created content is therefore
+             * rendered inside the existing About content
+             * area without removing the original material.
              */
+
             const contentElement =
                 document.getElementById(
                     "aboutPageContent"
                 );
 
-            if (
-                contentElement &&
-                page.content
-            ) {
-
-                contentElement.innerHTML =
-                    page.content;
-
+            if (!contentElement) {
+                return;
             }
+
+
+            /*
+             * Preserve the original hard-coded content
+             * by adding administrator content after it.
+             */
+
+            const managedWrapper =
+                document.createElement("div");
+
+            managedWrapper.className =
+                "managed-about-content";
+
+
+            const heading =
+                document.createElement("div");
+
+            heading.className =
+                "section-heading";
+
+            heading.innerHTML =
+                '<p class="section-subtitle">LATEST UPDATES</p>' +
+                '<h2>Administrator Content</h2>';
+
+            managedWrapper.appendChild(heading);
+
+
+            data.pages.forEach(function(page) {
+
+                const article =
+                    document.createElement("article");
+
+                article.className = "card";
+
+
+                const title =
+                    document.createElement("h3");
+
+                title.textContent =
+                    page.title || "About YASU Tech";
+
+                article.appendChild(title);
+
+
+                if (page.description) {
+
+                    const description =
+                        document.createElement("p");
+
+                    description.textContent =
+                        page.description;
+
+                    article.appendChild(description);
+
+                }
+
+
+                if (page.content) {
+
+                    const content =
+                        document.createElement("div");
+
+                    content.className =
+                        "managed-page-rich-content";
+
+                    content.innerHTML =
+                        page.content;
+
+                    article.appendChild(content);
+
+                }
+
+
+                if (page.file_url) {
+
+                    const fileLink =
+                        document.createElement("a");
+
+                    fileLink.href =
+                        page.file_url;
+
+                    fileLink.target =
+                        "_blank";
+
+                    fileLink.rel =
+                        "noopener noreferrer";
+
+                    fileLink.className =
+                        "btn";
+
+                    fileLink.textContent =
+                        page.original_name
+                            ? "Open " + page.original_name
+                            : "Open File";
+
+                    article.appendChild(fileLink);
+
+                }
+
+
+                managedWrapper.appendChild(article);
+
+            });
+
+
+            contentElement.appendChild(
+                managedWrapper
+            );
 
         } catch (error) {
 
             console.error(
-                "Error loading public About page:",
+                "Error loading public About page content:",
                 error
             );
 
@@ -448,18 +484,13 @@
     }
 
 
-    /*
-     * Load the saved About page after
-     * the document has loaded.
-     */
     document.addEventListener(
         "DOMContentLoaded",
         loadPublicAboutPage
     );
 
 </script>
-
-
+<!-- END YASU_PUBLIC_ABOUT_CONTENT_LOADER -->
 </body>
 
 </html>
