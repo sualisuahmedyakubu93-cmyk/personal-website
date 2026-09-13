@@ -158,17 +158,12 @@ and SQLite-style callback usage:
 
 function run(
     sql,
-    parameters = []
+    parameters = [],
+    callback = null
 ) {
-    if (usePostgres) {
-        return postgresRun(
-            sql,
-            parameters
-        );
-    }
-
-    return new Promise(
-        (resolve, reject) => {
+    const promise = usePostgres
+        ? postgresRun(sql, parameters)
+        : new Promise((resolve, reject) => {
             sqliteDb.run(
                 sql,
                 parameters,
@@ -184,8 +179,31 @@ function run(
                     });
                 }
             );
-        }
-    );
+        });
+
+    if (typeof callback === "function") {
+        promise
+            .then((result) => {
+                callback.call(
+                    {
+                        lastID: result.id,
+                        changes: result.changes
+                    },
+                    null
+                );
+            })
+            .catch((error) => {
+                callback.call(
+                    {
+                        lastID: undefined,
+                        changes: 0
+                    },
+                    error
+                );
+            });
+    }
+
+    return promise;
 }
 
 /*
@@ -256,21 +274,16 @@ and:
 
 function get(
     sql,
-    parameters = []
+    parameters = [],
+    callback = null
 ) {
-    if (usePostgres) {
-        return postgresGet(
-            sql,
-            parameters
-        );
-    }
-
-    return new Promise(
-        (resolve, reject) => {
+    const promise = usePostgres
+        ? postgresGet(sql, parameters)
+        : new Promise((resolve, reject) => {
             sqliteDb.get(
                 sql,
                 parameters,
-                (error, row) => {
+                function (error, row) {
                     if (error) {
                         reject(error);
                         return;
@@ -279,8 +292,19 @@ function get(
                     resolve(row);
                 }
             );
-        }
-    );
+        });
+
+    if (typeof callback === "function") {
+        promise
+            .then((row) => {
+                callback(null, row);
+            })
+            .catch((error) => {
+                callback(error);
+            });
+    }
+
+    return promise;
 }
 
 /*
@@ -319,21 +343,16 @@ and:
 
 function all(
     sql,
-    parameters = []
+    parameters = [],
+    callback = null
 ) {
-    if (usePostgres) {
-        return postgresAll(
-            sql,
-            parameters
-        );
-    }
-
-    return new Promise(
-        (resolve, reject) => {
+    const promise = usePostgres
+        ? postgresAll(sql, parameters)
+        : new Promise((resolve, reject) => {
             sqliteDb.all(
                 sql,
                 parameters,
-                (error, rows) => {
+                function (error, rows) {
                     if (error) {
                         reject(error);
                         return;
@@ -342,8 +361,19 @@ function all(
                     resolve(rows);
                 }
             );
-        }
-    );
+        });
+
+    if (typeof callback === "function") {
+        promise
+            .then((rows) => {
+                callback(null, rows);
+            })
+            .catch((error) => {
+                callback(error);
+            });
+    }
+
+    return promise;
 }
 
 /*
