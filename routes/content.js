@@ -4,6 +4,11 @@ const {
     all
 } = require("../database/database");
 
+const {
+    authenticateToken,
+    requireAdmin
+} = require("../middleware/authMiddleware");
+
 
 const router =
     express.Router();
@@ -112,8 +117,9 @@ router.get(
                 await all(
                     `
                     SELECT *
-                    FROM content
-                    ORDER BY created_at DESC
+FROM content
+WHERE visibility = 'public'
+ORDER BY created_at DESC
                     `
                 );
 
@@ -148,7 +154,64 @@ router.get(
     }
 );
 
+/*
+==========================================
+GET ALL CONTENT FOR ADMIN
+==========================================
+*/
 
+router.get(
+    "/admin/all",
+
+    authenticateToken,
+    requireAdmin,
+
+    async (
+        request,
+        response
+    ) => {
+
+        try {
+
+            const contents =
+                await all(
+                    `
+                    SELECT *
+                    FROM content
+                    ORDER BY created_at DESC
+                    `
+                );
+
+
+            const result =
+                contents.map(
+                    formatContent
+                );
+
+
+            response.json(
+                result
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Admin content retrieval error:",
+                error.message
+            );
+
+
+            response.status(500).json({
+
+                message:
+                    "Unable to retrieve administrator content."
+
+            });
+
+        }
+
+    }
+);
 /*
 ==========================================
 GET CONTENT BY CATEGORY
@@ -192,9 +255,10 @@ router.get(
 
                     `
                     SELECT *
-                    FROM content
-                    WHERE category = ?
-                    ORDER BY created_at DESC
+FROM content
+WHERE category = ?
+AND visibility = 'public'
+ORDER BY created_at DESC
                     `,
 
                     [
@@ -316,10 +380,11 @@ router.get(
 
                     `
                     SELECT *
-                    FROM content
-                    WHERE category = ?
-                    AND subcategory = ?
-                    ORDER BY created_at DESC
+FROM content
+WHERE category = ?
+AND subcategory = ?
+AND visibility = 'public'
+ORDER BY created_at DESC
                     `,
 
                     [

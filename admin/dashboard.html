@@ -610,7 +610,16 @@
                     <span>Published Content</span>
                 </a>
 
+
+
                 <a
+                    href="#displayControlsSection"
+                    class="admin-nav-link"
+                >
+                    <span class="admin-nav-icon">⚙</span>
+                    <span>Display Controls</span>
+                </a>
+<a
                     href="#websitePagesSection"
                     class="admin-nav-link"
                 >
@@ -700,13 +709,26 @@
 
         <!-- DESCRIPTION -->
 
-        <label for="description">
-            Description
-        </label>
+<label for="description">
+    Description
+</label>
 
-        <textarea
-            id="description"
-        ></textarea>
+<textarea
+    id="description"
+></textarea>
+
+
+<!-- CAPTION -->
+
+<label for="caption">
+    Caption
+</label>
+
+<input
+    type="text"
+    id="caption"
+    placeholder="Enter a caption for this content"
+/>
 
 
         <!-- MAIN CATEGORY -->
@@ -825,19 +847,62 @@
         -->
 
         <div
-            id="fileSection"
-        >
+    id="fileSection"
+>
 
-            <label for="file">
-                Select File
-            </label>
+    <label for="file">
+        Select File
+    </label>
 
-            <input
-                type="file"
-                id="file"
-            >
+    <input
+        type="file"
+        id="file"
+    >
 
-        </div>
+</div>
+
+
+<!-- DISPLAY BEHAVIOR -->
+
+<div
+    id="displayModeSection"
+>
+
+    <label for="displayMode">
+        Display Behavior
+    </label>
+
+    <select
+        id="displayMode"
+    >
+
+        <option value="image">
+            Display as Image
+        </option>
+
+        <option value="video">
+            Play as Video
+        </option>
+
+        <option value="audio">
+            Play as Audio
+        </option>
+
+        <option value="read">
+            Read Full Content
+        </option>
+
+        <option value="download">
+            Download / Link
+        </option>
+
+    </select>
+
+    <small>
+        Choose how this content should appear to website visitors.
+    </small>
+
+</div>
 
 
         <!--
@@ -1071,7 +1136,7 @@
                     data-command="insertUnorderedList"
                     title="Bullet list"
                 >
-                    â€¢ List
+                    • List
                 </button>
 
 
@@ -1230,6 +1295,30 @@
 
     <!--
     ==========================================
+    DISPLAY CONTROLS
+    ==========================================
+    -->
+
+    <section id="displayControlsSection" class="display-controls-section">
+
+        <div class="website-pages-header">
+            <div>
+                <span class="section-label">DISPLAY CONTROLS</span>
+                <h2>Manage Display Controls</h2>
+                <p>Control how uploaded content is displayed publicly and whether it is visible on the website.</p>
+            </div>
+        </div>
+
+        <div id="displayControlsList">
+            Loading...
+        </div>
+
+    </section>
+
+    <hr>
+
+    <!--
+    ==========================================
     WEBSITE PAGES
     ==========================================
     -->
@@ -1256,7 +1345,7 @@
                 <div class="website-page-card-header">
 
                     <div class="website-page-icon">
-                        ðŸ 
+                        🏠
                     </div>
 
                     <div>
@@ -1309,7 +1398,7 @@
                 <div class="website-page-card-header">
 
                     <div class="website-page-icon">
-                        ðŸ‘¤
+                        👤
                     </div>
 
                     <div>
@@ -1365,7 +1454,7 @@
                 <div class="website-page-card-header">
 
                     <div class="website-page-icon">
-                        ðŸ’»
+                        💻
                     </div>
 
                     <div>
@@ -2392,6 +2481,121 @@ document
                 const selectedFile =
 
                     fileInput.files[0];
+const displayModeSelect =
+    document.getElementById(
+        "displayMode"
+    );
+
+
+const fileName =
+    selectedFile
+        ? selectedFile.name.toLowerCase()
+        : "";
+
+
+const fileType =
+    selectedFile
+        ? selectedFile.type.toLowerCase()
+        : "";
+
+
+let displayOptions = [
+    {
+        value: "download",
+        label: "Download / Link"
+    }
+];
+
+
+if (
+    fileType.startsWith("image/") ||
+    /\.(jpg|jpeg|png|gif|webp)$/i.test(
+        fileName
+    )
+) {
+
+    displayOptions = [
+        {
+            value: "image",
+            label: "Display as Image"
+        },
+        {
+            value: "download",
+            label: "Download / Link"
+        }
+    ];
+
+} else if (
+    fileType.startsWith("video/") ||
+    /\.(mp4|webm|mov)$/i.test(
+        fileName
+    )
+) {
+
+    displayOptions = [
+        {
+            value: "video",
+            label: "Play as Video"
+        },
+        {
+            value: "download",
+            label: "Download / Link"
+        }
+    ];
+
+} else if (
+    fileType.startsWith("audio/") ||
+    /\.(mp3|wav|ogg|m4a|aac|flac)$/i.test(
+        fileName
+    )
+) {
+
+    displayOptions = [
+        {
+            value: "audio",
+            label: "Play as Audio"
+        },
+        {
+            value: "download",
+            label: "Download / Link"
+        }
+    ];
+
+} else {
+
+    displayOptions = [
+        {
+            value: "download",
+            label: "Download / Link"
+        }
+    ];
+
+}
+
+
+displayModeSelect.innerHTML = "";
+
+
+displayOptions.forEach(
+    function(optionData) {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        option.value =
+            optionData.value;
+
+        option.textContent =
+            optionData.label;
+
+        displayModeSelect.appendChild(
+            option
+        );
+
+    }
+);
 
 
                 if (
@@ -2411,33 +2615,49 @@ document
 
 
                 formData.append(
-                    "title",
-                    title
-                );
+    "title",
+    title
+);
 
 
-                formData.append(
-                    "description",
-                    description
-                );
+formData.append(
+    "description",
+    description
+);
 
 
-                formData.append(
-                    "category",
-                    selectedCategory
-                );
+formData.append(
+    "caption",
+    document.getElementById(
+        "caption"
+    ).value.trim()
+);
 
 
-                formData.append(
-                    "subcategory",
-                    selectedSubcategory
-                );
+formData.append(
+    "category",
+    selectedCategory
+);
 
 
-                formData.append(
-                    "contentMode",
-                    "file"
-                );
+formData.append(
+    "subcategory",
+    selectedSubcategory
+);
+
+
+formData.append(
+    "contentMode",
+    "file"
+);
+
+
+formData.append(
+    "displayMode",
+    document.getElementById(
+        "displayMode"
+    ).value
+);
 
 
                 formData.append(
@@ -2740,7 +2960,7 @@ async function loadContent() {
 
             await fetch(
 
-                "/api/content",
+                "/api/content/admin/all",
 
                 {
 
@@ -3449,14 +3669,29 @@ WEBSITE PAGES MANAGEMENT
                 : "";
 
         const existingDescription =
-            item && item.description
-                ? item.description
-                : "";
+    item && item.description
+        ? item.description
+        : "";
 
-        const existingFile =
-            item && item.filename
-                ? item.filename
-                : "";
+const existingCaption =
+    item && item.caption
+        ? item.caption
+        : "";
+
+const existingVisibility =
+    item && item.visibility
+        ? item.visibility
+        : "public";
+
+const existingDisplayMode =
+    item && item.display_mode
+        ? item.display_mode
+        : "download";
+
+const existingFile =
+    item && item.filename
+        ? item.filename
+        : "";
 
         const existingOriginalName =
             item && item.original_name
@@ -3523,7 +3758,98 @@ WEBSITE PAGES MANAGEMENT
                 class="website-page-description"
                 placeholder="Brief description of this content"
             >${escapeHtml(existingDescription)}</textarea>
+            <label>
+                Caption
+            </label>
 
+            <input
+                type="text"
+                class="website-page-caption"
+                placeholder="Optional caption for this content"
+                value="${escapeHtml(existingCaption)}"
+            >
+
+            <label>
+                Visibility
+            </label>
+
+            <select
+                class="website-page-visibility"
+            >
+                <option
+                    value="public"
+                    ${
+                        existingVisibility === "public"
+                            ? "selected"
+                            : ""
+                    }
+                >
+                    Public
+                </option>
+
+                <option
+                    value="hidden"
+                    ${
+                        existingVisibility === "hidden"
+                            ? "selected"
+                            : ""
+                    }
+                >
+                    Hidden
+                </option>
+            </select>
+
+            <label>
+                Display Mode
+            </label>
+
+            <select
+                class="website-page-display-mode"
+            >
+                <option
+                    value="download"
+                    ${
+                        existingDisplayMode === "download"
+                            ? "selected"
+                            : ""
+                    }
+                >
+                    Download
+                </option>
+
+                <option
+                    value="image"
+                    ${
+                        existingDisplayMode === "image"
+                            ? "selected"
+                            : ""
+                    }
+                >
+                    Image
+                </option>
+
+                <option
+                    value="video"
+                    ${
+                        existingDisplayMode === "video"
+                            ? "selected"
+                            : ""
+                    }
+                >
+                    Video
+                </option>
+
+                <option
+                    value="read"
+                    ${
+                        existingDisplayMode === "read"
+                            ? "selected"
+                            : ""
+                    }
+                >
+                    Read Full Content
+                </option>
+            </select>
 
             <div class="website-page-method">
 
@@ -3633,7 +3959,7 @@ WEBSITE PAGES MANAGEMENT
                         data-command="insertUnorderedList"
                         title="Bullet List"
                     >
-                        â€¢ List
+                        • List
                     </button>
 
                     <button
@@ -3856,7 +4182,20 @@ WEBSITE PAGES MANAGEMENT
             form.querySelector(
                 ".website-page-description"
             ).value.trim();
+const caption =
+    form.querySelector(
+        ".website-page-caption"
+    ).value.trim();
 
+const visibility =
+    form.querySelector(
+        ".website-page-visibility"
+    ).value;
+
+const displayMode =
+    form.querySelector(
+        ".website-page-display-mode"
+    ).value;
         const selectedMethod =
             form.querySelector(
                 'input[name^="contentMethod-"]:checked'
@@ -3956,6 +4295,20 @@ WEBSITE PAGES MANAGEMENT
             "description",
             description
         );
+formData.append(
+    "caption",
+    caption
+);
+
+formData.append(
+    "visibility",
+    visibility
+);
+
+formData.append(
+    "displayMode",
+    displayMode
+);
 
         formData.append(
             "contentMode",
@@ -4342,7 +4695,7 @@ WEBSITE PAGES MANAGEMENT
                     "website-page-empty";
 
                 empty.textContent =
-                    "No content has been added yet. Click â€œ+ Add Another Contentâ€ to create the first content item.";
+                    "No content has been added yet. Click “+ Add Another Content” to create the first content item.";
 
                 container.appendChild(
                     empty
@@ -4538,6 +4891,225 @@ WEBSITE PAGES MANAGEMENT
 
 })();
 
+
+
+    /* =========================================================
+       YASU TECH DISPLAY CONTROLS
+       ========================================================= */
+
+    function getDisplayModeOptions(content) {
+        const filename = (content.filename || content.original_name || '').toLowerCase();
+        const isWritten = !content.filename && !!content.content;
+        const isImage = /\.(jpg|jpeg|png|gif|webp)$/i.test(filename);
+        const isVideo = /\.(mp4|webm|mov)$/i.test(filename);
+
+        if (isWritten) {
+            return ['read'];
+        }
+
+        if (isImage) {
+            return ['image', 'download'];
+        }
+
+        if (isVideo) {
+            return ['video', 'download'];
+        }
+
+        return ['download'];
+    }
+
+    function displayModeLabel(mode) {
+        const labels = {
+            image: 'Image',
+            video: 'Video',
+            download: 'Download',
+            read: 'Read Full Content'
+        };
+        return labels[mode] || mode;
+    }
+
+    async function loadDisplayControls() {
+        const container = document.getElementById('displayControlsList');
+
+        if (!container) {
+            return;
+        }
+
+        container.innerHTML = 'Loading...';
+
+        try {
+            const response = await fetch(
+                '/api/content/admin/all',
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error('Unable to load display controls.');
+            }
+
+            const contents = await response.json();
+
+            if (!contents.length) {
+                container.innerHTML = '<p>No uploaded content found.</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+
+            contents.forEach(content => {
+                const options = getDisplayModeOptions(content);
+                let selectedMode = content.display_mode;
+
+                if (!options.includes(selectedMode)) {
+                    selectedMode = options[0];
+                }
+
+                const card = document.createElement('div');
+                card.className = 'display-control-card';
+
+                const optionMarkup = options.map(mode => `
+                    <option value="${mode}" ${selectedMode === mode ? 'selected' : ''}>
+                        ${displayModeLabel(mode)}
+                    </option>
+                `).join('');
+
+                card.innerHTML = `
+                    <div class="display-control-info">
+                        <h3>${escapeHtml(content.title || 'Untitled')}</h3>
+                        <p>
+                            ${escapeHtml(content.category || '')}
+                            ${content.subcategory ? ' / ' + escapeHtml(content.subcategory) : ''}
+                        </p>
+                        <small>
+                            Current visibility: ${escapeHtml(content.visibility || 'public')}
+                        </small>
+                    </div>
+
+                    <div class="display-control-fields">
+                        <label>
+                            Visibility
+                            <select class="display-visibility">
+                                <option value="public" ${content.visibility !== 'hidden' ? 'selected' : ''}>Public</option>
+                                <option value="hidden" ${content.visibility === 'hidden' ? 'selected' : ''}>Hidden</option>
+                            </select>
+                        </label>
+
+                        <label>
+                            Display Mode
+                            <select class="display-mode">
+                                ${optionMarkup}
+                            </select>
+                        </label>
+
+                        <button
+                            type="button"
+                            class="display-control-save"
+                            onclick="saveDisplayControls(${content.id}, this)"
+                        >
+                            Save Changes
+                        </button>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        } catch (error) {
+            console.error(error);
+            container.innerHTML = '<p>Unable to load display controls.</p>';
+        }
+    }
+
+    async function saveDisplayControls(id, button) {
+        const card = button.closest('.display-control-card');
+        const visibility = card.querySelector('.display-visibility').value;
+        const displayMode = card.querySelector('.display-mode').value;
+
+        const originalText = button.textContent;
+        button.disabled = true;
+        button.textContent = 'Saving...';
+
+        try {
+            const response = await fetch(
+                `/api/uploads/${id}/display-controls`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        visibility,
+                        displayMode
+                    })
+                }
+            );
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.message || 'Unable to save display controls.');
+            }
+
+            button.textContent = 'Saved';
+
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.disabled = false;
+            }, 1200);
+
+            await loadContent();
+        } catch (error) {
+            console.error(error);
+            alert(error.message || 'Unable to save display controls.');
+            button.textContent = originalText;
+            button.disabled = false;
+        }
+    }
+
+    loadDisplayControls();
+
+    /*
+     * YASU TECH ADMINISTRATOR VERSION DISPLAY
+     * Reads the authoritative version from /api/version.
+     */
+    (async function () {
+        const message = document.querySelector(".yasu-sidebar-message");
+
+        if (!message) {
+            return;
+        }
+
+        try {
+            const response = await fetch("/api/version");
+
+            if (!response.ok) {
+                throw new Error("Version request failed.");
+            }
+
+            const data = await response.json();
+
+            if (!data || !data.success || !data.version) {
+                return;
+            }
+
+            const versionElement = document.createElement("span");
+
+            versionElement.id = "yasuTechAdminVersion";
+            versionElement.textContent = "v" + data.version;
+            versionElement.style.display = "block";
+            versionElement.style.marginTop = "6px";
+            versionElement.style.fontSize = "12px";
+            versionElement.style.opacity = "0.75";
+
+            message.appendChild(versionElement);
+        } catch (error) {
+            console.error("Unable to load YASU Tech version.", error);
+        }
+    })();
 </script>
 
 <script>

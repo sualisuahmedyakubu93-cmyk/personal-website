@@ -311,10 +311,45 @@ document.addEventListener("DOMContentLoaded", () => {
             */
 
             contentGrid.innerHTML =
-                data.map(
-                    item =>
-                        createContentCard(item)
-                ).join("");
+                data
+                    .filter(
+                        item =>
+                            !isHidden(item)
+                    )
+                    .map(
+                        item =>
+                            createContentCard(item)
+                    )
+                    .join("");
+
+
+            /*
+            ==========================================
+            CHECK IF EVERYTHING IS HIDDEN
+            ==========================================
+            */
+
+            if (
+                contentGrid.innerHTML.trim() === ""
+            ) {
+
+                contentGrid.innerHTML = `
+                    <div class="empty-state">
+
+                        <h3>
+                            No Content Available
+                        </h3>
+
+                        <p>
+                            No content is currently available
+                            for public viewing.
+                        </p>
+
+                    </div>
+                `;
+
+                return;
+            }
 
 
             /*
@@ -360,6 +395,179 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /*
     ==========================================
+    DETERMINE VISIBILITY
+    ==========================================
+    */
+
+    function isHidden(item) {
+
+        const visibility =
+            String(
+                item.visibility ||
+                ""
+            )
+            .trim()
+            .toLowerCase();
+
+
+        const displayMode =
+            String(
+                item.display_mode ||
+                ""
+            )
+            .trim()
+            .toLowerCase();
+
+
+        return (
+            visibility === "hidden" ||
+            displayMode === "hidden"
+        );
+
+    }
+
+
+    /*
+    ==========================================
+    DETERMINE DISPLAY MODE
+    ==========================================
+    */
+
+    function getDisplayMode(item) {
+
+        const mode =
+            String(
+                item.display_mode ||
+                ""
+            )
+            .trim()
+            .toLowerCase();
+
+
+        /*
+        ======================================
+        WRITTEN CONTENT
+        ======================================
+        */
+
+        if (
+            !item.filename &&
+            item.content &&
+            String(item.content).trim() !== ""
+        ) {
+
+            return (
+                mode === "hidden"
+                    ? "hidden"
+                    : "read"
+            );
+
+        }
+
+
+        /*
+        ======================================
+        FILE CONTENT
+        ======================================
+        */
+
+        if (
+            mode
+        ) {
+
+            return mode;
+
+        }
+
+
+        /*
+        ======================================
+        BACKWARD COMPATIBILITY
+        ======================================
+        */
+
+        return "downloadable";
+
+    }
+
+
+    /*
+    ==========================================
+    DETERMINE FILE TYPE
+    ==========================================
+    */
+
+    function getFileType(item) {
+
+        const mimeType =
+            String(
+                item.mime_type ||
+                item.mimetype ||
+                item.mimeType ||
+                ""
+            )
+            .trim()
+            .toLowerCase();
+
+
+        const filename =
+            String(
+                item.filename ||
+                item.original_name ||
+                item.originalName ||
+                ""
+            )
+            .trim()
+            .toLowerCase();
+
+
+        if (
+            mimeType.startsWith("image/")
+        ) {
+
+            return "image";
+
+        }
+
+
+        if (
+            mimeType.startsWith("video/")
+        ) {
+
+            return "video";
+
+        }
+
+
+        if (
+            /\.(jpg|jpeg|png|gif|webp|svg|bmp|avif)$/i.test(
+                filename
+            )
+        ) {
+
+            return "image";
+
+        }
+
+
+        if (
+            /\.(mp4|webm|ogg|mov|avi|mkv|m4v)$/i.test(
+                filename
+            )
+        ) {
+
+            return "video";
+
+        }
+
+
+        return "file";
+
+    }
+
+
+    /*
+    ==========================================
     CREATE CONTENT CARD
     ==========================================
     */
@@ -392,6 +600,10 @@ document.addEventListener("DOMContentLoaded", () => {
             String(item.content).trim() !== "";
 
 
+        const displayMode =
+            getDisplayMode(item);
+
+
         /*
         ======================================
         WRITTEN CONTENT CARD
@@ -401,6 +613,15 @@ document.addEventListener("DOMContentLoaded", () => {
         if (
             isWrittenContent
         ) {
+
+            if (
+                displayMode === "hidden"
+            ) {
+
+                return "";
+
+            }
+
 
             const preview =
                 createWrittenPreview(
@@ -412,7 +633,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <article class="card content-card written-content-card">
 
                     <div class="card-icon">
-                        ✍️
+                        📝
                     </div>
 
                     <h3>
@@ -481,7 +702,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         /*
         ======================================
-        FILE CONTENT CARD
+        FILE CONTENT
         ======================================
         */
 
@@ -497,6 +718,130 @@ document.addEventListener("DOMContentLoaded", () => {
             item.file_url ||
             "#";
 
+
+        const fileType =
+            getFileType(item);
+
+
+        /*
+        ======================================
+        IMAGE — SHOW AS IMAGE
+        ======================================
+        */
+
+        if (
+            fileType === "image" &&
+            displayMode === "image"
+        ) {
+
+            return `
+                <article class="card content-card">
+
+                    <div class="card-icon">
+                        🖼️
+                    </div>
+
+                    <h3>
+                        ${title}
+                    </h3>
+
+                    <p>
+                        ${description}
+                    </p>
+
+                    <div class="content-media">
+
+                        <img
+                            src="${escapeAttribute(fileUrl)}"
+                            alt="${title}"
+                            loading="lazy"
+                            style="max-width:100%;height:auto;display:block;"
+                        >
+
+                    </div>
+
+                    <p class="file-name">
+
+                        <strong>
+                            File:
+                        </strong>
+
+                        ${originalName}
+
+                    </p>
+
+                </article>
+            `;
+
+        }
+
+
+        /*
+        ======================================
+        VIDEO — PLAYABLE VIDEO
+        ======================================
+        */
+
+        if (
+            fileType === "video" &&
+            displayMode === "video"
+        ) {
+
+            return `
+                <article class="card content-card">
+
+                    <div class="card-icon">
+                        🎬
+                    </div>
+
+                    <h3>
+                        ${title}
+                    </h3>
+
+                    <p>
+                        ${description}
+                    </p>
+
+                    <div class="content-media">
+
+                        <video
+                            controls
+                            preload="metadata"
+                            style="width:100%;max-width:100%;height:auto;"
+                        >
+
+                            <source
+                                src="${escapeAttribute(fileUrl)}"
+                            >
+
+                            Your browser does not support
+                            video playback.
+
+                        </video>
+
+                    </div>
+
+                    <p class="file-name">
+
+                        <strong>
+                            File:
+                        </strong>
+
+                        ${originalName}
+
+                    </p>
+
+                </article>
+            `;
+
+        }
+
+
+        /*
+        ======================================
+        DOWNLOADABLE FILE
+        ======================================
+        */
 
         return `
             <article class="card content-card">
@@ -527,19 +872,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     <a
                         href="${escapeAttribute(fileUrl)}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="btn"
-                    >
-                        View File
-                    </a>
-
-                    <a
-                        href="${escapeAttribute(fileUrl)}"
                         download
                         class="btn"
                     >
-                        Download
+                        Download File
                     </a>
 
                 </div>
@@ -654,10 +990,18 @@ document.addEventListener("DOMContentLoaded", () => {
                             false;
 
 
-                        button.closest(
-                            ".content-actions"
-                        ).style.display =
-                            "none";
+                        const actions =
+                            button.closest(
+                                ".content-actions"
+                            );
+
+
+                        if (actions) {
+
+                            actions.style.display =
+                                "none";
+
+                        }
 
 
                         contentElement.scrollIntoView({
@@ -715,20 +1059,20 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
 
 
-                        const readActions =
+                        const readButton =
                             card.querySelector(
                                 ".read-content-btn"
                             );
 
 
                         if (
-                            readActions &&
-                            readActions.closest(
+                            readButton &&
+                            readButton.closest(
                                 ".content-actions"
                             )
                         ) {
 
-                            readActions.closest(
+                            readButton.closest(
                                 ".content-actions"
                             ).style.display =
                                 "";

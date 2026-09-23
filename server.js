@@ -5,7 +5,8 @@ const path = require("path");
 const fs = require("fs");
 
 const {
-    initializeDatabase
+    initializeDatabase,
+    get
 } = require("./database/database");
 
 const authRoutes = require("./routes/auth");
@@ -17,6 +18,8 @@ const pagesRoutes = require("./routes/pages");
 const app = express();
 
 const PORT = process.env.PORT || 3000;
+
+const packageInfo = require("./package.json");
 
 
 /*
@@ -85,6 +88,17 @@ app.use(
 API ROUTES
 ==========================================
 */
+
+app.get(
+    "/api/version",
+    function (request, response) {
+        response.json({
+            success: true,
+            name: packageInfo.name,
+            version: packageInfo.version
+        });
+    }
+);
 
 app.use(
     "/api/auth",
@@ -255,7 +269,7 @@ PUBLIC UPLOADED FILES
 
 app.get(
     "/uploads/:category/:filename",
-    function (request, response) {
+    async function (request, response) {
 
         const allowedCategories = [
             "documents",
@@ -292,6 +306,77 @@ app.get(
             );
 
 
+        /*
+        ==========================================
+        PROTECT MAIN CONTENT VISIBILITY
+        ==========================================
+        */
+
+        if (
+            category !== "pages"
+        ) {
+
+            try {
+
+                const contentItem =
+                    await get(
+                        `
+                        SELECT
+                            id,
+                            visibility
+                        FROM content
+                        WHERE category = ?
+                        AND filename = ?
+                        LIMIT 1
+                        `,
+                        [
+                            category,
+                            safeFilename
+                        ]
+                    );
+
+
+                if (
+                    !contentItem
+                ) {
+                    return response
+                        .status(404)
+                        .json({
+                            message:
+                                "File not found."
+                        });
+                }
+
+
+                if (
+                    contentItem.visibility !==
+                    "public"
+                ) {
+                    return response
+                        .status(403)
+                        .send(
+                            "This content is currently hidden by the administrator."
+                        );
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Content visibility check error:",
+                    error.message
+                );
+
+                return response
+                    .status(500)
+                    .json({
+                        message:
+                            "Unable to verify content visibility."
+                    });
+            }
+
+        }
+
+
         const filePath =
             path.join(
                 __dirname,
@@ -313,6 +398,8 @@ app.get(
                         "File not found."
                 });
         }
+
+
 
 
         response.sendFile(

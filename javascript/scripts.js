@@ -1,4 +1,4 @@
-/*
+﻿/*
 ==========================================
 AUTOMATIC YEAR
 ==========================================
@@ -237,40 +237,46 @@ async function loadManagedHomeContent() {
             page.original_name
         ) {
 
-            const fileLink =
-                document.createElement(
-                    "a"
-                );
+            const displayMode = String(page.display_mode || 'download').trim().toLowerCase();
+            const fileName = String(page.filename || page.original_name || '').trim().toLowerCase();
 
-            fileLink.href =
-                page.file_url;
+            managedHomeBody.innerHTML = '';
 
-            fileLink.target =
-                "_blank";
+            if (displayMode === 'image' && /\.(jpg|jpeg|png|gif|webp|svg|bmp|avif)$/i.test(fileName)) {
+                const image = document.createElement('img');
+                image.src = page.file_url;
+                image.alt = page.caption || page.title || page.original_name;
+                image.loading = 'lazy';
+                image.style.maxWidth = '100%';
+                image.style.height = 'auto';
+                image.style.display = 'block';
+                managedHomeBody.appendChild(image);
+                managedHomeSection.hidden = false;
+                return;
+            }
 
-            fileLink.rel =
-                "noopener noreferrer";
+            if (displayMode === 'video' && /\.(mp4|webm|ogg|mov|avi|mkv|m4v)$/i.test(fileName)) {
+                const video = document.createElement('video');
+                video.src = page.file_url;
+                video.controls = true;
+                video.preload = 'metadata';
+                video.style.maxWidth = '100%';
+                video.style.height = 'auto';
+                video.style.display = 'block';
+                managedHomeBody.appendChild(video);
+                managedHomeSection.hidden = false;
+                return;
+            }
 
-            fileLink.textContent =
-                "Open " +
-                page.original_name;
-
-
-            managedHomeBody.innerHTML =
-                "";
-
-            managedHomeBody.appendChild(
-                fileLink
-            );
-
-
-            managedHomeSection.hidden =
-                false;
-
+            const fileLink = document.createElement('a');
+            fileLink.href = page.file_url;
+            fileLink.target = '_blank';
+            fileLink.rel = 'noopener noreferrer';
+            fileLink.textContent = 'Open ' + page.original_name;
+            managedHomeBody.appendChild(fileLink);
+            managedHomeSection.hidden = false;
             return;
-
         }
-
 
         /*
         ------------------------------------------
@@ -502,3 +508,40 @@ document.addEventListener(
 
     }
 );
+
+/*
+==========================================
+YASU TECH VERSION DISPLAY
+==========================================
+*/
+
+document.addEventListener("DOMContentLoaded", function () {
+    const versionElement =
+        document.getElementById("yasuTechVersion");
+
+    if (!versionElement) {
+        return;
+    }
+
+    fetch("/api/version")
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error("Version request failed.");
+            }
+
+            return response.json();
+        })
+        .then(function (data) {
+            if (
+                data &&
+                data.success &&
+                data.version
+            ) {
+                versionElement.textContent =
+                    "v" + data.version;
+            }
+        })
+        .catch(function () {
+            versionElement.textContent = "";
+        });
+});

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -232,7 +232,7 @@
 
                 <article class="card">
 
-                    <div class="card-icon">✍️</div>
+                    <div class="card-icon">âœï¸</div>
 
                     <h3>Writings</h3>
 
@@ -400,6 +400,7 @@
         <p>
             Powered by Yakubu Sualisu Ahmed
         </p>
+        <p id="yasuTechVersion"></p>
 
     </div>
 
@@ -511,27 +512,47 @@
 
                 if (page.file_url) {
 
-                    const fileLink =
-                        document.createElement("a");
+                    const displayMode = String(page.display_mode || 'download').trim().toLowerCase();
+                    const fileName = String(page.filename || page.original_name || '').trim().toLowerCase();
 
-                    fileLink.href =
-                        page.file_url;
+                    if (displayMode === 'image' && /\.(jpg|jpeg|png|gif|webp|svg|bmp|avif)$/i.test(fileName)) {
 
-                    fileLink.target =
-                        "_blank";
+                        const image = document.createElement('img');
 
-                    fileLink.rel =
-                        "noopener noreferrer";
+                        image.src = page.file_url;
+                        image.alt = page.caption || page.title || page.original_name || 'Image';
+                        image.loading = 'lazy';
+                        image.style.maxWidth = '100%';
+                        image.style.height = 'auto';
+                        image.style.display = 'block';
 
-                    fileLink.className =
-                        "btn";
+                        article.appendChild(image);
 
-                    fileLink.textContent =
-                        page.original_name
-                            ? "Open " + page.original_name
-                            : "Open File";
+                    } else if (displayMode === 'video' && /\.(mp4|webm|ogg|mov|avi|mkv|m4v)$/i.test(fileName)) {
 
-                    article.appendChild(fileLink);
+                        const video = document.createElement('video');
+
+                        video.src = page.file_url;
+                        video.controls = true;
+                        video.preload = 'metadata';
+                        video.style.maxWidth = '100%';
+                        video.style.height = 'auto';
+                        video.style.display = 'block';
+
+                        article.appendChild(video);
+
+                    } else {
+
+                        const fileLink = document.createElement('a');
+
+                        fileLink.href = page.file_url;
+                        fileLink.target = '_blank';
+                        fileLink.rel = 'noopener noreferrer';
+                        fileLink.className = 'btn';
+                        fileLink.textContent = page.original_name ? 'Open ' + page.original_name : 'Open File';
+
+                        article.appendChild(fileLink);
+                    }
 
                 }
 

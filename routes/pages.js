@@ -194,9 +194,12 @@ function formatPage(row) {
         page_key: row.page_key,
         title: row.title,
         description: row.description,
+        caption: row.caption,
         filename: row.filename,
         original_name: row.original_name,
         content: row.content,
+        visibility: row.visibility,
+        display_mode: row.display_mode,
         display_order: row.display_order,
         created_by: row.created_by,
         created_at: row.created_at,
@@ -219,9 +222,12 @@ router.get("/", authMiddleware, (req, res) => {
             page_key,
             title,
             description,
+            caption,
             filename,
             original_name,
             content,
+            visibility,
+            display_mode,
             display_order,
             created_by,
             created_at,
@@ -280,15 +286,19 @@ router.get("/public/:pageKey", (req, res) => {
             page_key,
             title,
             description,
+            caption,
             filename,
             original_name,
             content,
+            visibility,
+            display_mode,
             display_order,
             created_by,
             created_at,
             updated_at
         FROM website_page_content
         WHERE page_key = ?
+            AND visibility = 'public'
         ORDER BY
             display_order ASC,
             id ASC
@@ -340,10 +350,13 @@ router.get("/item/:id", authMiddleware, (req, res) => {
             page_key,
             title,
             description,
-            filename,
-            original_name,
-            content,
-            display_order,
+caption,
+filename,
+original_name,
+content,
+visibility,
+display_mode,
+display_order,
             created_by,
             created_at,
             updated_at
@@ -415,6 +428,19 @@ router.post(
             typeof req.body.content === "string"
                 ? req.body.content
                 : "";
+
+        const caption =
+            typeof req.body.caption === "string"
+                ? req.body.caption.trim()
+                : "";
+
+        const visibility =
+            String(req.body.visibility || "public").toLowerCase() === "hidden"
+                ? "hidden"
+                : "public";
+
+        const displayMode =
+            String(req.body.displayMode || "download").toLowerCase();
 
         if (!isValidPage(pageKey)) {
             cleanupTemporaryFile(req.file);
@@ -539,31 +565,37 @@ router.post(
                         : null;
 
                 const insertSql = `
-                    INSERT INTO website_page_content (
-                        page_key,
-                        title,
-                        description,
-                        filename,
-                        original_name,
-                        content,
-                        display_order,
-                        created_by
-                    )
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                `;
+    INSERT INTO website_page_content (
+        page_key,
+        title,
+        description,
+        caption,
+        filename,
+        original_name,
+        content,
+        visibility,
+        display_mode,
+        display_order,
+        created_by
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+`;
 
                 db.run(
                     insertSql,
                     [
-                        pageKey,
-                        title,
-                        description || null,
-                        filename,
-                        originalName,
-                        savedContent,
-                        displayOrder,
-                        userId
-                    ],
+    pageKey,
+    title,
+    description || null,
+    caption || null,
+    filename,
+    originalName,
+    savedContent,
+    visibility,
+    displayMode,
+    displayOrder,
+    userId
+],
                     function (insertErr) {
                         if (insertErr) {
                             if (filename) {
@@ -585,18 +617,21 @@ router.post(
                         db.get(
                             `
                             SELECT
-                                id,
-                                page_key,
-                                title,
-                                description,
-                                filename,
-                                original_name,
-                                content,
-                                display_order,
-                                created_by,
-                                created_at,
-                                updated_at
-                            FROM website_page_content
+    id,
+    page_key,
+    title,
+    description,
+    caption,
+    filename,
+    original_name,
+    content,
+    visibility,
+    display_mode,
+    display_order,
+    created_by,
+    created_at,
+    updated_at
+FROM website_page_content
                             WHERE id = ?
                             `,
                             [this.lastID],
@@ -658,7 +693,22 @@ router.put(
             typeof req.body.description === "string"
                 ? req.body.description.trim()
                 : "";
+const caption =
+    typeof req.body.caption === "string"
+        ? req.body.caption.trim()
+        : "";
 
+const visibility =
+    String(
+        req.body.visibility || "public"
+    ).toLowerCase() === "hidden"
+        ? "hidden"
+        : "public";
+
+const displayMode =
+    String(
+        req.body.displayMode || "download"
+    ).toLowerCase();
         const contentMode =
             String(
                 req.body.contentMode || ""
@@ -724,9 +774,12 @@ router.put(
                 page_key,
                 title,
                 description,
+                caption,
                 filename,
                 original_name,
                 content,
+                visibility,
+                display_mode,
                 display_order,
                 created_by,
                 created_at,
@@ -808,9 +861,12 @@ router.put(
                     SET
                         title = ?,
                         description = ?,
+                        caption = ?,
                         filename = ?,
                         original_name = ?,
                         content = ?,
+                        visibility = ?,
+                        display_mode = ?,
                         updated_at = CURRENT_TIMESTAMP
                     WHERE id = ?
                 `;
@@ -820,9 +876,12 @@ router.put(
                     [
                         title,
                         description || null,
+                        caption || null,
                         filename,
                         originalName,
                         savedContent,
+                        visibility,
+                        displayMode,
                         id
                     ],
                     function (updateErr) {
@@ -866,9 +925,12 @@ router.put(
                                 page_key,
                                 title,
                                 description,
+                                caption,
                                 filename,
                                 original_name,
                                 content,
+                                visibility,
+                                display_mode,
                                 display_order,
                                 created_by,
                                 created_at,
@@ -1195,5 +1257,3 @@ router.use(
 // ============================================================
 
 module.exports = router;
-
-

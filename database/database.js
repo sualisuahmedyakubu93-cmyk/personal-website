@@ -1,4 +1,4 @@
-const sqlite3 = require("sqlite3").verbose();
+﻿const sqlite3 = require("sqlite3").verbose();
 const { Pool } = require("pg");
 const path = require("path");
 const bcrypt = require("bcryptjs");
@@ -749,21 +749,36 @@ async function initializePostgresDatabase() {
     */
 
     await run(`
-        CREATE TABLE IF NOT EXISTS content (
-            id SERIAL PRIMARY KEY,
-            title TEXT NOT NULL,
-            description TEXT,
-            category TEXT NOT NULL,
-            subcategory TEXT,
-            filename TEXT,
-            original_name TEXT,
-            content TEXT,
-            uploaded_by INTEGER
-                REFERENCES users(id),
-            created_at TIMESTAMP
-                DEFAULT CURRENT_TIMESTAMP
-        )
-    `);
+    CREATE TABLE IF NOT EXISTS content (
+        id SERIAL PRIMARY KEY,
+        title TEXT NOT NULL,
+        description TEXT,
+        category TEXT NOT NULL,
+        subcategory TEXT,
+        filename TEXT,
+        original_name TEXT,
+        content TEXT,
+        visibility TEXT NOT NULL DEFAULT 'public',
+        display_mode TEXT NOT NULL DEFAULT 'file',
+        caption TEXT,
+        uploaded_by INTEGER
+            REFERENCES users(id),
+        created_at TIMESTAMP
+            DEFAULT CURRENT_TIMESTAMP
+    )
+`);
+
+await run(`
+    ALTER TABLE content
+    ADD COLUMN IF NOT EXISTS visibility TEXT
+        NOT NULL DEFAULT 'public'
+`);
+
+await run(`
+    ALTER TABLE content
+    ADD COLUMN IF NOT EXISTS display_mode TEXT
+        NOT NULL DEFAULT 'file'
+`);
 
     /*
     PAGE CONTENT
@@ -798,6 +813,9 @@ async function initializePostgresDatabase() {
             filename TEXT,
             original_name TEXT,
             content TEXT,
+            caption TEXT,
+            visibility TEXT NOT NULL DEFAULT 'public',
+            display_mode TEXT NOT NULL DEFAULT 'file',
             display_order INTEGER DEFAULT 0,
             created_by INTEGER
                 REFERENCES users(id),
@@ -919,24 +937,27 @@ async function initializeSqliteDatabase() {
     `);
 
     await run(`
-        CREATE TABLE IF NOT EXISTS content (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL,
-            description TEXT,
-            category TEXT NOT NULL,
-            subcategory TEXT,
-            filename TEXT,
-            original_name TEXT,
-            content TEXT,
-            uploaded_by INTEGER,
+    CREATE TABLE IF NOT EXISTS content (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        description TEXT,
+        category TEXT NOT NULL,
+        subcategory TEXT,
+        filename TEXT,
+        original_name TEXT,
+        content TEXT,
+        visibility TEXT NOT NULL DEFAULT 'public',
+        display_mode TEXT NOT NULL DEFAULT 'file',
+        caption TEXT,
+        uploaded_by INTEGER,
 
-            created_at DATETIME
-                DEFAULT CURRENT_TIMESTAMP,
+        created_at DATETIME
+            DEFAULT CURRENT_TIMESTAMP,
 
-            FOREIGN KEY (uploaded_by)
-            REFERENCES users(id)
-        )
-    `);
+        FOREIGN KEY (uploaded_by)
+        REFERENCES users(id)
+    )
+`);
 
     const contentColumns =
         await all(`
@@ -946,7 +967,58 @@ async function initializeSqliteDatabase() {
     await migrateContentTable(
         contentColumns
     );
+const visibilityColumn =
+    contentColumns.find(
+        column =>
+            column.name === "visibility"
+    );
 
+if (!visibilityColumn) {
+    await run(`
+        ALTER TABLE content
+        ADD COLUMN visibility TEXT
+            NOT NULL DEFAULT 'public'
+    `);
+
+    console.log(
+        "Visibility column added to SQLite content table."
+    );
+}
+
+const displayModeColumn =
+    contentColumns.find(
+        column =>
+            column.name === "display_mode"
+    );
+
+if (!displayModeColumn) {
+    await run(`
+        ALTER TABLE content
+        ADD COLUMN display_mode TEXT
+            NOT NULL DEFAULT 'file'
+    `);
+
+    console.log(
+        "Display mode column added to SQLite content table."
+    );
+}
+
+const captionColumn =
+    contentColumns.find(
+        column =>
+            column.name === "caption"
+    );
+
+if (!captionColumn) {
+    await run(`
+        ALTER TABLE content
+        ADD COLUMN caption TEXT
+    `);
+
+    console.log(
+        "Caption column added to SQLite content table."
+    );
+}
     await run(`
         CREATE TABLE IF NOT EXISTS page_content (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -975,6 +1047,9 @@ async function initializeSqliteDatabase() {
             filename TEXT,
             original_name TEXT,
             content TEXT,
+            caption TEXT,
+            visibility TEXT NOT NULL DEFAULT 'public',
+            display_mode TEXT NOT NULL DEFAULT 'file',
             display_order INTEGER DEFAULT 0,
             created_by INTEGER,
             created_at DATETIME
@@ -986,7 +1061,63 @@ async function initializeSqliteDatabase() {
             REFERENCES users(id)
         )
     `);
+const pageContentColumns =
+    await all(`
+        PRAGMA table_info(website_page_content)
+    `);
 
+const pageCaptionColumn =
+    pageContentColumns.find(
+        column =>
+            column.name === "caption"
+    );
+
+if (!pageCaptionColumn) {
+    await run(`
+        ALTER TABLE website_page_content
+        ADD COLUMN caption TEXT
+    `);
+
+    console.log(
+        "Caption column added to SQLite website page content table."
+    );
+}
+
+const pageVisibilityColumn =
+    pageContentColumns.find(
+        column =>
+            column.name === "visibility"
+    );
+
+if (!pageVisibilityColumn) {
+    await run(`
+        ALTER TABLE website_page_content
+        ADD COLUMN visibility TEXT
+            NOT NULL DEFAULT 'public'
+    `);
+
+    console.log(
+        "Visibility column added to SQLite website page content table."
+    );
+}
+
+const pageDisplayModeColumn =
+    pageContentColumns.find(
+        column =>
+            column.name === "display_mode"
+    );
+
+if (!pageDisplayModeColumn) {
+    await run(`
+        ALTER TABLE website_page_content
+        ADD COLUMN display_mode TEXT
+            NOT NULL DEFAULT 'file'
+    `);
+
+    console.log(
+        "Display mode column added to SQLite website page content table."
+    );
+}
     await run(`
         CREATE TABLE IF NOT EXISTS contact_messages (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
