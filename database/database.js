@@ -827,6 +827,24 @@ await run(`
     `);
 
     /*
+    MIGRATE WEBSITE PAGE CONTENT COLUMNS
+    */
+
+    await run(`
+        ALTER TABLE website_page_content
+        ADD COLUMN IF NOT EXISTS caption TEXT
+    `);
+
+    await run(`
+        ALTER TABLE website_page_content
+        ADD COLUMN IF NOT EXISTS visibility TEXT NOT NULL DEFAULT 'public'
+    `);
+
+    await run(`
+        ALTER TABLE website_page_content
+        ADD COLUMN IF NOT EXISTS display_mode TEXT NOT NULL DEFAULT 'file'
+    `);
+    /*
     CONTACT MESSAGES
     */
 
