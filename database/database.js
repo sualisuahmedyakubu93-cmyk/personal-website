@@ -780,6 +780,11 @@ await run(`
         NOT NULL DEFAULT 'file'
 `);
 
+await run(`
+    ALTER TABLE content
+    ADD COLUMN IF NOT EXISTS caption TEXT
+`);
+
     /*
     PAGE CONTENT
     */
