@@ -1,4 +1,5 @@
 ﻿require("dotenv").config();
+console.log("SUPABASE RUNTIME CONFIG:", { url: !!process.env.SUPABASE_URL, serviceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY, bucket: process.env.SUPABASE_STORAGE_BUCKET || "MISSING" });
 
 const express = require("express");
 const path = require("path");
@@ -14,6 +15,7 @@ const uploadRoutes = require("./routes/uploads");
 const contentRoutes = require("./routes/content");
 const contactRoutes = require("./routes/contact");
 const pagesRoutes = require("./routes/pages");
+const { supabaseConfigured, createSignedUrl } = require('./storage/supabaseStorage');
 
 const app = express();
 
@@ -377,6 +379,35 @@ app.get(
         }
 
 
+        if (supabaseConfigured) {
+            try {
+                const storagePath =
+                    category + "/" + safeFilename;
+
+                const signedUrl =
+                    await createSignedUrl(
+                        storagePath
+                    );
+
+                return response.redirect(
+                    signedUrl
+                );
+
+            } catch (error) {
+                console.error(
+                    "Supabase Storage serving error:",
+                    error.message
+                );
+
+                return response
+                    .status(500)
+                    .json({
+                        message:
+                            "Unable to retrieve the stored file."
+                    });
+            }
+        }
+
         const filePath =
             path.join(
                 __dirname,
@@ -384,7 +415,6 @@ app.get(
                 category,
                 safeFilename
             );
-
 
         if (
             !fs.existsSync(
@@ -398,9 +428,6 @@ app.get(
                         "File not found."
                 });
         }
-
-
-
 
         response.sendFile(
             filePath
@@ -505,3 +532,4 @@ async function startServer() {
 }
 
 startServer();
+
