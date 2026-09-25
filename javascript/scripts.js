@@ -309,10 +309,7 @@ LOAD MANAGED HOME CONTENT
 ==========================================
 */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    loadManagedHomeContent
-);
+/* Obsolete Home renderer disabled. index.html now owns public Home rendering. */
 
 
 /*
