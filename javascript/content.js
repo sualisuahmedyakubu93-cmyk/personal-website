@@ -561,7 +561,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        return "file";
+        if (
+    mimeType.startsWith("audio/")
+) {
+    return "audio";
+}
+
+if (
+    /\.(mp3|wav|ogg|m4a|aac|flac)$/i.test(
+        filename
+    )
+) {
+    return "audio";
+}
+
+return "file";
 
     }
 
@@ -836,6 +850,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+        if (
+            fileType === "audio" &&
+            displayMode === "audio"
+        ) {
+            return `
+                <article class="card content-card">
+
+                    <div class="card-icon">
+                        Audio
+                    </div>
+
+                    <div class="card-content">
+
+                        <h3>
+                            ${title}
+                        </h3>
+
+                        <p>
+                            ${description}
+                        </p>
+
+                        <div class="content-media">
+                            <audio
+                                controls
+                                preload="metadata"
+                                style="width:100%;max-width:100%;"
+                            >
+                                <source
+                                    src="${escapeAttribute(fileUrl)}"
+                                >
+                                Your browser does not support
+                                audio playback.
+                            </audio>
+                        </div>
+
+                        <div class="content-actions">
+
+                            <a
+                                href="${escapeAttribute(fileUrl)}"
+                                download
+                                class="btn"
+                            >
+                                Download Audio
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </article>
+            `;
+        }
 
         /*
         ======================================

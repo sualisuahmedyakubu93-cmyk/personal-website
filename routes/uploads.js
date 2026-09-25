@@ -190,10 +190,18 @@ const allowedExtensions = [
     ".gif",
     ".webp",
 
-    // Videos
+        // Videos
     ".mp4",
     ".webm",
-    ".mov"
+    ".mov",
+
+    // Audio
+    ".mp3",
+    ".wav",
+    ".ogg",
+    ".m4a",
+    ".aac",
+    ".flac"
 
 ];
 
@@ -787,10 +795,11 @@ const audioExtensions = [
     }
 
     if (
-        !isImage &&
-        !isVideo &&
-        contentDisplayMode !== "download"
-    ) {
+    !isImage &&
+    !isVideo &&
+    !isAudio &&
+    contentDisplayMode !== "download"
+) {
 
         deleteFileSafely(
             request.file.path
