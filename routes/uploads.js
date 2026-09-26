@@ -12,7 +12,10 @@ const {
     authenticateToken,
     requireAdmin
 } = require("../middleware/authMiddleware");
-
+const {
+    supabaseConfigured,
+    uploadFileToSupabase
+} = require("../storage/supabaseStorage");
 const router = express.Router();
 
 
@@ -593,33 +596,50 @@ if (!contentDisplayMode) {
             ".webp"
         ];
 
-        const videoExtensions = [
-            ".mp4",
-            ".webm",
-            ".mov"
-        ];
+       const videoExtensions = [
+    ".mp4",
+    ".webm",
+    ".mov"
+];
 
-        if (
-            imageExtensions.includes(
-                extension
-            )
-        ) {
+const audioExtensions = [
+    ".mp3",
+    ".wav",
+    ".ogg",
+    ".m4a",
+    ".aac",
+    ".flac"
+];
 
-            contentDisplayMode = "image";
+if (
+    imageExtensions.includes(
+        extension
+    )
+) {
 
-        } else if (
-            videoExtensions.includes(
-                extension
-            )
-        ) {
+    contentDisplayMode = "image";
 
-            contentDisplayMode = "video";
+} else if (
+    videoExtensions.includes(
+        extension
+    )
+) {
 
-        } else {
+    contentDisplayMode = "video";
 
-            contentDisplayMode = "download";
+} else if (
+    audioExtensions.includes(
+        extension
+    )
+) {
 
-        }
+    contentDisplayMode = "audio";
+
+} else {
+
+    contentDisplayMode = "download";
+
+}
 
     } else {
 
@@ -1074,7 +1094,21 @@ const audioExtensions = [
                             finalFilePath
                         );
 
+/*
+==========================================
+UPLOAD FINAL FILE TO SUPABASE STORAGE
+==========================================
+*/
 
+if (supabaseConfigured) {
+
+    await uploadFileToSupabase(
+        finalFilePath,
+        category + "/" + request.file.filename,
+        request.file.mimetype
+    );
+
+}
                         /*
                         ==========================================
                         SAVE FILE INFORMATION TO DATABASE
@@ -1407,6 +1441,7 @@ router.put(
             const allowedDisplayModes = [
                 "image",
                 "video",
+                "audio",
                 "download",
                 "read"
             ];

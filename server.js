@@ -1,4 +1,4 @@
-﻿require("dotenv").config();
+require("dotenv").config();
 console.log("SUPABASE RUNTIME CONFIG:", { url: !!process.env.SUPABASE_URL, serviceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY, bucket: process.env.SUPABASE_STORAGE_BUCKET || "MISSING" });
 
 const express = require("express");
@@ -399,12 +399,10 @@ app.get(
                     error.message
                 );
 
-                return response
-                    .status(500)
-                    .json({
-                        message:
-                            "Unable to retrieve the stored file."
-                    });
+                console.warn(
+                    "Falling back to local stored file:",
+                    category + "/" + safeFilename
+                );
             }
         }
 

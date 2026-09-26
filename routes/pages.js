@@ -7,6 +7,7 @@ const router = express.Router();
 
 const { authenticateToken: authMiddleware, requireAdmin } = require('../middleware/authMiddleware');
 const db = require("../database/database");
+const { supabaseConfigured, uploadFileToSupabase, deleteFileFromSupabase } = require("../storage/supabaseStorage");
 
 // ============================================================
 // WEBSITE PAGE CONFIGURATION
@@ -510,7 +511,7 @@ router.post(
         db.get(
             orderSql,
             [pageKey],
-            (orderErr, orderRow) => {
+            async (orderErr, orderRow) => {
                 if (orderErr) {
                     cleanupTemporaryFile(req.file);
 
@@ -557,6 +558,21 @@ router.post(
                         message:
                             "Failed to save the uploaded file."
                     });
+                }
+
+                if (filename && supabaseConfigured) {
+                    try {
+                        await uploadFileToSupabase(
+                            path.join(PAGES_UPLOAD_DIR, filename),
+                            "pages/" + filename,
+                            req.file ? req.file.mimetype : undefined
+                        );
+                    } catch (storageError) {
+                        console.error(
+                            "Error uploading Website Page file to Supabase:",
+                            storageError
+                        );
+                    }
                 }
 
                 const userId =

@@ -1,4 +1,4 @@
-﻿/*
+/*
 ==========================================
 AUTOMATIC YEAR
 ==========================================
@@ -268,6 +268,18 @@ async function loadManagedHomeContent() {
                 return;
             }
 
+            if (displayMode === 'audio' && /\.(mp3|wav|ogg|m4a|aac|flac)$/i.test(fileName)) {
+                const audio = document.createElement('audio');
+                audio.src = page.file_url;
+                audio.controls = true;
+                audio.preload = 'metadata';
+                audio.style.width = '100%';
+                audio.style.display = 'block';
+
+                managedHomeBody.appendChild(audio);
+                managedHomeSection.hidden = false;
+                return;
+            }
             const fileLink = document.createElement('a');
             fileLink.href = page.file_url;
             fileLink.target = '_blank';
