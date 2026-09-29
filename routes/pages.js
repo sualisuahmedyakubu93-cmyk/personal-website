@@ -757,18 +757,7 @@ const displayMode =
             });
         }
 
-        if (
-            contentMode === "file" &&
-            !req.file
-        ) {
-            cleanupTemporaryFile(req.file);
 
-            return res.status(400).json({
-                success: false,
-                message:
-                    "Please select a replacement file."
-            });
-        }
 
         if (
             contentMode === "write" &&
@@ -839,24 +828,35 @@ const displayMode =
                 let savedContent =
                     existingRow.content;
 
-                try {
-                    if (contentMode === "file") {
-                        filename =
-                            moveUploadedFile(req.file);
+              try {
+    if (contentMode === "file") {
+        if (req.file) {
+            filename =
+                moveUploadedFile(req.file);
 
-                        originalName =
-                            req.file.originalname;
+            originalName =
+                req.file.originalname;
 
-                        savedContent = null;
-                    } else {
-                        filename = null;
-                        originalName = null;
-                        savedContent = content;
+            savedContent = null;
+        } else {
+            filename =
+                existingRow.filename;
 
-                        cleanupTemporaryFile(
-                            req.file
-                        );
-                    }
+            originalName =
+                existingRow.original_name;
+
+            savedContent =
+                existingRow.content;
+        }
+    } else {
+        filename = null;
+        originalName = null;
+        savedContent = content;
+
+        cleanupTemporaryFile(
+            req.file
+        );
+    }
                 } catch (fileError) {
                     cleanupTemporaryFile(req.file);
 

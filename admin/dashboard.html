@@ -942,7 +942,7 @@
                     data-command="undo"
                     title="Undo"
                 >
-                    â†¶
+                    Undo
                 </button>
 
 
@@ -953,7 +953,7 @@
                     data-command="redo"
                     title="Redo"
                 >
-                    â†·
+                    Redo
                 </button>
 
 
@@ -1092,7 +1092,7 @@
                     data-command="justifyLeft"
                     title="Align left"
                 >
-                    â˜°
+                    Left
                 </button>
 
 
@@ -1103,7 +1103,7 @@
                     data-command="justifyCenter"
                     title="Align center"
                 >
-                    â‰¡
+                    Center
                 </button>
 
 
@@ -1114,7 +1114,7 @@
                     data-command="justifyRight"
                     title="Align right"
                 >
-                    â˜·
+                    Right
                 </button>
 
 
@@ -1125,7 +1125,7 @@
                     data-command="justifyFull"
                     title="Justify"
                 >
-                    â˜·
+                    Justify
                 </button>
 
 
@@ -1136,8 +1136,8 @@
                     data-command="insertUnorderedList"
                     title="Bullet list"
                 >
-                    • List
-                </button>
+                         • List
+                     </button>
 
 
                 <!-- NUMBERED LIST -->
@@ -1158,7 +1158,7 @@
                     data-command="indent"
                     title="Increase indentation"
                 >
-                    â†’
+                    Indent
                 </button>
 
 
@@ -1169,7 +1169,7 @@
                     data-command="outdent"
                     title="Decrease indentation"
                 >
-                    â†
+                    Outdent
                 </button>
 
 
@@ -1182,6 +1182,18 @@
                 >
                     Highlight
                 </button>
+
+                <!-- TEXT COLOR -->
+
+                <button
+                    type="button"
+                    id="textColorButton"
+                    title="Text color"
+                >
+                    Text Color
+                </button>
+
+                <input type="color" id="textColorPicker" value="#000000" style="display:none">
 
 
                 <!-- LINK -->
@@ -1345,7 +1357,7 @@
                 <div class="website-page-card-header">
 
                     <div class="website-page-icon">
-                        🏠
+                        &#127968;
                     </div>
 
                     <div>
@@ -1398,7 +1410,7 @@
                 <div class="website-page-card-header">
 
                     <div class="website-page-icon">
-                        👤
+                        &#128100;
                     </div>
 
                     <div>
@@ -1454,7 +1466,7 @@
                 <div class="website-page-card-header">
 
                     <div class="website-page-icon">
-                        💻
+                        &#128187;
                     </div>
 
                     <div>
@@ -1528,6 +1540,9 @@ const token =
     sessionStorage.getItem(
         "userToken"
     );
+
+
+
 
 
 /*
@@ -1743,6 +1758,47 @@ const message =
     document.getElementById(
         "message"
     );
+
+
+/*
+==========================================
+TEXT COLOR
+==========================================
+*/
+
+let savedTextColorRange = null;
+
+document.getElementById("textColorButton").addEventListener(
+    "click",
+    function() {
+        const selection = window.getSelection();
+
+        if (selection && selection.rangeCount > 0 && editor.contains(selection.anchorNode)) {
+            savedTextColorRange = selection.getRangeAt(0).cloneRange();
+        }
+
+        document.getElementById("textColorPicker").click();
+    }
+);
+
+document.getElementById("textColorPicker").addEventListener(
+    "input",
+    function() {
+        editor.focus();
+
+        if (savedTextColorRange) {
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(savedTextColorRange);
+        }
+
+        document.execCommand(
+            "foreColor",
+            false,
+            this.value
+        );
+    }
+);
 
 
 /*
@@ -3959,8 +4015,8 @@ const existingFile =
                         data-command="insertUnorderedList"
                         title="Bullet List"
                     >
-                        • List
-                    </button>
+                         &#8226; List
+                     </button>
 
                     <button
                         type="button"
