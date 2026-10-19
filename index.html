@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -13,40 +13,57 @@
     >
 
     <link rel="stylesheet" href="CSS/styles.css">
-
+<link rel='stylesheet' href='CSS/user-shell.css'>
+<link rel="stylesheet" href="CSS/public-homepage.css">
 </head>
 
-<body>
+<body class="public-homepage">
 
 <!-- HEADER -->
 <header class="header">
 
     <div class="container nav-container">
+<button
+    class="menu-toggle"
+    id="menuToggle"
+    type="button"
+    aria-label="Open navigation sidebar"
+    aria-controls="navbar"
+    aria-expanded="false"
+>
+    &#9776;
+</button>
 
-        <a href="index.html" class="logo">
-            YASU<span>Tech</span>
-        </a>
+        <a href="index.html" class="logo" aria-label="YASU Tech Home">
+    <img
+        src="yasu-tech-logo/yasu-tech-logo-transparent.png"
+        alt="YASU Tech official logo"
+        class="site-logo-image"
+    >
+</a>
 
-        <button
-            class="menu-toggle"
-            id="menuToggle"
-            aria-label="Open navigation menu"
-        >
-             &#9776;
-        </button>
+        
 
         <nav class="navbar" id="navbar">
 
-            <a href="index.html" class="active">Home</a>
-            <a href="about.html">About</a>
-            <a href="documents.html">Documents</a>
-            <a href="speeches.html">Speeches</a>
-            <a href="presentations.html">Presentations</a>
-            <a href="writings.html">Writings</a>
-            <a href="programming.html">Programming</a>
-            <a href="contact.html">Contact</a>
+    <a href="index.html" class="active">Home</a>
+    <a href="about.html">About</a>
+    <a href="documents.html">Documents</a>
+    <a href="speeches.html">Speeches</a>
+    <a href="presentations.html">Presentations</a>
+    <a href="writings.html">Writings</a>
+    <a href="programming.html">Programming</a>
+    <a href="contact.html">Contact</a>
 
-        </nav>
+    <!-- Visible only to authenticated staff members -->
+    <a
+        href="admin/dashboard.html"
+        id="staffDashboardLink"
+        style="display: none;"
+    >Staff Dashboard</a>
+
+<a href="login.html" id="logoutLink" onclick="logout(); return false;">Logout</a>
+</nav>
 
     </div>
 
@@ -167,12 +184,18 @@
             <div class="section-heading">
 
                 <p class="section-subtitle">
-                    EXPLORE
-                </p>
+    YOUR DASHBOARD
+</p>
 
-                <h2>
-                    YASU Tech Digital Portfolio
-                </h2>
+<h2>
+    Your YASU Tech Overview
+</h2>
+
+<p class="dashboard-overview-description">
+    Access academic resources, speeches, presentations, writings,
+    programming projects and other areas of the YASU Tech platform
+    from one convenient place.
+</p>
 
             </div>
 
@@ -591,5 +614,51 @@
 
 </script>
 <!-- END YASU_PUBLIC_HOME_CONTENT_LOADER -->
+ <script>
+(function () {
+    "use strict";
+
+    const staffRoles = [
+        "super_admin",
+        "admin",
+        "content_staff",
+        "technical_staff",
+        "departmental_staff"
+    ];
+
+    const dashboardLink = document.getElementById(
+        "staffDashboardLink"
+    );
+
+    if (!dashboardLink) {
+        return;
+    }
+
+    const stores = [
+        window.localStorage,
+        window.sessionStorage
+    ];
+
+    let authenticatedStaffFound = false;
+
+    for (const store of stores) {
+        try {
+            const token = store.getItem("userToken");
+            const role = store.getItem("userRole");
+
+            if (token && staffRoles.includes(role)) {
+                authenticatedStaffFound = true;
+                break;
+            }
+        } catch (error) {
+            // Continue checking the other available storage.
+        }
+    }
+
+    dashboardLink.style.display = authenticatedStaffFound
+        ? ""
+        : "none";
+})();
+</script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en">
 
@@ -503,6 +503,21 @@
 
 <body>
     <div class="admin-shell">
+        
+    <!-- YASU TECH FULL-WIDTH ADMIN HEADER -->
+    <header class="yasu-global-header" aria-label="YASU Tech administration header">
+        <a class="yasu-global-header-brand" href="#dashboard-top" aria-label="YASU Tech Administrator Dashboard">
+            <img
+                src="../yasu-tech-logo/yasu-tech-logo-transparent.png"
+                alt="YASU Tech official logo"
+                class="yasu-global-header-logo"
+            >
+        </a>
+
+        <span class="yasu-global-header-title">Administrator Workspace</span>
+    </header>
+
+
                 <aside class="admin-sidebar">
                                 <button
                 type="button"
@@ -529,51 +544,14 @@
 
             <div class="yasu-brand">
 
-                <div class="yasu-logo" aria-label="YASU Tech logo">
-                    <svg
-                        viewBox="0 0 64 64"
-                        role="img"
-                        aria-hidden="true"
-                    >
-                        <rect
-                            x="3"
-                            y="3"
-                            width="58"
-                            height="58"
-                            rx="16"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="3"
-                        />
+                <div class="yasu-logo">
+    <img
+        src="../yasu-tech-logo/yasu-tech-logo-transparent.png"
 
-                        <path
-                            d="M16 18L25 34L25 46"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-
-                        <path
-                            d="M34 18L34 34L48 46"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-
-                        <path
-                            d="M34 34L48 18"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                    </svg>
-                </div>
+        alt="YASU Tech official logo"
+        class="yasu-logo-image"
+    >
+</div>
 
                 <div class="yasu-brand-text">
                     <strong>YASU Tech</strong>
@@ -586,48 +564,239 @@
 
             <nav class="admin-navigation" aria-label="Administrator navigation">
 
-                <a
-                    href="#dashboard-top"
-                    class="admin-nav-link active"
-                >
-                    <span class="admin-nav-icon">⌂</span>
-                    <span>Dashboard</span>
-                </a>
 
-                <a
-                    href="#uploadForm"
-                    class="admin-nav-link"
-                >
-                    <span class="admin-nav-icon">＋</span>
-                    <span>Create Content</span>
-                </a>
+<!-- Dashboard -->
 
-                <a
-                    href="#contentList"
-                    class="admin-nav-link"
-                >
-                    <span class="admin-nav-icon">▤</span>
-                    <span>Published Content</span>
-                </a>
+<a href="#dashboard-top"
+class="admin-nav-link active"
+data-dashboard-view="overview"
+aria-current="page">
 
-                
+<svg class="admin-nav-icon"
+     viewBox="0 0 24 24"
+     width="20" height="20"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.8"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     aria-hidden="true">
+    <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+    <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+    <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+    <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+</svg>
 
-                <a
-                    href="#displayControlsSection"
-                    class="admin-nav-link"
-                >
-                    <span class="admin-nav-icon">⚙</span>
-                    <span>Display Controls</span>
-                </a>
+<span>Dashboard</span>
+
+
+</a>
+
+
+<!-- Expandable Content Management -->
+<details class="admin-nav-group">
+
+    <summary class="admin-nav-link">
+
+        <svg class="admin-nav-icon"
+             viewBox="0 0 24 24"
+             width="20" height="20"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             aria-hidden="true">
+            <path d="M5 3h9l5 5v13H5z"></path>
+            <path d="M14 3v5h5"></path>
+            <path d="M8 13h8M8 17h8"></path>
+        </svg>
+
+        <span>Content Management</span>
+
+        <svg class="admin-nav-chevron"
+             viewBox="0 0 24 24"
+             width="16" height="16"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             aria-hidden="true">
+            <path d="m7 10 5 5 5-5"></path>
+        </svg>
+
+    </summary>
+
+    <div class="admin-nav-submenu">
+
+        <a href="#uploadForm" class="admin-nav-link" data-dashboard-view="content-create">
+            <span>Create Content</span>
+        </a>
+
+        <a href="#contentList" class="admin-nav-link" data-dashboard-view="content-list">
+            <span>Published Content</span>
+        </a>
+
+    </div>
+
+</details>
+
+<!-- File Uploads: uses the existing upload section -->
+<a href="#uploadForm" class="admin-nav-link" data-dashboard-view="content-create">
+
+    <svg class="admin-nav-icon"
+         viewBox="0 0 24 24"
+         width="20" height="20"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="1.8"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         aria-hidden="true">
+        <path d="M12 16V4"></path>
+        <path d="m7 9 5-5 5 5"></path>
+        <path d="M4 16v4h16v-4"></path>
+    </svg>
+
+    <span>File Uploads</span>
+</a>
+
+<!-- Display Controls -->
+<a href="#displayControlsSection" class="admin-nav-link" data-dashboard-view="display-controls">
+
+    <svg class="admin-nav-icon"
+         viewBox="0 0 24 24"
+         width="20" height="20"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="1.8"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         aria-hidden="true">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 3.1-.2-.1a1.7 1.7 0 0 0-1.8.2l-.2.1h-3.6l-.1-.2a1.7 1.7 0 0 0-1.4-1l-.3-.1-1.8-3.1.1-.2a1.7 1.7 0 0 0-.3-1.8l-.2-.2v-3.6l.2-.1a1.7 1.7 0 0 0 .3-1.8l-.1-.2 1.8-3.1.3.1a1.7 1.7 0 0 0 1.8-.2l.1-.1h3.6l.2.2a1.7 1.7 0 0 0 1.8.3l.2-.1 1.8 3.1-.1.2a1.7 1.7 0 0 0-.3 1.8l.2.2v3.6z"
+              transform="translate(-1 -1) scale(1.08)"></path>
+    </svg>
+
+    <span>Display Controls</span>
+</a>
+
+<!-- Website Pages -->
+<a href="#websitePagesSection" class="admin-nav-link" data-dashboard-view="website-pages">
+
+    <svg class="admin-nav-icon"
+         viewBox="0 0 24 24"
+         width="20" height="20"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="1.8"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         aria-hidden="true">
+        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+        <path d="M3 9h18"></path>
+        <path d="M7 6.5h.01M10 6.5h.01"></path>
+    </svg>
+
+    <span>Website Pages</span>
+</a>
+<!-- Website Settings -->
 <a
-                    href="#websitePagesSection"
-                    class="admin-nav-link"
-                >
-                    <span class="admin-nav-icon">◫</span>
-                    <span>Website Pages</span>
-                </a>
+    href="#websiteSettingsSection"
+    class="admin-nav-link"
+    data-dashboard-view="website-settings"
+>
+    <svg
+        class="admin-nav-icon"
+        viewBox="0 0 24 24"
+        width="20"
+        height="20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+    >
+        <circle cx="12" cy="12" r="3"></circle>
+        <path
+            d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 3.1-.2-.1a1.7 1.7 0 0 0-1.8.2l-.2.1h-3.6l-.1-.2a1.7 1.7 0 0 0-1.4-1l-.3-.1-1.8-3.1.1-.2a1.7 1.7 0 0 0-.3-1.8l-.2-.2v-3.6l.2-.1a1.7 1.7 0 0 0 .3-1.8l-.1-.2 1.8-3.1.3.1a1.7 1.7 0 0 0 1.8-.2l.1-.1h3.6l.2.2a1.7 1.7 0 0 0 1.8.3l.2-.1 1.8 3.1-.1.2a1.7 1.7 0 0 0-.3 1.8l.2.2v3.6z"
+            transform="translate(-1 -1) scale(1.08)"
+        ></path>
+    </svg>
 
-            </nav>
+        <span>Website Settings</span>
+</a>
+
+<!-- Security & MFA -->
+<a
+    href="#securityMfaSection"
+    class="admin-nav-link"
+    data-dashboard-view="security-mfa"
+>
+    <svg
+        class="admin-nav-icon"
+        viewBox="0 0 24 24"
+        width="20"
+        height="20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+    >
+        <path d="M12 3 20 6v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-3z"></path>
+        <path d="m9 12 2 2 4-4"></path>
+    </svg>
+
+    <span>Security &amp; MFA</span>
+</a>
+
+<!-- Administrator Management -->
+<a href="#administratorManagementSection" class="admin-nav-link" data-dashboard-view="staff-management">
+    <svg class="admin-nav-icon"
+         viewBox="0 0 24 24"
+         width="20"
+         height="20"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="1.8"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         aria-hidden="true">
+        <circle cx="9" cy="8" r="4"></circle>
+        <path d="M2 21v-2a7 7 0 0 1 14 0v2"></path>
+        <path d="M16 4.5a4 4 0 0 1 0 7.5"></path>
+        <path d="M19 14a5 5 0 0 1 3 4.5V21"></path>
+    </svg>
+    <span>Administrator Management</span>
+</a>
+
+
+</nav>
+
+<!-- Public Website -->
+
+<a href="../index.html" class="admin-nav-link">
+    <svg class="admin-nav-icon"
+         viewBox="0 0 24 24"
+         width="20"
+         height="20"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="1.8"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M2 12h20"></path>
+        <path d="M12 2a15 15 0 0 1 0 20"></path>
+        <path d="M12 2a15 15 0 0 0 0 20"></path>
+    </svg>
+    <span>Public Website</span>
+</a>
 
             <div class="sidebar-bottom">
 
@@ -656,36 +825,629 @@
 
 
 <main id="dashboard-top" class="container">
+<!-- YASU TECH ADMINISTRATOR TOP BAR -->
+<header class="admin-topbar" aria-label="Administrator toolbar">
 
+    <div class="admin-topbar-left">
 
-    <h1>
-        YASU Tech Administrator Dashboard
-    </h1>
+        <button
+            type="button"
+            class="admin-topbar-menu-button"
+            id="topbarSidebarToggle"
+            aria-label="Toggle sidebar"
+            title="Toggle sidebar"
+        >
+            <svg viewBox="0 0 24 24"
+                 width="22"
+                 height="22"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 aria-hidden="true">
+                <path d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
 
+        <div class="admin-topbar-heading">
+            <span class="admin-topbar-eyebrow">YASU TECH</span>
+            <h2>Administrator Workspace</h2>
+        </div>
 
-    <p>
-        Manage and publish documents, speeches,
-        presentations and writings.
-    </p>
+    </div>
 
+    <div class="admin-topbar-actions">
 
-    <button
-        type="button"
-        onclick="logout()"
+        <form
+            class="admin-topbar-search"
+            id="adminTopbarSearchForm"
+            role="search"
+        >
+            <svg viewBox="0 0 24 24"
+                 width="19"
+                 height="19"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m16 16 4 4"></path>
+            </svg>
+
+            <input
+                type="search"
+                id="adminTopbarSearch"
+                placeholder="Search dashboard..."
+                aria-label="Search dashboard"
+                autocomplete="off"
+            >
+        </form>
+
+        <button
+            type="button"
+            class="admin-topbar-notifications"
+            id="adminNotificationsButton"
+            aria-label="Notifications"
+            title="Notifications"
+        >
+            <svg viewBox="0 0 24 24"
+                 width="21"
+                 height="21"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 aria-hidden="true">
+                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+                <path d="M10 21h4"></path>
+            </svg>
+        </button>
+
+        <div class="admin-topbar-profile">
+
+            <button
+                type="button"
+                class="admin-topbar-profile-button"
+                id="adminProfileButton"
+                aria-expanded="false"
+                aria-haspopup="true"
+            >
+                <span class="admin-topbar-avatar" aria-hidden="true">Y</span>
+
+                <span class="admin-topbar-user-details">
+                    <strong id="adminTopbarUserName">Administrator</strong>
+                    <small id="adminTopbarUserRole">Admin</small>
+                </span>
+
+                <svg viewBox="0 0 24 24"
+                     width="16"
+                     height="16"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     aria-hidden="true">
+                    <path d="m7 10 5 5 5-5"></path>
+                </svg>
+            </button>
+
+            <div
+                class="admin-topbar-profile-menu"
+                id="adminProfileMenu"
+                hidden
+            >
+                <div class="admin-topbar-profile-menu-heading">
+                    <strong id="adminProfileMenuName">Administrator</strong>
+                    <small id="adminProfileMenuRole">Admin</small>
+                </div>
+
+                <button
+                    type="button"
+                    id="adminProfileMenuLogout"
+                >
+                    Log out
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+<!-- END YASU TECH ADMINISTRATOR TOP BAR -->
+
+<!-- YASU TECH DASHBOARD OVERVIEW WORKSPACE -->
+
+<section
+    id="dashboardOverviewWorkspace"
+    class="dashboard-workspace yasu-overview"
+    data-dashboard-workspace="overview"
+>
+    <!-- WELCOME BANNER -->
+    <header class="yasu-overview-hero">
+        <div class="yasu-hero-content">
+            <span class="yasu-eyebrow">
+                YASU TECH / ADMINISTRATION
+            </span>
+
+            <h1 id="yasuOverviewGreeting">
+                Welcome to YASU Tech
+            </h1>
+
+            <p>
+                Innovating Today, Engineering Tomorrow.
+            </p>
+
+            <p class="yasu-hero-description">
+                Manage your content, monitor website activity,
+                and oversee your digital platform from one place.
+            </p>
+        </div>
+
+        <div class="yasu-hero-brand" aria-hidden="true">
+            <div class="yasu-brand-orbit">
+                <span>Y</span>
+            </div>
+
+            <div class="yasu-brand-caption">
+                <strong>YASU Tech</strong>
+                <span>Administrator Workspace</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- PROFILE SUMMARY -->
+    <section class="yasu-profile-summary">
+        <div class="yasu-profile-identity">
+            <div
+                class="yasu-profile-avatar"
+                id="yasuOverviewAvatar"
+                aria-label="Profile picture placeholder"
+            >
+                Y
+            </div>
+
+            <div class="yasu-profile-details">
+                <span class="yasu-section-kicker">
+                    YOUR WORKSPACE
+                </span>
+
+                <h2 id="yasuOverviewUserName">
+                    Administrator
+                </h2>
+
+                <p id="yasuOverviewUserRole">
+                    Account information will load here.
+                </p>
+            </div>
+        </div>
+
+        <div class="yasu-profile-status">
+            <span class="yasu-status-dot"></span>
+            <span>Dashboard overview</span>
+        </div>
+    </section>
+
+    <!-- WEBSITE STATISTICS -->
+    <section
+        class="yasu-overview-section"
+        aria-labelledby="yasuStatisticsHeading"
     >
-        Logout
-    </button>
+        <div class="yasu-section-heading">
+            <div>
+                <span class="yasu-section-kicker">
+                    WEBSITE PERFORMANCE
+                </span>
 
+                <h2 id="yasuStatisticsHeading">
+                    At a glance
+                </h2>
 
-    <hr>
+                <p>
+                    Key figures from your website and content library.
+                </p>
+            </div>
 
+            <span class="yasu-live-data-badge">
+                <span class="yasu-status-dot"></span>
+                Live data connection pending
+            </span>
+        </div>
 
-    <!--
-    ==========================================
-    CREATE NEW CONTENT
-    ==========================================
-    -->
+        <div class="yasu-statistics-grid">
 
+            <!-- TOTAL CONTENT -->
+            <article class="yasu-stat-card">
+                <div class="yasu-stat-card-top">
+                    <span class="yasu-stat-label">
+                        Total Content
+                    </span>
+
+                    <span class="yasu-stat-icon yasu-icon-blue"
+                          aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M6 3.75h8l4 4v12.5H6z"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M14 3.75v4h4M9 12h6M9 15.5h6"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </span>
+                </div>
+
+                <strong
+                    class="yasu-stat-value"
+                    id="yasuStatTotalContent"
+                >—</strong>
+
+                <span class="yasu-stat-footnote">
+                    Content records
+                </span>
+            </article>
+
+            <!-- DOCUMENTS -->
+            <article class="yasu-stat-card">
+                <div class="yasu-stat-card-top">
+                    <span class="yasu-stat-label">
+                        Documents
+                    </span>
+
+                    <span class="yasu-stat-icon yasu-icon-purple"
+                          aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M6 3.75h8l4 4v12.5H6z"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M14 3.75v4h4M9 12h6M9 15.5h4"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </span>
+                </div>
+
+                <strong
+                    class="yasu-stat-value"
+                    id="yasuStatDocuments"
+                >—</strong>
+
+                <span class="yasu-stat-footnote">
+                    Document library
+                </span>
+            </article>
+
+            <!-- SPEECHES -->
+            <article class="yasu-stat-card">
+                <div class="yasu-stat-card-top">
+                    <span class="yasu-stat-label">
+                        Speeches
+                    </span>
+
+                    <span class="yasu-stat-icon yasu-icon-orange"
+                          aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M12 15a4 4 0 0 0 4-4V7a4 4 0 0 0-8 0v4a4 4 0 0 0 4 4Z"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                            />
+                            <path
+                                d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </span>
+                </div>
+
+                <strong
+                    class="yasu-stat-value"
+                    id="yasuStatSpeeches"
+                >—</strong>
+
+                <span class="yasu-stat-footnote">
+                    Speech library
+                </span>
+            </article>
+
+            <!-- PRESENTATIONS -->
+            <article class="yasu-stat-card">
+                <div class="yasu-stat-card-top">
+                    <span class="yasu-stat-label">
+                        Presentations
+                    </span>
+
+                    <span class="yasu-stat-icon yasu-icon-green"
+                          aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <rect
+                                x="3.5" y="4" width="17" height="12"
+                                rx="1.5"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                            />
+                            <path
+                                d="M12 16v4M8.5 20h7M8 12l2.5-3 2 2 3.5-4"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </span>
+                </div>
+
+                <strong
+                    class="yasu-stat-value"
+                    id="yasuStatPresentations"
+                >—</strong>
+
+                <span class="yasu-stat-footnote">
+                    Presentation library
+                </span>
+            </article>
+
+            <!-- WRITINGS -->
+            <article class="yasu-stat-card">
+                <div class="yasu-stat-card-top">
+                    <span class="yasu-stat-label">
+                        Writings
+                    </span>
+
+                    <span class="yasu-stat-icon yasu-icon-teal"
+                          aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="m15 5 4 4M5 19l3.5-.7L19 7.8a2.1 2.1 0 0 0-3-3L5.7 15.1 5 19Z"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </span>
+                </div>
+
+                <strong
+                    class="yasu-stat-value"
+                    id="yasuStatWritings"
+                >—</strong>
+
+                <span class="yasu-stat-footnote">
+                    Writing library
+                </span>
+            </article>
+
+            <!-- WEBSITE PAGES -->
+            <article class="yasu-stat-card">
+                <div class="yasu-stat-card-top">
+                    <span class="yasu-stat-label">
+                        Website Pages
+                    </span>
+
+                    <span class="yasu-stat-icon yasu-icon-blue"
+                          aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <rect
+                                x="3.5" y="4" width="17" height="16"
+                                rx="2"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                            />
+                            <path
+                                d="M3.5 9h17M7 6.5h.1M10 6.5h.1"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </span>
+                </div>
+
+                <strong
+                    class="yasu-stat-value"
+                    id="yasuStatPages"
+                >—</strong>
+
+                <span class="yasu-stat-footnote">
+                    Managed pages
+                </span>
+            </article>
+
+            <!-- REGISTERED USERS -->
+            <article class="yasu-stat-card">
+                <div class="yasu-stat-card-top">
+                    <span class="yasu-stat-label">
+                        Registered Users
+                    </span>
+
+                    <span class="yasu-stat-icon yasu-icon-green"
+                          aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <circle
+                                cx="9" cy="8" r="3.2"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                            />
+                            <path
+                                d="M3.5 19a5.5 5.5 0 0 1 11 0M16 5.5a3 3 0 0 1 0 5.8M17 14a4.5 4.5 0 0 1 3.5 4.5"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </span>
+                </div>
+
+                <strong
+                    class="yasu-stat-value"
+                    id="yasuStatUsers"
+                >—</strong>
+
+                <span class="yasu-stat-footnote">
+                    Registered accounts
+                </span>
+            </article>
+
+            <!-- STAFF -->
+            <article class="yasu-stat-card">
+                <div class="yasu-stat-card-top">
+                    <span class="yasu-stat-label">
+                        Administrators &amp; Staff
+                    </span>
+
+                    <span class="yasu-stat-icon yasu-icon-purple"
+                          aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <circle
+                                cx="12" cy="8" r="3"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                            />
+                            <path
+                                d="M5 20a7 7 0 0 1 14 0M18 5.5a3 3 0 0 1 0 5.5"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </span>
+                </div>
+
+                <strong
+                    class="yasu-stat-value"
+                    id="yasuStatStaff"
+                >—</strong>
+
+                <span class="yasu-stat-footnote">
+                    Authorized staff accounts
+                </span>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- PERFORMANCE AND ACTIVITY -->
+    <div class="yasu-overview-lower-grid">
+
+        <!-- CONTENT PERFORMANCE -->
+        <section
+            class="yasu-overview-panel"
+            aria-labelledby="yasuPerformanceHeading"
+        >
+            <div class="yasu-panel-heading">
+                <div>
+                    <span class="yasu-section-kicker">
+                        CONTENT ANALYTICS
+                    </span>
+
+                    <h2 id="yasuPerformanceHeading">
+                        Content performance
+                    </h2>
+                </div>
+            </div>
+
+            <p class="yasu-panel-description">
+                A breakdown of your content library by category.
+            </p>
+
+            <div
+                id="yasuContentPerformance"
+                class="yasu-analytics-placeholder"
+                role="status"
+            >
+                <div class="yasu-placeholder-symbol"
+                     aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M4 19V12M10 19V5M16 19v-9M22 19H2"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+                </div>
+
+                <strong>Analytics will appear here</strong>
+
+                <p>
+                    This chart will use your actual content records
+                    after the statistics connection is implemented.
+                </p>
+            </div>
+        </section>
+
+        <!-- RECENT ACTIVITY -->
+        <section
+            class="yasu-overview-panel"
+            aria-labelledby="yasuActivityHeading"
+        >
+            <div class="yasu-panel-heading">
+                <div>
+                    <span class="yasu-section-kicker">
+                        WEBSITE MONITORING
+                    </span>
+
+                    <h2 id="yasuActivityHeading">
+                        Recent activity
+                    </h2>
+                </div>
+            </div>
+
+            <p class="yasu-panel-description">
+                Important events across your website.
+            </p>
+
+            <div
+                id="yasuRecentActivity"
+                class="yasu-activity-placeholder"
+                role="status"
+            >
+                <span class="yasu-activity-placeholder-icon"
+                      aria-hidden="true">
+                    &#128203;
+                </span>
+
+                <div>
+                    <strong>Activity feed is being prepared</strong>
+
+                    <p>
+                        Recent uploads, page updates, and account
+                        events will appear here when connected to
+                        the appropriate backend records.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</section>
+
+<!-- END DASHBOARD OVERVIEW WORKSPACE -->
+
+<section
+    id="createContentWorkspace"
+    class="dashboard-workspace"
+    data-dashboard-workspace="content-create"
+    hidden
+>
     <h2>
         Upload New Content
     </h2>
@@ -1282,7 +2044,7 @@
 
     <p id="message"></p>
 
-
+</section>
     <hr>
 
 
@@ -1291,7 +2053,12 @@
     UPLOADED CONTENT
     ==========================================
     -->
-
+<section
+    id="publishedContentWorkspace"
+    class="dashboard-workspace"
+    data-dashboard-workspace="content-list"
+    hidden
+>
     <h2>
         Uploaded Content
     </h2>
@@ -1302,7 +2069,7 @@
         Loading...
 
     </div>
-
+    </section>
     <hr>
 
     <!--
@@ -1311,7 +2078,12 @@
     ==========================================
     -->
 
-    <section id="displayControlsSection" class="display-controls-section">
+    <section
+    id="displayControlsSection"
+    class="display-controls-section dashboard-workspace"
+    data-dashboard-workspace="display-controls"
+    hidden
+>
 
         <div class="website-pages-header">
             <div>
@@ -1335,7 +2107,12 @@
     ==========================================
     -->
 
-        <section id="websitePagesSection" class="website-pages-section">
+        <section
+    id="websitePagesSection"
+    class="website-pages-section dashboard-workspace"
+    data-dashboard-workspace="website-pages"
+    hidden
+>
 
         <div class="website-pages-header">
             <div>
@@ -1514,7 +2291,648 @@
         </div>
 
     </section>
+    <!-- WEBSITE SETTINGS WORKSPACE -->
+<section
+    id="websiteSettingsSection"
+    class="dashboard-workspace"
+    data-dashboard-workspace="website-settings"
+    hidden
+    style="margin:32px 0;padding:24px;border-radius:12px;"
+>
+    <header style="margin-bottom:24px;">
+        <span class="section-label">WEBSITE CONFIGURATION</span>
+        <h2>Website Settings</h2>
+        <p>
+            Manage the main identity and public-facing text of YASU Tech.
+        </p>
+    </header>
 
+    <form id="websiteSettingsForm">
+        <div style="margin-bottom:20px;">
+            <label for="settingSiteName">
+                <strong>Site name</strong>
+            </label>
+            <input
+                type="text"
+                id="settingSiteName"
+                name="site_name"
+                maxlength="1000"
+                required
+                style="display:block;width:100%;max-width:700px;padding:12px;margin-top:8px;"
+            >
+        </div>
+
+        <div style="margin-bottom:20px;">
+            <label for="settingSiteSlogan">
+                <strong>Site slogan</strong>
+            </label>
+            <input
+                type="text"
+                id="settingSiteSlogan"
+                name="site_slogan"
+                maxlength="1000"
+                required
+                style="display:block;width:100%;max-width:700px;padding:12px;margin-top:8px;"
+            >
+        </div>
+
+        <div style="margin-bottom:20px;">
+            <label for="settingFooterText">
+                <strong>Footer text</strong>
+            </label>
+            <input
+                type="text"
+                id="settingFooterText"
+                name="footer_text"
+                maxlength="1000"
+                required
+                style="display:block;width:100%;max-width:700px;padding:12px;margin-top:8px;"
+            >
+        </div>
+
+        <div style="margin-bottom:20px;">
+            <label for="settingHomepageTitle">
+                <strong>Homepage title</strong>
+            </label>
+            <input
+                type="text"
+                id="settingHomepageTitle"
+                name="homepage_title"
+                maxlength="1000"
+                required
+                style="display:block;width:100%;max-width:700px;padding:12px;margin-top:8px;"
+            >
+        </div>
+
+        <div style="margin-bottom:20px;">
+            <label for="settingHomepageDescription">
+                <strong>Homepage description</strong>
+            </label>
+            <textarea
+                id="settingHomepageDescription"
+                name="homepage_description"
+                maxlength="1000"
+                rows="4"
+                required
+                style="display:block;width:100%;max-width:700px;padding:12px;margin-top:8px;"
+            ></textarea>
+        </div>
+
+        <div style="margin-bottom:20px;">
+            <label for="settingLogoUrl">
+                <strong>Logo URL or local path</strong>
+            </label>
+            <input
+                type="text"
+                id="settingLogoUrl"
+                name="logo_url"
+                maxlength="1000"
+                required
+                style="display:block;width:100%;max-width:700px;padding:12px;margin-top:8px;"
+            >
+            <p style="margin-top:8px;">
+                Example:
+                /yasu-tech-logo/yasu-tech-logo-transparent.png
+            </p>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:12px;">
+            <button type="submit" id="saveWebsiteSettingsButton">
+                Save Website Settings
+            </button>
+
+            <button type="button" id="reloadWebsiteSettingsButton">
+                Reload Saved Settings
+            </button>
+        </div>
+
+        <p
+            id="websiteSettingsMessage"
+            role="status"
+            aria-live="polite"
+            style="margin-top:16px;"
+        >
+            Loading website settings...
+        </p>
+    </form>
+</section>
+<!-- END WEBSITE SETTINGS WORKSPACE -->
+ <!-- SECURITY & MFA WORKSPACE -->
+<section
+    id="securityMfaSection"
+    class="dashboard-workspace"
+    data-dashboard-workspace="security-mfa"
+    style="margin:32px 0;padding:24px;border-radius:12px;"
+    hidden
+>
+    <header style="margin-bottom:24px;">
+        <span class="section-label">ACCOUNT SECURITY</span>
+        <h2>Security &amp; MFA</h2>
+        <p>
+            Manage two-step verification and protect your YASU Tech account.
+        </p>
+    </header>
+
+    <!-- CURRENT SECURITY STATUS -->
+    <div
+        style="padding:20px;border:1px solid #ddd;border-radius:12px;margin-bottom:24px;"
+    >
+        <h3>Two-Step Verification Status</h3>
+
+        <p id="mfaStatusText" role="status" aria-live="polite">
+            Loading security status...
+        </p>
+
+        <p id="mfaMethodText">
+            Verification method: Not yet loaded
+        </p>
+
+        <button type="button" id="refreshMfaStatusButton">
+            Refresh Security Status
+        </button>
+    </div>
+
+    <!-- ENABLE MFA -->
+    <div
+        style="padding:20px;border:1px solid #ddd;border-radius:12px;margin-bottom:24px;"
+    >
+        <h3>Enable Two-Step Verification</h3>
+
+        <p>
+            Choose how you want to verify your identity when required.
+        </p>
+
+        <form id="mfaSetupForm">
+            <div style="margin-bottom:16px;">
+                <label for="mfaSetupMethod">
+                    Verification method
+                </label>
+
+                <select
+                    id="mfaSetupMethod"
+                    name="method"
+                    required
+                    style="display:block;width:100%;max-width:500px;padding:12px;margin-top:8px;"
+                >
+                    <option value="authenticator">
+                        Authenticator app
+                    </option>
+
+                    <option value="email">
+                        Email verification
+                    </option>
+                </select>
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <label for="mfaSetupPassword">
+                    Confirm your current password
+                </label>
+
+                <input
+                    type="password"
+                    id="mfaSetupPassword"
+                    name="password"
+                    autocomplete="current-password"
+                    required
+                    style="display:block;width:100%;max-width:500px;padding:12px;margin-top:8px;"
+                >
+            </div>
+
+            <button type="submit" id="startMfaSetupButton">
+                Start MFA Setup
+            </button>
+        </form>
+
+        <div
+            id="mfaSetupVerification"
+            style="margin-top:24px;"
+            hidden
+        >
+            <h4>Complete Verification</h4>
+
+            <p id="mfaSetupInstructions"></p>
+
+            <div id="mfaQrContainer" hidden>
+                <p>
+                    Scan this QR code using your authenticator app.
+                </p>
+
+                <img
+                    id="mfaSetupQrCode"
+                    alt="Authenticator setup QR code"
+                    style="display:block;width:100%;max-width:260px;height:auto;"
+                >
+            </div>
+
+            <form id="mfaSetupVerifyForm">
+                <div style="margin-bottom:16px;">
+                    <label for="mfaSetupCode">
+                        Six-digit verification code
+                    </label>
+
+                    <input
+                        type="text"
+                        id="mfaSetupCode"
+                        name="code"
+                        inputmode="numeric"
+                        pattern="[0-9]{6}"
+                        maxlength="6"
+                        autocomplete="one-time-code"
+                        required
+                        style="display:block;width:100%;max-width:300px;padding:12px;margin-top:8px;"
+                    >
+                </div>
+
+                <button type="submit" id="verifyMfaSetupButton">
+                    Verify and Enable MFA
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- RECOVERY CODES -->
+    <div
+        style="padding:20px;border:1px solid #ddd;border-radius:12px;margin-bottom:24px;"
+    >
+        <h3>Recovery Codes</h3>
+
+        <p>
+            Recovery codes can help you regain access if you cannot use
+            your authenticator app. Generating new codes replaces the
+            previous set.
+        </p>
+
+        <form id="mfaRecoveryForm">
+            <div style="margin-bottom:16px;">
+                <label for="mfaRecoveryPassword">
+                    Confirm your current password
+                </label>
+
+                <input
+                    type="password"
+                    id="mfaRecoveryPassword"
+                    autocomplete="current-password"
+                    required
+                    style="display:block;width:100%;max-width:500px;padding:12px;margin-top:8px;"
+                >
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <label for="mfaRecoveryCode">
+                    Current authenticator code
+                </label>
+
+                <input
+                    type="text"
+                    id="mfaRecoveryCode"
+                    inputmode="numeric"
+                    pattern="[0-9]{6}"
+                    maxlength="6"
+                    autocomplete="one-time-code"
+                    required
+                    style="display:block;width:100%;max-width:300px;padding:12px;margin-top:8px;"
+                >
+            </div>
+
+            <button type="submit" id="generateMfaRecoveryCodesButton">
+                Generate Recovery Codes
+            </button>
+        </form>
+
+        <div id="mfaRecoveryCodesContainer" style="margin-top:16px;" hidden>
+            <p>
+                Store these codes somewhere safe. They will be displayed
+                only when generated.
+            </p>
+
+            <pre
+                id="mfaRecoveryCodesOutput"
+                style="white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;border:1px solid #ddd;border-radius:8px;"
+            ></pre>
+        </div>
+    </div>
+
+    <!-- DISABLE MFA -->
+    <div
+        style="padding:20px;border:1px solid #ddd;border-radius:12px;"
+    >
+        <h3>Disable Two-Step Verification</h3>
+
+        <p>
+            Disabling two-step verification reduces account protection.
+            Your password and a current verification code are required.
+        </p>
+
+        <form id="mfaDisableForm">
+            <div style="margin-bottom:16px;">
+                <label for="mfaDisablePassword">
+                    Confirm your current password
+                </label>
+
+                <input
+                    type="password"
+                    id="mfaDisablePassword"
+                    autocomplete="current-password"
+                    required
+                    style="display:block;width:100%;max-width:500px;padding:12px;margin-top:8px;"
+                >
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <label for="mfaDisableCode">
+                    Current six-digit verification code
+                </label>
+
+                <input
+                    type="text"
+                    id="mfaDisableCode"
+                    inputmode="numeric"
+                    pattern="[0-9]{6}"
+                    maxlength="6"
+                    autocomplete="one-time-code"
+                    required
+                    style="display:block;width:100%;max-width:300px;padding:12px;margin-top:8px;"
+                >
+            </div>
+
+            <button type="submit" id="disableMfaButton">
+                Disable MFA
+            </button>
+        </form>
+    </div>
+
+    <p
+        id="securityMfaMessage"
+        role="status"
+        aria-live="polite"
+        style="margin-top:20px;"
+    ></p>
+</section>
+<!-- END SECURITY & MFA WORKSPACE -->
+
+<!-- ADMINISTRATOR MANAGEMENT WORKSPACE -->
+<<!-- YASU TECH STAFF MANAGEMENT WORKSPACE -->
+<section
+    id="administratorManagementSection"
+    class="admin-users-section dashboard-workspace"
+    data-dashboard-workspace="staff-management"
+    style="margin:32px 0;padding:24px;border-radius:12px;"
+    hidden
+>
+    <header style="margin-bottom:24px;">
+        <span class="section-label">STAFF & ACCOUNT ADMINISTRATION</span>
+        <h2>Staff Management</h2>
+        <p>
+            Manage website accounts, staff roles, departments,
+            permissions, and administrative activity.
+        </p>
+    </header>
+
+    <!-- OVERVIEW -->
+    <div
+        id="staffOverviewCards"
+        style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:24px;"
+    >
+        <article style="padding:18px;border:1px solid #ddd;border-radius:10px;min-width:140px;">
+            <span>Total Accounts</span>
+            <h3 id="staffTotalAccounts">—</h3>
+        </article>
+
+        <article style="padding:18px;border:1px solid #ddd;border-radius:10px;min-width:140px;">
+            <span>Active Accounts</span>
+            <h3 id="staffActiveAccounts">—</h3>
+        </article>
+
+        <article style="padding:18px;border:1px solid #ddd;border-radius:10px;min-width:140px;">
+            <span>Roles</span>
+            <h3 id="staffTotalRoles">—</h3>
+        </article>
+
+        <article style="padding:18px;border:1px solid #ddd;border-radius:10px;min-width:140px;">
+            <span>Departments</span>
+            <h3 id="staffTotalDepartments">—</h3>
+        </article>
+    </div>
+
+    <!-- MANAGEMENT NAVIGATION -->
+    <div
+        style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;"
+        aria-label="Staff management sections"
+    >
+        <button type="button" data-staff-view="users">Users & Staff</button>
+        <button type="button" data-staff-view="roles">Roles</button>
+        <button type="button" data-staff-view="permissions">Permissions</button>
+        <button type="button" data-staff-view="departments">Departments</button>
+        <button type="button" data-staff-view="audit">Audit Logs</button>
+    </div>
+
+    <p id="staffManagementMessage" role="status" aria-live="polite">
+        Staff management is ready.
+    </p>
+
+    <!-- USERS & STAFF -->
+    <div id="staffViewUsers">
+        <h3>Users & Staff Accounts</h3>
+
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+            <button type="button" id="staffRefreshUsers">Refresh Accounts</button>
+        </div>
+
+        <div style="width:100%;overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;text-align:left;">
+                <thead>
+                    <tr>
+                        <th style="padding:12px;">ID</th>
+                        <th style="padding:12px;">Username</th>
+                        <th style="padding:12px;">Email</th>
+                        <th style="padding:12px;">Role</th>
+                        <th style="padding:12px;">Verified</th>
+                        <th style="padding:12px;">Status</th>
+                        <th style="padding:12px;">Created</th>
+                        <th style="padding:12px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="staffUsersTableBody">
+                    <tr>
+                        <td colspan="8" style="padding:12px;">
+                            Select Refresh Accounts to load users.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ROLES -->
+    <div id="staffViewRoles" hidden>
+        <h3>Available Roles</h3>
+        <button type="button" id="staffRefreshRoles">Refresh Roles</button>
+        <div id="staffRolesResults" style="margin-top:16px;"></div>
+    </div>
+
+    <!-- PERMISSIONS -->
+    <div id="staffViewPermissions" hidden>
+        <h3>System Permissions</h3>
+        <button type="button" id="staffRefreshPermissions">Refresh Permissions</button>
+        <div id="staffPermissionsResults" style="margin-top:16px;"></div>
+    </div>
+
+    <!-- DEPARTMENTS -->
+    <div id="staffViewDepartments" hidden>
+        <h3>Departments</h3>
+
+        <form id="staffCreateDepartmentForm" style="margin:16px 0;">
+            <label for="staffDepartmentName">Department name</label>
+            <input
+                id="staffDepartmentName"
+                name="name"
+                type="text"
+                maxlength="100"
+                required
+            >
+
+            <label for="staffDepartmentDescription">Description</label>
+            <input
+                id="staffDepartmentDescription"
+                name="description"
+                type="text"
+                maxlength="500"
+            >
+
+            <button type="submit">Create Department</button>
+            <button type="button" id="staffRefreshDepartments">Refresh Departments</button>
+        </form>
+
+        <div id="staffDepartmentsResults"></div>
+    </div>
+
+    <!-- AUDIT LOGS -->
+    <div id="staffViewAudit" hidden>
+        <h3>Administrative Activity</h3>
+        <button type="button" id="staffRefreshAudit">Refresh Audit Logs</button>
+        <div id="staffAuditResults" style="margin-top:16px;"></div>
+    </div>
+</section>
+
+<script>
+(function () {
+    const refreshButton =
+        document.getElementById("adminUsersRefresh");
+
+    const message =
+        document.getElementById("adminUsersMessage");
+
+    const total =
+        document.getElementById("adminUsersTotal");
+
+    const tableBody =
+        document.getElementById("adminUsersTableBody");
+
+    if (
+        !refreshButton ||
+        !message ||
+        !total ||
+        !tableBody ||
+        refreshButton.dataset.initialized === "true"
+    ) {
+        return;
+    }
+
+    refreshButton.dataset.initialized = "true";
+
+    function addCell(row, value) {
+        const cell = document.createElement("td");
+
+        cell.style.padding = "12px";
+        cell.style.borderTop = "1px solid #ddd";
+        cell.textContent =
+            value === null || value === undefined
+                ? "—"
+                : String(value);
+
+        row.appendChild(cell);
+    }
+
+    async function loadAccounts() {
+        const token = localStorage.getItem("userToken");
+
+        if (!token) {
+            message.textContent =
+                "No login token was found. Please log in again.";
+
+            return;
+        }
+
+        refreshButton.disabled = true;
+        message.textContent = "Loading accounts…";
+
+        try {
+            const response = await fetch("/api/admin/users", {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            });
+
+            const result = await response.json();
+
+            if (!response.ok || result.success !== true) {
+                throw new Error(
+                    result.message || "Unable to load accounts."
+                );
+            }
+
+            tableBody.replaceChildren();
+
+            result.users.forEach(function (user) {
+                const row = document.createElement("tr");
+
+                addCell(row, user.id);
+                addCell(row, user.username);
+                addCell(row, user.email);
+                addCell(row, user.role);
+                addCell(
+                    row,
+                    Number(user.is_verified) === 1
+                        ? "Verified"
+                        : "Not verified"
+                );
+                addCell(row, user.created_at);
+
+                tableBody.appendChild(row);
+            });
+
+            total.textContent = String(result.count);
+
+            message.textContent =
+                result.count === 0
+                    ? "No accounts were found."
+                    : "Accounts loaded successfully.";
+
+        } catch (error) {
+            message.textContent = error.message;
+
+            tableBody.replaceChildren();
+
+            const row = document.createElement("tr");
+            const cell = document.createElement("td");
+
+            cell.colSpan = 6;
+            cell.style.padding = "12px";
+            cell.textContent = "Account information could not be loaded.";
+
+            row.appendChild(cell);
+            tableBody.appendChild(row);
+
+        } finally {
+            refreshButton.disabled = false;
+        }
+    }
+
+    refreshButton.addEventListener("click", loadAccounts);
+})();
+
+</script>
 
 </main>
 </div>
@@ -1571,18 +2989,16 @@ PROTECT ADMIN DASHBOARD
 */
 
 if (
-
-    !token
-
-    ||
-
-    role !== "admin"
-
+    !token ||
+    ![
+        "super_admin",
+        "admin",
+        "content_staff",
+        "technical_staff",
+        "departmental_staff"
+    ].includes(role)
 ) {
-
-    window.location.href =
-        "../login.html";
-
+    window.location.replace("../login.html");
 }
 
 
@@ -5256,7 +6672,476 @@ formData.append(
             );
         });
     })();
+    // Connect the top-bar menu button to the existing sidebar toggle.
+const topbarToggle = document.getElementById("topbarSidebarToggle");
+
+if (topbarToggle) {
+    topbarToggle.addEventListener("click", function () {
+        toggle.click();
+    });
+}
+/* =========================================================
+   YASU TECH — PHASE 1
+   Profile Menu Functionality
+   ========================================================= */
+
+(function () {
+    "use strict";
+
+    const profileButton =
+        document.getElementById("adminProfileButton");
+
+    const profileMenu =
+        document.getElementById("adminProfileMenu");
+
+const profileName =
+    document.getElementById("adminTopbarUserName");
+
+const profileRole =
+    document.getElementById("adminTopbarUserRole");
+
+const profileAvatar =
+    document.querySelector(".admin-topbar-avatar");
+
+const profileMenuName =
+    document.getElementById("adminProfileMenuName");
+
+const profileMenuRole =
+    document.getElementById("adminProfileMenuRole");
+
+const username =
+    localStorage.getItem("username") ||
+    sessionStorage.getItem("username") ||
+    "Administrator";
+
+const role =
+    localStorage.getItem("userRole") ||
+    sessionStorage.getItem("userRole") ||
+    "admin";
+
+if (profileName) {
+    profileName.textContent = username;
+}
+
+if (profileRole) {
+    profileRole.textContent = role;
+}
+
+if (profileAvatar) {
+    profileAvatar.textContent =
+        username.charAt(0).toUpperCase();
+}
+
+if (profileMenuName) {
+    profileMenuName.textContent = username;
+}
+
+if (profileMenuRole) {
+    profileMenuRole.textContent = role;
+}
+
+
+    const profileLogoutButton =
+        document.getElementById("adminProfileMenuLogout");
+
+    if (!profileButton || !profileMenu || !profileLogoutButton) {
+        console.warn(
+            "YASU Tech: Profile menu elements were not found."
+        );
+        return;
+    }
+
+    function closeProfileMenu() {
+        profileMenu.hidden = true;
+
+        profileButton.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+    }
+
+    function toggleProfileMenu() {
+        const isOpening = profileMenu.hidden;
+
+        profileMenu.hidden = !isOpening;
+
+        profileButton.setAttribute(
+            "aria-expanded",
+            String(isOpening)
+        );
+    }
+
+    profileButton.setAttribute(
+        "aria-haspopup",
+        "true"
+    );
+
+    profileButton.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+    profileButton.addEventListener(
+        "click",
+        toggleProfileMenu
+    );
+
+    profileLogoutButton.addEventListener(
+        "click",
+        function () {
+            logout();
+        }
+    );
+
+    document.addEventListener(
+        "click",
+        function (event) {
+            if (
+                !profileButton.contains(event.target) &&
+                !profileMenu.contains(event.target)
+            ) {
+                closeProfileMenu();
+            }
+        }
+    );
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+            if (event.key === "Escape") {
+                closeProfileMenu();
+            }
+        }
+    );
+})();
+
 </script>
+<script src="notifications.js"></script>
+<script src="global-search.js"></script>
+<script src="staff-management.js"></script>
+<script src="dashboard-monitoring.js"></script>
+<!-- YASU TECH DASHBOARD WORKSPACE SWITCHER -->
+ <script>
+(function () {
+    "use strict";
+
+    async function loadOverviewStats() {
+        const statIds = {
+            totalContent: "yasuStatTotalContent",
+            documents: "yasuStatDocuments",
+            speeches: "yasuStatSpeeches",
+            presentations: "yasuStatPresentations",
+            writings: "yasuStatWritings",
+            pages: "yasuStatPages",
+            users: "yasuStatUsers",
+            staff: "yasuStatStaff"
+        };
+
+        try {
+            const token =
+    sessionStorage.getItem("userToken") ||
+    localStorage.getItem("userToken") ||
+    sessionStorage.getItem("token") ||
+    localStorage.getItem("token");
+
+if (!token) {
+    throw new Error("No authentication token found.");
+}
+
+const response = await fetch("/api/admin/stats", {
+    headers: {
+        Authorization: "Bearer " + token
+    }
+});
+
+            if (!response.ok) {
+                throw new Error(
+                    "Statistics request failed: HTTP " +
+                    response.status
+                );
+            }
+
+            const result = await response.json();
+
+            if (!result.success || !result.stats) {
+                throw new Error(
+                    "The server returned invalid statistics."
+                );
+            }
+
+            Object.entries(statIds).forEach(function ([key, id]) {
+                const element = document.getElementById(id);
+
+                if (element) {
+                    const value = Number(result.stats[key]);
+
+                    element.textContent =
+                        Number.isFinite(value) ? value.toLocaleString() : "—";
+                }
+            });
+
+            console.info(
+                "YASU Tech: Overview statistics loaded."
+            );
+        } catch (error) {
+            console.error(
+                "YASU Tech: Unable to load overview statistics.",
+                error
+            );
+        }
+    }
+
+    loadOverviewStats();
+})();
+</script>
+<script>
+(function () {
+    "use strict";
+
+    const navigationLinks = document.querySelectorAll(
+        "[data-dashboard-view]"
+    );
+
+    const workspaces = document.querySelectorAll(
+        "[data-dashboard-workspace]"
+    );
+
+    function showWorkspace(viewName) {
+        const selectedWorkspace = Array.from(workspaces).find(
+            function (workspace) {
+                return workspace.dataset.dashboardWorkspace === viewName;
+            }
+        );
+
+        if (!selectedWorkspace) {
+            return;
+        }
+
+        workspaces.forEach(function (workspace) {
+            workspace.hidden = workspace !== selectedWorkspace;
+        });
+
+        navigationLinks.forEach(function (link) {
+            const isActive = link.dataset.dashboardView === viewName;
+
+            link.classList.toggle("active", isActive);
+
+            if (isActive) {
+                link.setAttribute("aria-current", "page");
+            } else {
+                link.removeAttribute("aria-current");
+            }
+        });
+
+        window.scrollTo({
+            top: 0,
+            behavior: "auto"
+        });
+    }
+
+    navigationLinks.forEach(function (link) {
+        link.addEventListener("click", function (event) {
+            const viewName = link.dataset.dashboardView;
+
+            if (!viewName) {
+                return;
+            }
+
+            event.preventDefault();
+            showWorkspace(viewName);
+        });
+    });
+
+    showWorkspace("overview");
+})();
+</script>
+<!-- END YASU TECH DASHBOARD WORKSPACE SWITCHER -->
+ <script>
+(function () {
+    "use strict";
+
+    const form = document.getElementById("websiteSettingsForm");
+    const message = document.getElementById("websiteSettingsMessage");
+    const saveButton = document.getElementById("saveWebsiteSettingsButton");
+    const reloadButton = document.getElementById("reloadWebsiteSettingsButton");
+
+    if (!form || !message || !saveButton || !reloadButton) {
+        console.error("YASU Tech: Website Settings form was not found.");
+        return;
+    }
+
+    const settingFields = {
+        site_name: document.getElementById("settingSiteName"),
+        site_slogan: document.getElementById("settingSiteSlogan"),
+        footer_text: document.getElementById("settingFooterText"),
+        homepage_title: document.getElementById("settingHomepageTitle"),
+        homepage_description: document.getElementById("settingHomepageDescription"),
+        logo_url: document.getElementById("settingLogoUrl")
+    };
+
+    function getAuthenticationToken() {
+        return (
+            localStorage.getItem("userToken") ||
+            sessionStorage.getItem("userToken") ||
+            localStorage.getItem("token") ||
+            sessionStorage.getItem("token")
+        );
+    }
+
+    function showMessage(text, isError) {
+        message.textContent = text;
+        message.style.color = isError ? "#b42318" : "#08784b";
+    }
+
+    async function loadWebsiteSettings() {
+        reloadButton.disabled = true;
+        showMessage("Loading website settings...", false);
+
+        try {
+            const response = await fetch("/api/website-settings", {
+                method: "GET",
+                headers: {
+                    Accept: "application/json"
+                }
+            });
+
+            const result = await response.json();
+
+            if (!response.ok || !result.success || !result.settings) {
+                throw new Error(
+                    result.message || "Unable to load website settings."
+                );
+            }
+
+            Object.keys(settingFields).forEach(function (key) {
+                const field = settingFields[key];
+
+                if (field) {
+                    field.value = result.settings[key] || "";
+                }
+            });
+
+            showMessage("Website settings loaded successfully.", false);
+        } catch (error) {
+            console.error(
+                "YASU Tech: Unable to load website settings.",
+                error
+            );
+
+            showMessage(
+                error.message || "Unable to load website settings.",
+                true
+            );
+        } finally {
+            reloadButton.disabled = false;
+        }
+    }
+
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const token = getAuthenticationToken();
+
+        if (!token) {
+            showMessage(
+                "Your login session was not found. Please sign in again.",
+                true
+            );
+            return;
+        }
+
+        const settings = {};
+
+        for (const key of Object.keys(settingFields)) {
+            const field = settingFields[key];
+
+            if (!field) {
+                showMessage("A settings field could not be found.", true);
+                return;
+            }
+
+            settings[key] = field.value.trim();
+
+            if (!settings[key]) {
+                field.focus();
+
+                showMessage(
+                    "Please complete every settings field.",
+                    true
+                );
+
+                return;
+            }
+
+            if (settings[key].length > 1000) {
+                field.focus();
+
+                showMessage(
+                    "Each setting must contain no more than 1000 characters.",
+                    true
+                );
+
+                return;
+            }
+        }
+
+        saveButton.disabled = true;
+        reloadButton.disabled = true;
+
+        showMessage("Saving website settings...", false);
+
+        try {
+            const response = await fetch("/api/website-settings", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: "Bearer " + token
+                },
+                body: JSON.stringify({
+                    settings: settings
+                })
+            });
+
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                throw new Error(
+                    result.message ||
+                    "Unable to save website settings."
+                );
+            }
+
+            showMessage(
+                result.message || "Website settings saved successfully.",
+                false
+            );
+
+            await loadWebsiteSettings();
+        } catch (error) {
+            console.error(
+                "YASU Tech: Unable to save website settings.",
+                error
+            );
+
+            showMessage(
+                error.message || "Unable to save website settings.",
+                true
+            );
+        } finally {
+            saveButton.disabled = false;
+            reloadButton.disabled = false;
+        }
+    });
+
+    reloadButton.addEventListener("click", function () {
+        loadWebsiteSettings();
+    });
+
+    loadWebsiteSettings();
+})();
+</script>
+<script src="security-mfa.js"></script>
 </body>
 
 </html>

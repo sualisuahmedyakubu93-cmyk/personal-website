@@ -1,4 +1,4 @@
-/*
+﻿/*
 ==========================================
 AUTOMATIC YEAR
 ==========================================
@@ -22,64 +22,57 @@ if (
 
 /*
 ==========================================
-NAVIGATION MENU
+RESPONSIVE NAVIGATION MENU
 ==========================================
 */
 
-const menuToggle =
-    document.getElementById(
-        "menuToggle"
-    );
+const menuToggle = document.getElementById("menuToggle");
+const navbar = document.getElementById("navbar");
 
+if (menuToggle && navbar) {
+    const mobileScreen = window.matchMedia("(max-width: 760px)");
 
-const navbar =
-    document.getElementById(
-        "navbar"
-    );
+    function updateMenuButton() {
+        const isOpen = mobileScreen.matches
+            ? navbar.classList.contains("show")
+            : !document.body.classList.contains("sidebar-collapsed");
 
-
-if (
-    menuToggle &&
-    navbar
-) {
-
-    menuToggle.addEventListener(
-        "click",
-
-        () => {
-
-            navbar.classList.toggle(
-                "show"
-            );
-
-        }
-    );
-
-
-    const navigationLinks =
-        navbar.querySelectorAll(
-            "a"
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+        menuToggle.setAttribute(
+            "aria-label",
+            isOpen ? "Close navigation sidebar" : "Open navigation sidebar"
         );
+    }
 
+    function closeMobileSidebar() {
+        navbar.classList.remove("show");
+        updateMenuButton();
+    }
 
-    navigationLinks.forEach(
-        link => {
-
-            link.addEventListener(
-                "click",
-
-                () => {
-
-                    navbar.classList.remove(
-                        "show"
-                    );
-
-                }
-            );
-
+    menuToggle.addEventListener("click", function () {
+        if (mobileScreen.matches) {
+            navbar.classList.toggle("show");
+        } else {
+            document.body.classList.toggle("sidebar-collapsed");
         }
-    );
 
+        updateMenuButton();
+    });
+
+    navbar.querySelectorAll("a:not(#logoutLink)").forEach(function (link) {
+        link.addEventListener("click", function () {
+            if (mobileScreen.matches) {
+                closeMobileSidebar();
+            }
+        });
+    });
+
+    mobileScreen.addEventListener("change", function () {
+        navbar.classList.remove("show");
+        updateMenuButton();
+    });
+
+    updateMenuButton();
 }
 
 

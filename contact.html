@@ -19,6 +19,7 @@
 <title>Contact | YASU Tech</title>
 
 <link rel="stylesheet" href="CSS/styles.css">
+<link rel='stylesheet' href='CSS/user-shell.css'>
 
 </head>
 
@@ -30,9 +31,14 @@
 
     <div class="container nav-container">
 
-        <a href="index.html" class="logo">
-            YASU<span>Tech</span>
-        </a>
+        <a href="index.html" class="logo" aria-label="YASU Tech Home">
+    <img
+        src="yasu-tech-logo/yasu-tech-logo-transparent.png"
+        alt="YASU Tech official logo"
+        class="site-logo-image"
+    >
+</a>
+
 
         <button
             class="menu-toggle"
@@ -79,7 +85,8 @@
                 Contact
             </a>
 
-        </nav>
+        <a href="login.html" id="logoutLink" onclick="logout(); return false;">Logout</a>
+</nav>
 
     </div>
 

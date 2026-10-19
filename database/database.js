@@ -3,6 +3,10 @@ const { Pool } = require("pg");
 const path = require("path");
 const bcrypt = require("bcryptjs");
 const fs = require("fs");
+const {
+initializeStaffManagementSchema
+} = require("./staffManagementSchema");
+
 
 /*
 ==================================================
@@ -849,6 +853,18 @@ await run(`
         ALTER TABLE website_page_content
         ADD COLUMN IF NOT EXISTS display_mode TEXT NOT NULL DEFAULT 'file'
     `);
+        /*
+    GENERAL WEBSITE SETTINGS
+    */
+
+    await run(`
+        CREATE TABLE IF NOT EXISTS website_settings (
+            setting_key TEXT PRIMARY KEY,
+            setting_value TEXT NOT NULL,
+            updated_at TIMESTAMP
+                DEFAULT CURRENT_TIMESTAMP
+        )
+    `);
     /*
     CONTACT MESSAGES
     */
@@ -931,6 +947,12 @@ await run(`
             );
         }
     }
+
+    await initializeStaffManagementSchema({
+        run,
+        all,
+        isPostgres: true
+    });
 
     console.log(
         "Neon PostgreSQL database initialized successfully."
@@ -1141,6 +1163,19 @@ if (!pageDisplayModeColumn) {
         "Display mode column added to SQLite website page content table."
     );
 }
+    /*
+    GENERAL WEBSITE SETTINGS
+    */
+
+    await run(`
+        CREATE TABLE IF NOT EXISTS website_settings (
+            setting_key TEXT PRIMARY KEY,
+            setting_value TEXT NOT NULL,
+            updated_at DATETIME
+                DEFAULT CURRENT_TIMESTAMP
+        )
+    `);
+    
     await run(`
         CREATE TABLE IF NOT EXISTS contact_messages (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1211,6 +1246,12 @@ if (!pageDisplayModeColumn) {
             );
         }
     }
+
+    await initializeStaffManagementSchema({
+        run,
+        all,
+        isPostgres: false
+    });
 
     console.log(
         "SQLite database initialized successfully."

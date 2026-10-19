@@ -1,0 +1,497 @@
+
+Yes
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Verify Your Identity | YASU Tech</title>
+    <style>
+        :root {
+            --primary: #08784b;
+            --primary-dark: #065d3a;
+            --background: #f3f7f5;
+            --surface: #ffffff;
+            --text: #17211c;
+            --muted: #647168;
+            --border: #dce5df;
+            --error: #b42318;
+            --success: #087443;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            background: var(--background);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .verification-card {
+            width: 100%;
+            max-width: 440px;
+            padding: 32px 26px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 12px 36px rgba(15, 45, 30, 0.08);
+        }
+
+        .brand {
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .brand-name {
+            margin: 0;
+            color: var(--primary);
+            font-size: 27px;
+            font-weight: 800;
+            letter-spacing: -0.7px;
+        }
+
+        .brand-tagline {
+            margin: 7px 0 0;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .security-icon {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: #e5f4ec;
+            color: var(--primary);
+            font-size: 29px;
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            text-align: center;
+            font-size: 25px;
+            line-height: 1.3;
+        }
+
+        .description {
+            margin: 0 0 24px;
+            color: var(--muted);
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .method-label {
+            margin: 0 0 20px;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #f8faf9;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            min-height: 54px;
+            padding: 12px;
+            border: 1px solid #c8d4cc;
+            border-radius: 10px;
+            background: #ffffff;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 24px;
+            letter-spacing: 8px;
+            text-align: center;
+        }
+
+        input:focus {
+            outline: 3px solid rgba(8, 120, 75, 0.16);
+            border-color: var(--primary);
+        }
+
+        .help-text {
+            margin: 9px 0 20px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        button {
+            width: 100%;
+            min-height: 48px;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            background: var(--primary);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: var(--primary-dark);
+        }
+
+        button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        .message {
+            display: none;
+            margin: 16px 0;
+            padding: 12px;
+            border-radius: 9px;
+            font-size: 13px;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .message.error {
+            display: block;
+            border: 1px solid #f2c5c2;
+            background: #fff1f0;
+            color: var(--error);
+        }
+
+        .message.success {
+            display: block;
+            border: 1px solid #b7e1c9;
+            background: #ecfdf3;
+            color: var(--success);
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 22px;
+            color: var(--primary);
+            font-size: 13px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin: 24px 0 0;
+            color: var(--muted);
+            font-size: 11px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 380px) {
+            .verification-card {
+                padding: 26px 18px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            input {
+                font-size: 22px;
+                letter-spacing: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+<main class="verification-card">
+    <header class="brand">
+        <p class="brand-name">YASU Tech</p>
+        <p class="brand-tagline">Innovating Today, Engineering Tomorrow</p>
+    </header>
+
+    <div class="security-icon" aria-hidden="true">&#128274;</div>
+
+    <h1>Verify Your Identity</h1>
+
+    <p class="description" id="description">
+        Complete the additional security check to continue signing in.
+    </p>
+
+    <div class="method-label" id="methodLabel">
+        Preparing your verification...
+    </div>
+
+    <form id="mfaForm">
+        <label for="verificationCode">Six-digit verification code</label>
+
+        <input
+            id="verificationCode"
+            name="code"
+            type="text"
+            inputmode="numeric"
+            autocomplete="one-time-code"
+            pattern="[0-9]{6}"
+            minlength="6"
+            maxlength="6"
+            placeholder="000000"
+            aria-describedby="codeHelp"
+            required
+        >
+
+        <p class="help-text" id="codeHelp">
+            Enter the current six-digit code for your selected verification method.
+        </p>
+
+        <div
+            class="message"
+            id="message"
+            role="status"
+            aria-live="polite"
+        ></div>
+
+        <button id="verifyButton" type="submit">
+            Verify and Continue
+        </button>
+    </form>
+
+    <a class="back-link" id="backLink" href="login.html">
+        Return to login
+    </a>
+
+    <p class="footer">
+        Your account will be signed in only after verification succeeds.
+    </p>
+</main>
+
+<script>
+"use strict";
+
+const challengeId = sessionStorage.getItem("mfaChallengeId");
+const method = sessionStorage.getItem("mfaMethod");
+const loginOrigin = sessionStorage.getItem("mfaLoginOrigin");
+
+const form = document.getElementById("mfaForm");
+const codeInput = document.getElementById("verificationCode");
+const verifyButton = document.getElementById("verifyButton");
+const message = document.getElementById("message");
+const methodLabel = document.getElementById("methodLabel");
+const description = document.getElementById("description");
+const backLink = document.getElementById("backLink");
+
+const adminRoles = [
+    "super_admin",
+    "admin",
+    "content_staff",
+    "technical_staff",
+    "departmental_staff"
+];
+
+function getLoginUrl() {
+    return loginOrigin === "admin"
+        ? "/admin/login.html"
+        : "/login.html";
+}
+
+function clearChallenge() {
+    sessionStorage.removeItem("mfaChallengeId");
+    sessionStorage.removeItem("mfaMethod");
+    sessionStorage.removeItem("mfaLoginOrigin");
+}
+
+function showMessage(text, type) {
+    message.textContent = text;
+    message.className = "message " + type;
+}
+
+function expireChallenge(text) {
+    clearChallenge();
+    form.hidden = true;
+    showMessage(text, "error");
+    backLink.href = getLoginUrl();
+    backLink.textContent = "Return to login";
+}
+
+backLink.href = getLoginUrl();
+
+if (!challengeId || !method) {
+    expireChallenge(
+        "Your verification session is missing or has expired. Please sign in again."
+    );
+} else if (method !== "email" && method !== "authenticator") {
+    expireChallenge(
+        "The verification method is invalid. Please sign in again."
+    );
+} else {
+    if (method === "email") {
+        methodLabel.textContent =
+            "Email verification: enter the six-digit code sent to your registered email address.";
+
+        description.textContent =
+            "Check your email for the verification code. If it does not arrive, check your spam or junk folder.";
+    } else {
+        methodLabel.textContent =
+            "Authenticator app: enter the current six-digit code displayed in your authenticator app.";
+
+        description.textContent =
+            "Open the authenticator app connected to your YASU Tech account and enter its current code.";
+    }
+
+    codeInput.focus();
+}
+
+codeInput.addEventListener("input", function () {
+    codeInput.value = codeInput.value.replace(/\D/g, "").slice(0, 6);
+});
+
+form.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    if (!challengeId || !method) {
+        expireChallenge(
+            "Your verification session has expired. Please sign in again."
+        );
+        return;
+    }
+
+    const code = codeInput.value.trim();
+
+    if (!/^\d{6}$/.test(code)) {
+        showMessage(
+            "Enter all six digits of your verification code.",
+            "error"
+        );
+        codeInput.focus();
+        return;
+    }
+
+    verifyButton.disabled = true;
+    verifyButton.textContent = "Verifying...";
+
+    showMessage(
+        "Checking your verification code...",
+        "success"
+    );
+
+    try {
+        const response = await fetch(
+            "/api/auth/verify-mfa-login",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    challengeId: challengeId,
+                    code: code
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            showMessage(
+                data.message ||
+                "Verification failed. Please check your code and try again.",
+                "error"
+            );
+
+            if (
+                response.status === 429 ||
+                response.status === 403 ||
+                response.status === 404
+            ) {
+                expireChallenge(
+                    data.message ||
+                    "This verification session is no longer valid. Please sign in again."
+                );
+            }
+
+            return;
+        }
+
+        if (
+            !data.token ||
+            !data.user ||
+            !data.user.role ||
+            !data.user.username
+        ) {
+            showMessage(
+                "The server returned an incomplete login response. Please contact support.",
+                "error"
+            );
+            return;
+        }
+
+        localStorage.setItem("userToken", data.token);
+        localStorage.setItem("userRole", data.user.role);
+        localStorage.setItem("username", data.user.username);
+
+        clearChallenge();
+
+        showMessage(
+            "Verification successful. Redirecting...",
+            "success"
+        );
+
+        const isAdminRole = adminRoles.includes(data.user.role);
+
+        if (loginOrigin === "admin") {
+            if (!isAdminRole) {
+                localStorage.removeItem("userToken");
+                localStorage.removeItem("userRole");
+                localStorage.removeItem("username");
+
+                showMessage(
+                    "This account does not have administrator or staff access.",
+                    "error"
+                );
+
+                backLink.href = "/admin/login.html";
+                return;
+            }
+
+            window.location.replace("/admin/dashboard.html");
+        } else if (isAdminRole) {
+            window.location.replace("/admin/dashboard.html");
+        } else {
+            window.location.replace("/");
+        }
+    } catch (error) {
+        console.error(
+            "MFA verification request failed:",
+            error.message
+        );
+
+        showMessage(
+            "Unable to contact the server. Check your connection and try again.",
+            "error"
+        );
+    } finally {
+        verifyButton.disabled = false;
+        verifyButton.textContent = "Verify and Continue";
+    }
+});
+</script>
+</body>
+</html>

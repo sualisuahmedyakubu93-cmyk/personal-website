@@ -1,4 +1,4 @@
-require("dotenv").config();
+﻿require("dotenv").config();
 console.log("SUPABASE RUNTIME CONFIG:", { url: !!process.env.SUPABASE_URL, serviceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY, bucket: process.env.SUPABASE_STORAGE_BUCKET || "MISSING" });
 
 const express = require("express");
@@ -11,10 +11,14 @@ const {
 } = require("./database/database");
 
 const authRoutes = require("./routes/auth");
+const mfaRoutes = require("./routes/mfa");
 const uploadRoutes = require("./routes/uploads");
 const contentRoutes = require("./routes/content");
 const contactRoutes = require("./routes/contact");
 const pagesRoutes = require("./routes/pages");
+const websiteSettingsRoutes = require("./routes/websiteSettings");
+const adminUsersRoutes = require("./routes/adminUsers");
+const staffManagementRoutes = require("./routes/staffManagement");
 const { supabaseConfigured, createSignedUrl } = require('./storage/supabaseStorage');
 
 const app = express();
@@ -108,6 +112,11 @@ app.use(
 );
 
 app.use(
+    "/api/auth/mfa",
+    mfaRoutes
+);
+
+app.use(
     "/api/uploads",
     uploadRoutes
 );
@@ -126,7 +135,24 @@ app.use(
     "/api/pages",
     pagesRoutes
 );
+app.use(
+    "/api/website-settings",
+    websiteSettingsRoutes
+);
+app.use(
+    "/api/admin/users", 
+    adminUsersRoutes
+);
+const dashboardStatsRoutes = require("./routes/dashboardStats");
 
+app.use(
+    "/api/admin/stats",
+    dashboardStatsRoutes
+);
+app.use(
+    "/api/staff-management",
+    staffManagementRoutes
+);
 
 /*
 ==========================================
@@ -196,7 +222,23 @@ app.get(
     }
 );
 
+/*
+==========================================
+MFA LOGIN VERIFICATION
+==========================================
+*/
 
+app.get(
+    "/mfa-verify.html",
+    function (request, response) {
+        response.sendFile(
+            path.join(
+                __dirname,
+                "mfa-verify.html"
+            )
+        );
+    }
+);
 /*
 ==========================================
 ADMINISTRATOR LOGIN

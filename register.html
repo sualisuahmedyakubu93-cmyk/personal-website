@@ -88,80 +88,30 @@
     }
 
 
-    /* =========================================
-       YASU TECH LOGO
-    ========================================== */
+    
+/* =========================================
+   OFFICIAL YASU TECH LOGO
+========================================== */
 
-    .auth-logo {
-        display: flex;
+.auth-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 25px;
+}
 
-        align-items: center;
-
-        justify-content: center;
-
-        gap: 12px;
-
-        margin-bottom: 25px;
-    }
-
-
-    .logo-mark {
-        width: 58px;
-
-        height: 58px;
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        border-radius: 15px;
-
-        background:
-            linear-gradient(
-                135deg,
-                #111827,
-                #2563eb
-            );
-
-        box-shadow:
-            0 8px 18px
-            rgba(37, 99, 235, 0.25);
-    }
+.auth-logo-image {
+    display: block;
+    width: 100%;
+    max-width: 280px;
+    max-height: 110px;
+    height: auto;
+    object-fit: contain;
+    margin: 0 auto;
+}
 
 
-    .logo-mark svg {
-        width: 36px;
-
-        height: 36px;
-
-        fill: none;
-
-        stroke: #ffffff;
-
-        stroke-width: 2;
-
-        stroke-linecap: round;
-
-        stroke-linejoin: round;
-    }
-
-
-    .logo-text {
-        font-size: 30px;
-
-        font-weight: 800;
-
-        letter-spacing: -1px;
-
-        color: #111827;
-    }
-
-
-    .logo-text span {
-        color: #2563eb;
-    }
 
 
     /* =========================================
@@ -484,48 +434,13 @@
     <section class="auth-container">
 
 
-        <!-- YASU TECH LOGO -->
-
         <div class="auth-logo">
-
-            <div class="logo-mark">
-
-                <svg
-                    viewBox="0 0 48 48"
-                    aria-hidden="true"
-                >
-
-                    <!-- Y -->
-
-                    <path
-                        d="M10 9 L18 21 L26 9"
-                    />
-
-                    <path
-                        d="M18 21 L18 37"
-                    />
-
-
-                    <!-- T -->
-
-                    <path
-                        d="M29 9 L43 9"
-                    />
-
-                    <path
-                        d="M36 9 L36 37"
-                    />
-
-                </svg>
-
-            </div>
-
-
-            <div class="logo-text">
-                YASU<span>Tech</span>
-            </div>
-
-        </div>
+    <img
+        src="yasu-tech-logo/yasu-tech-logo-transparent.png"
+        alt="YASU Tech official logo"
+        class="auth-logo-image"
+    >
+</div>
 
 
         <!-- REGISTRATION HEADING -->

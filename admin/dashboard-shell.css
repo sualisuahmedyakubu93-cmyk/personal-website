@@ -135,24 +135,34 @@
 }
 
 .yasu-logo {
-    width: 46px;
-    height: 46px;
+width: 46px;
+height: 46px;
 
-    flex: 0 0 46px;
+flex: 0 0 46px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+display: flex;
+align-items: center;
+justify-content: center;
 
-    color: #ffffff;
+overflow: hidden;
+
+background: transparent;
+border-radius: 8px;
+
 }
 
-.yasu-logo svg {
-    width: 100%;
-    height: 100%;
+.yasu-logo-image {
+display: block;
 
-    display: block;
+
+width: 100%;
+height: 100%;
+
+object-fit: contain;
+object-position: center;
+
 }
+
 
 .yasu-brand-text {
     min-width: 0;
@@ -731,5 +741,1787 @@
     .admin-shell::before {
         transition: none;
     }
+
+}
+
+/* =========================================================
+   YASU TECH — PHASE 1
+   Professional Administrator Sidebar
+   ========================================================= */
+
+.admin-sidebar {
+    background: linear-gradient(
+        180deg,
+        #0b1730 0%,
+        #10264a 55%,
+        #0b1730 100%
+    );
+
+    color: #f8fafc;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 8px 0 30px rgba(15, 23, 42, 0.12);
+}
+
+/* Sidebar navigation layout */
+.admin-navigation {
+    padding: 18px 12px;
+    gap: 6px;
+}
+
+/* Navigation links and buttons */
+.admin-navigation a,
+.admin-navigation button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    min-height: 46px;
+    padding: 12px 14px;
+
+    color: #cbd5e1;
+    background: transparent;
+
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-align: left;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Hover state */
+.admin-navigation a:hover,
+.admin-navigation button:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Keyboard accessibility */
+.admin-navigation a:focus-visible,
+.admin-navigation button:focus-visible {
+    outline: 2px solid #60a5fa;
+    outline-offset: 3px;
+}
+
+/* Current page and selected navigation item */
+.admin-navigation a.active,
+.admin-navigation a[aria-current="page"],
+.admin-navigation button.active {
+    color: #ffffff;
+    background: linear-gradient(
+        90deg,
+        rgba(37, 99, 235, 0.95),
+        rgba(29, 78, 216, 0.72)
+    );
+
+    border-color: rgba(147, 197, 253, 0.25);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Sidebar toggle button */
+.admin-sidebar .sidebar-toggle {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 9px;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.admin-sidebar .sidebar-toggle:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.24);
+}
+
+/* Responsive navigation */
+@media (max-width: 700px) {
+    .admin-navigation {
+        padding: 14px 10px;
+    }
+
+    .admin-navigation a,
+    .admin-navigation button {
+        min-height: 44px;
+        padding: 11px 12px;
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .admin-navigation a,
+    .admin-navigation button,
+    .admin-sidebar .sidebar-toggle {
+        transition: none;
+    }
+}
+/* =========================================================
+YASU TECH — PHASE 1
+Expandable Content Management Navigation
+========================================================= */
+
+.admin-nav-group {
+width: 100%;
+margin: 0;
+padding: 0;
+}
+
+/* Remove the browser's default disclosure marker */
+.admin-nav-group > summary {
+list-style: none;
+}
+
+.admin-nav-group > summary::-webkit-details-marker {
+display: none;
+}
+
+/* Keep the summary consistent with other navigation links */
+.admin-nav-group > summary.admin-nav-link {
+cursor: pointer;
+user-select: none;
+}
+
+/* Chevron alignment and animation */
+.admin-nav-chevron {
+flex-shrink: 0;
+margin-left: auto;
+transition: transform 0.2s ease;
+}
+
+.admin-nav-group[open] > summary .admin-nav-chevron {
+transform: rotate(180deg);
+}
+
+/* Nested navigation links */
+.admin-nav-submenu {
+display: flex;
+flex-direction: column;
+gap: 4px;
+margin: 5px 0 8px 16px;
+padding-left: 12px;
+border-left: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+/* Make nested links slightly more compact */
+.admin-nav-submenu .admin-nav-link {
+min-height: 40px;
+padding: 9px 12px;
+font-size: 13px;
+}
+
+/* Consistent icon sizing */
+.admin-nav-icon {
+display: block;
+flex: 0 0 20px;
+width: 20px;
+height: 20px;
+}
+
+/* Keep nested links readable on smaller screens */
+@media (max-width: 700px) {
+.admin-nav-submenu {
+margin-left: 12px;
+padding-left: 10px;
+}
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+.admin-nav-chevron {
+transition: none;
+}
+}
+
+
+/* =========================================================
+YASU TECH — PHASE 1
+Professional Administrator Top Bar
+========================================================= */
+
+.admin-topbar {
+position: sticky;
+top: 0;
+z-index: 100;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 20px;
+min-height: 82px;
+padding: 16px 28px;
+background: #ffffff;
+border-bottom: 1px solid #e2e8f0;
+box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+}
+
+.admin-topbar-left,
+.admin-topbar-actions {
+display: flex;
+align-items: center;
+gap: 16px;
+min-width: 0;
+}
+
+.admin-topbar-heading {
+min-width: 0;
+}
+
+.admin-topbar-eyebrow {
+display: block;
+margin-bottom: 4px;
+color: #2563eb;
+font-size: 10px;
+font-weight: 800;
+letter-spacing: 0.14em;
+}
+
+.admin-topbar-heading h2 {
+margin: 0;
+color: #0f172a;
+font-size: 20px;
+font-weight: 700;
+line-height: 1.3;
+}
+
+.admin-topbar-menu-button,
+.admin-topbar-notifications {
+display: inline-flex;
+flex-shrink: 0;
+align-items: center;
+justify-content: center;
+width: 42px;
+height: 42px;
+padding: 0;
+color: #334155;
+background: #f8fafc;
+border: 1px solid #e2e8f0;
+border-radius: 11px;
+cursor: pointer;
+transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.admin-topbar-menu-button:hover,
+.admin-topbar-notifications:hover {
+background: #eff6ff;
+border-color: #bfdbfe;
+}
+
+.admin-topbar-search {
+display: flex;
+align-items: center;
+gap: 10px;
+width: min(300px, 28vw);
+min-width: 180px;
+padding: 0 13px;
+color: #64748b;
+background: #f8fafc;
+border: 1px solid #e2e8f0;
+border-radius: 11px;
+}
+
+.admin-topbar-search:focus-within {
+background: #ffffff;
+border-color: #60a5fa;
+box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+.admin-topbar-search input {
+width: 100%;
+min-width: 0;
+height: 42px;
+padding: 0;
+color: #0f172a;
+background: transparent;
+border: 0;
+outline: none;
+font: inherit;
+font-size: 13px;
+}
+
+.admin-topbar-search input::placeholder {
+color: #94a3b8;
+}
+
+.admin-topbar-profile {
+position: relative;
+flex-shrink: 0;
+}
+
+.admin-topbar-profile-button {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 5px 8px;
+color: #0f172a;
+background: transparent;
+border: 1px solid transparent;
+border-radius: 12px;
+text-align: left;
+cursor: pointer;
+}
+
+.admin-topbar-profile-button:hover,
+.admin-topbar-profile-button[aria-expanded="true"] {
+background: #f8fafc;
+border-color: #e2e8f0;
+}
+
+.admin-topbar-avatar {
+display: inline-flex;
+flex-shrink: 0;
+align-items: center;
+justify-content: center;
+width: 42px;
+height: 42px;
+color: #ffffff;
+background: linear-gradient(135deg, #2563eb, #1e3a8a);
+border-radius: 50%;
+font-size: 17px;
+font-weight: 800;
+}
+
+.admin-topbar-user-details {
+display: flex;
+flex-direction: column;
+gap: 3px;
+max-width: 145px;
+}
+
+.admin-topbar-user-details strong {
+overflow: hidden;
+color: #0f172a;
+font-size: 13px;
+font-weight: 700;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+
+.admin-topbar-user-details small {
+color: #64748b;
+font-size: 11px;
+text-transform: capitalize;
+}
+
+.admin-topbar-profile-menu {
+position: absolute;
+top: calc(100% + 10px);
+right: 0;
+z-index: 200;
+width: 220px;
+padding: 8px;
+background: #ffffff;
+border: 1px solid #e2e8f0;
+border-radius: 12px;
+box-shadow: 0 15px 40px rgba(15, 23, 42, 0.14);
+}
+
+.admin-topbar-profile-menu[hidden] {
+display: none !important;
+}
+
+.admin-topbar-profile-menu-heading {
+display: flex;
+flex-direction: column;
+gap: 5px;
+padding: 12px;
+border-bottom: 1px solid #e2e8f0;
+}
+
+.admin-topbar-profile-menu-heading strong {
+color: #0f172a;
+font-size: 13px;
+}
+
+.admin-topbar-profile-menu-heading small {
+color: #64748b;
+font-size: 12px;
+}
+
+.admin-topbar-profile-menu > button {
+display: block;
+width: 100%;
+margin-top: 6px;
+padding: 11px 12px;
+color: #b91c1c;
+background: transparent;
+border: 0;
+border-radius: 8px;
+font: inherit;
+font-size: 13px;
+text-align: left;
+cursor: pointer;
+}
+
+.admin-topbar-profile-menu > button:hover {
+background: #fef2f2;
+}
+
+.admin-topbar button:focus-visible {
+outline: 2px solid #60a5fa;
+outline-offset: 3px;
+}
+
+@media (max-width: 1000px) {
+.admin-topbar {
+gap: 12px;
+padding: 14px 18px;
+}
+
+
+.admin-topbar-actions {
+    gap: 10px;
+}
+
+.admin-topbar-search {
+    width: 210px;
+    min-width: 150px;
+}
+
+
+}
+
+@media (max-width: 700px) {
+.admin-topbar {
+flex-wrap: wrap;
+min-height: auto;
+padding: 14px;
+}
+
+
+.admin-topbar-left {
+    flex: 1;
+    gap: 10px;
+}
+
+.admin-topbar-heading h2 {
+    font-size: 16px;
+}
+
+.admin-topbar-actions {
+    width: 100%;
+    gap: 8px;
+}
+
+.admin-topbar-search {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+}
+
+.admin-topbar-user-details {
+    max-width: 100px;
+}
+
+.admin-topbar-profile-button {
+    gap: 6px;
+    padding: 4px;
+}
+
+
+}
+
+@media (max-width: 400px) {
+.admin-topbar-eyebrow {
+font-size: 9px;
+}
+
+
+.admin-topbar-heading h2 {
+    font-size: 14px;
+}
+
+.admin-topbar-user-details {
+    display: none;
+}
+
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+.admin-topbar-menu-button,
+.admin-topbar-notifications,
+.admin-topbar-search,
+.admin-topbar-profile-button {
+transition: none;
+}
+}
+/* PHASE 1 FIX: Keep the top bar above the dashboard content */
+.admin-topbar {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    flex: 0 0 100%;
+}
+/* Hide the duplicate navigation button in the top bar */
+.admin-topbar-menu-button {
+    display: none !important;
+}
+/* Ensure JavaScript-hidden dashboard elements stay hidden */
+[hidden] {
+    display: none !important;
+}
+/* =========================================================
+   YASU TECH — GLOBAL ADMIN DASHBOARD SEARCH
+   Search results, match highlighting, and navigation
+   ========================================================= */
+
+.admin-global-search-results {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 10000;
+
+    box-sizing: border-box;
+    width: min(560px, calc(100vw - 32px));
+    max-height: 65vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    padding: 12px;
+
+    color: #172033;
+    background: #ffffff;
+
+    border: 1px solid #d5ddeb;
+    border-radius: 12px;
+
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+}
+
+.admin-global-search-results[hidden] {
+    display: none !important;
+}
+
+.admin-global-search-summary {
+    position: sticky;
+    top: -12px;
+    z-index: 1;
+
+    margin: -12px -12px 10px;
+    padding: 12px;
+
+    color: #243b63;
+    background: #f0f5ff;
+
+    border-bottom: 1px solid #d5ddeb;
+
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.admin-global-search-result {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+
+    margin: 0 0 8px;
+    padding: 12px;
+
+    color: #172033;
+    background: #ffffff;
+
+    border: 1px solid #e0e6ef;
+    border-radius: 9px;
+
+    font: inherit;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.admin-global-search-result:last-child {
+    margin-bottom: 0;
+}
+
+.admin-global-search-result:hover {
+    background: #f4f7fc;
+    border-color: #8aa9dc;
+}
+
+.admin-global-search-result:focus-visible {
+    outline: 3px solid #4779d1;
+    outline-offset: 2px;
+}
+
+.admin-global-search-result-title {
+    display: block;
+    max-width: 100%;
+
+    color: #172033;
+
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+.admin-global-search-result-category {
+    display: block;
+    max-width: 100%;
+
+    color: #58677f;
+
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+.admin-global-search-result-snippet {
+    display: block;
+    max-width: 100%;
+
+    color: #39465b;
+
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+    white-space: normal;
+}
+
+.admin-global-search-result-snippet mark {
+    padding: 1px 3px;
+
+    color: #172033;
+    background: #ffeb99;
+
+    border-radius: 3px;
+
+    font-weight: 700;
+}
+
+.admin-global-search-empty {
+    margin: 8px 0 4px;
+    padding: 16px 12px;
+
+    color: #7a2430;
+    background: #fff4f4;
+
+    border: 1px solid #f1d0d3;
+    border-radius: 8px;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    overflow-wrap: anywhere;
+}
+
+.admin-global-search-target {
+    outline: 3px solid #4779d1 !important;
+    outline-offset: 4px !important;
+
+    border-radius: 6px;
+
+    scroll-margin-block: 100px;
+
+    transition: outline-color 0.2s ease;
+}
+
+@media (max-width: 600px) {
+    .admin-global-search-results {
+        right: -8px;
+
+        width: calc(100vw - 24px);
+        max-height: 60vh;
+
+        padding: 10px;
+    }
+
+    .admin-global-search-summary {
+        top: -10px;
+
+        margin: -10px -10px 8px;
+        padding: 10px;
+    }
+
+    .admin-global-search-result {
+        padding: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .admin-global-search-result,
+    .admin-global-search-target {
+        transition: none;
+    }
+}
+/* =========================================
+YASU TECH — ADMIN NOTIFICATIONS
+========================================= */
+
+.admin-topbar-actions {
+position: relative;
+}
+
+.admin-topbar-notifications {
+position: relative;
+}
+
+.admin-notifications-count {
+position: absolute;
+top: -5px;
+right: -5px;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+min-width: 18px;
+height: 18px;
+padding: 0 4px;
+color: #ffffff;
+background: #dc2626;
+border: 2px solid #ffffff;
+border-radius: 999px;
+font-size: 10px;
+font-weight: 800;
+line-height: 1;
+}
+
+.admin-notifications-panel {
+position: absolute;
+top: calc(100% + 10px);
+right: 54px;
+z-index: 1000;
+width: min(360px, calc(100vw - 32px));
+max-height: 420px;
+overflow-y: auto;
+padding: 16px;
+color: #0f172a;
+background: #ffffff;
+border: 1px solid #e2e8f0;
+border-radius: 14px;
+box-shadow: 0 12px 35px rgba(15, 23, 42, 0.16);
+}
+
+.admin-notifications-heading {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 12px;
+margin-bottom: 12px;
+}
+
+.admin-notifications-heading h3 {
+margin: 0;
+font-size: 16px;
+font-weight: 800;
+}
+
+.admin-notifications-refresh {
+padding: 7px 10px;
+color: #1d4ed8;
+background: #eff6ff;
+border: 1px solid #bfdbfe;
+border-radius: 8px;
+font: inherit;
+font-size: 12px;
+font-weight: 700;
+cursor: pointer;
+}
+
+.admin-notifications-refresh:hover {
+background: #dbeafe;
+}
+
+.admin-notifications-status,
+.admin-notifications-note {
+margin: 8px 0;
+color: #64748b;
+font-size: 12px;
+line-height: 1.5;
+}
+
+.admin-notifications-list {
+display: grid;
+gap: 10px;
+}
+
+.admin-notification-item {
+padding: 11px;
+background: #f8fafc;
+border: 1px solid #e2e8f0;
+border-radius: 10px;
+overflow-wrap: anywhere;
+}
+
+.admin-notification-sender {
+display: block;
+margin-bottom: 4px;
+font-size: 13px;
+font-weight: 800;
+}
+
+.admin-notification-subject {
+margin: 0 0 6px;
+color: #334155;
+font-size: 12px;
+line-height: 1.5;
+}
+
+.admin-notification-date {
+color: #64748b;
+font-size: 11px;
+}
+
+@media (max-width: 700px) {
+.admin-notifications-panel {
+right: 0;
+width: min(360px, calc(100vw - 28px));
+max-height: 65vh;
+}
+}
+/* YASU TECH DASHBOARD WORKSPACE VISIBILITY */
+.dashboard-workspace[hidden] {
+    display: none !important;
+}
+/* ==========================================
+   YASU TECH PROFESSIONAL OVERVIEW
+========================================== */
+
+.yasu-overview {
+    width: 100%;
+    max-width: 1500px;
+    margin-inline: auto;
+    padding-bottom: 32px;
+    color: #172033;
+}
+
+.yasu-overview,
+.yasu-overview * {
+    box-sizing: border-box;
+}
+
+.yasu-overview-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    min-height: 245px;
+    padding: 38px 42px;
+    overflow: hidden;
+    border-radius: 20px;
+    color: #ffffff;
+    background: linear-gradient(120deg, #101a35, #1b315c 68%, #263f70);
+    box-shadow: 0 12px 30px rgba(16, 26, 53, 0.12);
+}
+
+.yasu-overview-hero::after {
+    content: "";
+    position: absolute;
+    width: 310px;
+    height: 310px;
+    top: -170px;
+    right: 150px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.yasu-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+}
+
+.yasu-eyebrow,
+.yasu-section-kicker {
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.7px;
+    line-height: 1.5;
+}
+
+.yasu-eyebrow {
+    margin-bottom: 14px;
+    color: #c6d7ff;
+}
+
+.yasu-overview-hero h1 {
+    margin: 0 0 10px;
+    color: #ffffff;
+    font-size: clamp(27px, 3vw, 38px);
+    font-weight: 750;
+    line-height: 1.2;
+    letter-spacing: -0.8px;
+}
+
+.yasu-overview-hero p {
+    margin: 0;
+    color: #e0e8fb;
+    line-height: 1.7;
+}
+
+.yasu-overview-hero .yasu-hero-description {
+    max-width: 570px;
+    margin-top: 12px;
+    color: #c3cfe6;
+    font-size: 14px;
+}
+
+.yasu-hero-brand {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 0 170px;
+    gap: 12px;
+    text-align: center;
+}
+
+.yasu-brand-orbit {
+    display: grid;
+    width: 96px;
+    height: 96px;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.48);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 0 0 9px rgba(255, 255, 255, 0.035),
+        inset 0 0 25px rgba(255, 255, 255, 0.04);
+}
+
+.yasu-brand-orbit span {
+    color: #ffffff;
+    font-size: 51px;
+    font-weight: 800;
+    letter-spacing: -4px;
+}
+
+.yasu-brand-caption {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.yasu-brand-caption strong {
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.yasu-brand-caption span {
+    color: #c3cfe6;
+    font-size: 11px;
+}
+
+/* PROFILE SUMMARY */
+
+.yasu-profile-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 24px 0 32px;
+    padding: 20px 24px;
+    border: 1px solid #e8edf5;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 5px 20px rgba(20, 35, 65, 0.035);
+}
+
+.yasu-profile-identity {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+
+.yasu-profile-avatar {
+    display: grid;
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+    place-items: center;
+    border: 2px solid #dbe5f7;
+    border-radius: 50%;
+    background: #edf3ff;
+    color: #203c76;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.yasu-profile-details {
+    min-width: 0;
+}
+
+.yasu-section-kicker {
+    margin-bottom: 5px;
+    color: #64748b;
+    font-size: 10px;
+    letter-spacing: 1.35px;
+}
+
+.yasu-profile-details h2 {
+    margin: 0;
+    color: #172033;
+    font-size: 18px;
+    font-weight: 750;
+    overflow-wrap: anywhere;
+}
+
+.yasu-profile-details p {
+    margin: 5px 0 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.yasu-profile-status,
+.yasu-live-data-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.yasu-status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    flex: 0 0 8px;
+    border-radius: 50%;
+    background: #94a3b8;
+}
+
+/* SECTION HEADINGS */
+
+.yasu-overview-section {
+    margin-bottom: 32px;
+}
+
+.yasu-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.yasu-section-heading h2,
+.yasu-panel-heading h2 {
+    margin: 0;
+    color: #172033;
+    font-size: 22px;
+    font-weight: 750;
+    letter-spacing: -0.35px;
+}
+
+.yasu-section-heading p,
+.yasu-panel-description {
+    margin: 7px 0 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.yasu-live-data-badge {
+    padding: 9px 12px;
+    border: 1px solid #e5eaf2;
+    border-radius: 30px;
+    background: #ffffff;
+    white-space: normal;
+}
+
+/* STATISTICS CARDS */
+
+.yasu-statistics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.yasu-stat-card {
+    min-width: 0;
+    padding: 21px;
+    border: 1px solid #e8edf5;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 5px 20px rgba(20, 35, 65, 0.035);
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        border-color 180ms ease;
+}
+
+.yasu-stat-card:hover {
+    transform: translateY(-3px);
+    border-color: #d6e1f2;
+    box-shadow: 0 12px 26px rgba(20, 35, 65, 0.075);
+}
+
+.yasu-stat-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.yasu-stat-label {
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 650;
+    line-height: 1.5;
+}
+
+.yasu-stat-icon {
+    display: grid;
+    width: 43px;
+    height: 43px;
+    flex: 0 0 43px;
+    place-items: center;
+    border-radius: 12px;
+}
+
+.yasu-stat-icon svg,
+.yasu-placeholder-symbol svg {
+    width: 23px;
+    height: 23px;
+}
+
+.yasu-icon-blue {
+    color: #3568d4;
+    background: #edf3ff;
+}
+
+.yasu-icon-purple {
+    color: #7953c6;
+    background: #f3efff;
+}
+
+.yasu-icon-orange {
+    color: #c77828;
+    background: #fff4e8;
+}
+
+.yasu-icon-green {
+    color: #20875d;
+    background: #e9f8f0;
+}
+
+.yasu-icon-teal {
+    color: #138b91;
+    background: #e7f8f8;
+}
+
+.yasu-stat-value {
+    display: block;
+    margin-top: 20px;
+    color: #172033;
+    font-size: 33px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.8px;
+}
+
+.yasu-stat-footnote {
+    display: block;
+    margin-top: 10px;
+    color: #8490a4;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* PERFORMANCE AND ACTIVITY PANELS */
+
+.yasu-overview-lower-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.yasu-overview-panel {
+    min-width: 0;
+    padding: 25px;
+    border: 1px solid #e8edf5;
+    border-radius: 17px;
+    background: #ffffff;
+    box-shadow: 0 5px 20px rgba(20, 35, 65, 0.035);
+}
+
+.yasu-panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.yasu-panel-heading h2 {
+    font-size: 19px;
+}
+
+.yasu-analytics-placeholder {
+    display: flex;
+    min-height: 220px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    text-align: center;
+}
+
+.yasu-placeholder-symbol {
+    display: grid;
+    width: 54px;
+    height: 54px;
+    place-items: center;
+    margin-bottom: 16px;
+    border-radius: 15px;
+    background: #edf3ff;
+    color: #3568d4;
+}
+
+.yasu-analytics-placeholder strong,
+.yasu-activity-placeholder strong {
+    color: #26344d;
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.yasu-analytics-placeholder p,
+.yasu-activity-placeholder p {
+    max-width: 310px;
+    margin: 8px 0 0;
+    color: #7a879b;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.yasu-activity-placeholder {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    min-height: 150px;
+    margin-top: 25px;
+    padding: 20px;
+    border: 1px dashed #dce4ef;
+    border-radius: 13px;
+    background: #fafcff;
+}
+
+.yasu-activity-placeholder-icon {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    place-items: center;
+    border-radius: 11px;
+    background: #edf3ff;
+    font-size: 18px;
+}
+
+/* RESPONSIVE LAYOUT */
+
+@media (max-width: 1100px) {
+    .yasu-statistics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .yasu-overview-hero {
+        padding: 32px;
+    }
+}
+
+@media (max-width: 760px) {
+    .yasu-overview-hero {
+        min-height: auto;
+        padding: 27px 23px;
+    }
+
+    .yasu-hero-brand {
+        display: none;
+    }
+
+    .yasu-profile-summary,
+    .yasu-section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .yasu-profile-summary {
+        padding: 18px;
+    }
+
+    .yasu-statistics-grid,
+    .yasu-overview-lower-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .yasu-overview-panel {
+        padding: 20px;
+    }
+
+    .yasu-live-data-badge {
+        align-self: flex-start;
+    }
+}
+
+@media (max-width: 420px) {
+    .yasu-overview-hero {
+        padding: 24px 19px;
+        border-radius: 15px;
+    }
+
+    .yasu-overview-hero h1 {
+        font-size: 27px;
+    }
+
+    .yasu-stat-card {
+        padding: 18px;
+    }
+
+    .yasu-stat-value {
+        font-size: 30px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .yasu-stat-card {
+        transition: none;
+    }
+
+    .yasu-stat-card:hover {
+        transform: none;
+    }
+}
+
+/* ENSURE HIDDEN WORKSPACES STAY HIDDEN */
+.dashboard-workspace[hidden] {
+    display: none !important;
+}
+/* YASU TECH LIVE CONTENT ANALYTICS */
+
+.yasu-live-analytics {
+    margin-top: 22px;
+}
+
+.yasu-analytics-chart {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+}
+
+.yasu-donut-chart {
+    width: 180px;
+    max-width: 100%;
+    height: auto;
+    flex: 0 1 180px;
+}
+
+.yasu-donut-chart circle {
+    fill: none;
+    stroke-width: 24;
+}
+
+.yasu-donut-track {
+    stroke: #edf1f7;
+}
+
+.yasu-donut-segment {
+    transform: rotate(-90deg);
+    transform-origin: 90px 90px;
+    stroke-linecap: butt;
+    transition: stroke-dasharray 0.35s ease;
+}
+
+.yasu-analytics-legend {
+    display: grid;
+    gap: 13px;
+    min-width: 150px;
+}
+
+.yasu-analytics-legend-item {
+    display: grid;
+    grid-template-columns: 10px minmax(0, 1fr);
+    align-items: start;
+    gap: 9px;
+    color: #526078;
+    font-size: 12px;
+}
+
+.yasu-analytics-dot {
+    width: 10px;
+    height: 10px;
+    margin-top: 4px;
+    border-radius: 50%;
+}
+
+.yasu-analytics-legend-item strong {
+    display: block;
+    margin-top: 3px;
+    color: #26344d;
+    font-size: 13px;
+}
+
+.yasu-analytics-total {
+    fill: #26344d;
+    font-size: 25px;
+    font-weight: 750;
+    text-anchor: middle;
+}
+
+.yasu-analytics-total-label {
+    fill: #8490a4;
+    font-size: 10px;
+    text-anchor: middle;
+}
+
+.yasu-activity-list {
+    display: grid;
+    gap: 0;
+    margin-top: 22px;
+}
+
+.yasu-activity-item {
+    display: grid;
+    grid-template-columns: 10px minmax(0, 1fr);
+    gap: 12px;
+    padding: 15px 0;
+    border-bottom: 1px solid #edf1f7;
+}
+
+.yasu-activity-item:last-child {
+    border-bottom: 0;
+}
+
+.yasu-activity-dot {
+    width: 9px;
+    height: 9px;
+    margin-top: 5px;
+    border-radius: 50%;
+    background: #3568d4;
+}
+
+.yasu-activity-item strong {
+    display: block;
+    color: #26344d;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.yasu-activity-item p {
+    margin: 5px 0 0;
+    color: #7a879b;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.yasu-activity-item time {
+    display: block;
+    margin-top: 5px;
+    color: #8490a4;
+    font-size: 10px;
+}
+
+.yasu-analytics-message {
+    padding: 20px 0;
+    color: #7a879b;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+@media (max-width: 480px) {
+    .yasu-analytics-chart {
+        gap: 20px;
+    }
+
+    .yasu-analytics-legend {
+        width: 100%;
+    }
+}
+/* YASU TECH — CONTENT ANALYTICS */
+
+.yasu-live-analytics {
+    margin-top: 22px;
+}
+
+.yasu-analytics-chart {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+}
+
+.yasu-donut-chart {
+    width: 180px;
+    max-width: 100%;
+    height: auto;
+    flex: 0 1 180px;
+}
+
+.yasu-donut-chart circle {
+    fill: none;
+    stroke-width: 24;
+}
+
+.yasu-donut-track {
+    stroke: #edf1f7;
+}
+
+.yasu-donut-segment {
+    transform: rotate(-90deg);
+    transform-origin: 90px 90px;
+}
+
+.yasu-analytics-legend {
+    display: grid;
+    gap: 13px;
+    min-width: 150px;
+}
+
+.yasu-analytics-legend-item {
+    display: grid;
+    grid-template-columns: 10px minmax(0, 1fr);
+    align-items: start;
+    gap: 9px;
+    color: #526078;
+    font-size: 12px;
+}
+
+.yasu-analytics-dot {
+    width: 10px;
+    height: 10px;
+    margin-top: 4px;
+    border-radius: 50%;
+}
+
+.yasu-analytics-legend-item strong {
+    display: block;
+    margin-top: 3px;
+    color: #26344d;
+    font-size: 13px;
+}
+
+.yasu-analytics-total {
+    fill: #26344d;
+    font-size: 25px;
+    font-weight: 750;
+    text-anchor: middle;
+}
+
+.yasu-analytics-total-label {
+    fill: #8490a4;
+    font-size: 10px;
+    text-anchor: middle;
+}
+
+/* YASU TECH — WEBSITE MONITORING */
+
+.yasu-activity-list {
+    display: grid;
+    gap: 0;
+    margin-top: 22px;
+}
+
+.yasu-activity-item {
+    display: grid;
+    grid-template-columns: 10px minmax(0, 1fr);
+    gap: 12px;
+    padding: 15px 0;
+    border-bottom: 1px solid #edf1f7;
+}
+
+.yasu-activity-item:last-child {
+    border-bottom: 0;
+}
+
+.yasu-activity-dot {
+    width: 9px;
+    height: 9px;
+    margin-top: 5px;
+    border-radius: 50%;
+    background: #3568d4;
+}
+
+.yasu-activity-item strong {
+    display: block;
+    color: #26344d;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.yasu-activity-item p {
+    margin: 5px 0 0;
+    color: #7a879b;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.yasu-activity-item time {
+    display: block;
+    margin-top: 5px;
+    color: #8490a4;
+    font-size: 10px;
+}
+
+.yasu-analytics-message {
+    padding: 20px 0;
+    color: #7a879b;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+@media (max-width: 480px) {
+    .yasu-analytics-chart {
+        gap: 20px;
+    }
+
+    .yasu-analytics-legend {
+        width: 100%;
+    }
+}
+/* =========================================================
+YASU TECH FULL-WIDTH ADMINISTRATOR HEADER
+========================================================= */
+
+.yasu-global-header {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+z-index: 1200;
+
+
+display: flex;
+align-items: center;
+gap: 16px;
+
+width: 100%;
+height: 64px;
+min-height: 64px;
+padding: 6px 18px;
+
+box-sizing: border-box;
+
+background: #dff3e5;
+color: #08784b;
+
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+
+
+}
+
+.yasu-global-header-brand {
+display: flex;
+align-items: center;
+justify-content: center;
+
+
+flex: 0 0 auto;
+width: 150px;
+height: 52px;
+
+overflow: hidden;
+background: transparent;
+border-radius: 0;
+
+
+}
+
+.yasu-global-header-logo {
+display: block;
+width: 100%;
+height: 100%;
+
+
+object-fit: contain;
+object-position: center;
+
+
+}
+
+.yasu-global-header-title {
+font-size: 16px;
+font-weight: 600;
+letter-spacing: 0.2px;
+}
+
+/* Keep the existing sidebar below the new header. */
+.admin-sidebar {
+top: 64px;
+bottom: 0;
+height: calc(100vh - 64px);
+}
+
+/* Keep the sidebar toggle below the header. */
+.admin-shell:not(.sidebar-collapsed) > .sidebar-toggle {
+top: 78px;
+}
+
+.admin-shell.sidebar-collapsed > .sidebar-toggle {
+top: 76px;
+}
+
+/* Prevent the existing sticky toolbar from hiding behind the header. */
+.admin-topbar {
+top: 64px;
+}
+
+/* Compact layout on phones. */
+@media (max-width: 600px) {
+.yasu-global-header {
+height: 58px;
+min-height: 58px;
+gap: 10px;
+padding: 5px 10px;
+}
+
+
+.yasu-global-header-brand {
+    width: 116px;
+    height: 46px;
+}
+
+.yasu-global-header-title {
+    font-size: 13px;
+}
+
+.admin-sidebar {
+    top: 58px;
+    height: calc(100vh - 58px);
+}
+
+.admin-shell:not(.sidebar-collapsed) > .sidebar-toggle {
+    top: 72px;
+}
+
+.admin-shell.sidebar-collapsed > .sidebar-toggle {
+    top: 70px;
+}
+
+.admin-topbar {
+    top: 58px;
+}
+
 
 }

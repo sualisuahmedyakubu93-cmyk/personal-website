@@ -1,5 +1,9 @@
 const jwt = require("jsonwebtoken");
 
+const {
+    get
+} = require("../database/database");
+
 function authenticateToken(
     request,
     response,
@@ -37,23 +41,79 @@ function authenticateToken(
     );
 }
 
-function requireAdmin(
+async function requireAdmin(
     request,
     response,
     next
 ) {
-    if (
-        !request.user ||
-        request.user.role !== "admin"
-    ) {
-        return response.status(403).json({
+    try {
+        if (
+            !request.user ||
+            !request.user.id
+        ) {
+            return response.status(401).json({
+                message:
+                    "Please log in to continue."
+            });
+        }
+
+        const currentUser = await get(
+            `
+            SELECT
+                id,
+                username,
+                email,
+                role,
+                is_verified
+            FROM users
+            WHERE id = ?
+            `,
+            [request.user.id]
+        );
+
+        if (
+            !currentUser ||
+            !currentUser.is_verified
+        ) {
+            return response.status(403).json({
+                message:
+                    "Your account is unavailable or not verified."
+            });
+        }
+
+        const allowedRoles = [
+            "admin",
+            "super_admin"
+        ];
+
+        if (
+            !allowedRoles.includes(
+                currentUser.role
+            )
+        ) {
+            return response.status(403).json({
+                message:
+                    "Administrator access is required."
+            });
+        }
+
+        request.currentUser = currentUser;
+
+        next();
+
+    } catch (error) {
+        console.error(
+            "Administrator authorization error:",
+            error.message
+        );
+
+        return response.status(500).json({
             message:
-                "Administrator access is required."
+                "Unable to verify administrator permissions."
         });
     }
-
-    next();
 }
+    
 
 module.exports = {
     authenticateToken,

@@ -1543,3 +1543,13 @@ textarea {
     }
 
 }
+/* YASU TECH OFFICIAL WEBSITE LOGO */
+
+.site-logo-image {
+    display: block;
+    width: 160px;
+    max-width: 100%;
+    height: 48px;
+    object-fit: contain;
+    object-position: left center;
+}

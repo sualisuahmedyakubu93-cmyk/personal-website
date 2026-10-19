@@ -8,3 +8,4 @@ uploads/documents/*
 uploads/speeches/*
 uploads/presentations/*
 uploads/writings/*
+.env.*

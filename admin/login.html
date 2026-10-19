@@ -16,6 +16,21 @@
         rel="stylesheet"
         href="../CSS/styles.css"
     >
+<link
+    rel="stylesheet"
+    href="../CSS/styles.css"
+>
+
+<style>
+    .admin-login-logo {
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        height: 100px;
+        object-fit: contain;
+        object-position: center;
+    }
+</style>
 
 </head>
 
@@ -30,6 +45,13 @@
         <h1>
             Administrator Login
         </h1>
+        <div class="auth-logo">
+    <img
+        src="../yasu-tech-logo/yasu-tech-logo-transparent.png"
+        alt="YASU Tech official logo"
+        class="admin-login-logo"
+    >
+</div>
 
 
         <form id="adminLoginForm">
@@ -144,7 +166,52 @@ document
 
             const data =
                 await response.json();
+            /*
+            =================================
+            MFA VERIFICATION REQUIRED
+            =================================
+            */
 
+            if (
+                response.ok &&
+                data.mfaRequired === true
+            ) {
+
+                // Remove any previous authenticated session.
+                for (const store of [
+                    localStorage,
+                    sessionStorage
+                ]) {
+
+                    store.removeItem("userToken");
+                    store.removeItem("userRole");
+                    store.removeItem("username");
+
+                }
+
+                // Save only the temporary MFA challenge.
+                sessionStorage.setItem(
+                    "mfaChallengeId",
+                    data.challengeId
+                );
+
+                sessionStorage.setItem(
+                    "mfaMethod",
+                    data.method
+                );
+
+                // Identify that verification began from
+                // the administrator login page.
+                sessionStorage.setItem(
+                    "mfaLoginOrigin",
+                    "admin"
+                );
+
+                window.location.href =
+                    "../mfa-verify.html";
+
+                return;
+            }
 
             if (!response.ok) {
 
@@ -159,38 +226,38 @@ document
             }
 
 
-            if (
-                data.user.role !==
-                "admin"
-            ) {
+            const staffRoles = [
+    "super_admin",
+    "admin",
+    "content_staff",
+    "technical_staff",
+    "departmental_staff"
+];
 
-                document
-                    .getElementById(
-                        "message"
-                    )
-                    .textContent =
-                        "You do not have administrator access.";
+if (!staffRoles.includes(data.user.role)) {
 
-                return;
-            }
+    document
+        .getElementById("message")
+        .textContent =
+            "Your account does not have staff dashboard access.";
 
-
-            const storage =
-                rememberMe
-                    ? localStorage
-                    : sessionStorage;
+    return;
+}
 
 
-            storage.setItem(
-                "userToken",
-                data.token
-            );
+            // Remove the previous account's identity from both storages.
+for (const store of [localStorage, sessionStorage]) {
+    store.removeItem("userToken");
+    store.removeItem("userRole");
+    store.removeItem("username");
+}
 
+// Save the identity of the account that just logged in.
+const storage = rememberMe ? localStorage : sessionStorage;
 
-            storage.setItem(
-                "userRole",
-                data.user.role
-            );
+storage.setItem("userToken", data.token);
+storage.setItem("userRole", data.user.role);
+storage.setItem("username", data.user.username);
 
 
             window.location.href =

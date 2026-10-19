@@ -14,6 +14,17 @@ const {
 const {
     authenticateToken
 } = require("../middleware/authMiddleware");
+const crypto = require("crypto");
+
+const {
+encryptSecret,
+decryptSecret,
+hashChallengeCode,
+verifyChallengeCode,
+generateAuthenticatorSetup,
+verifyAuthenticatorCode
+} = require("../utils/mfa");
+
 
 const router = express.Router();
 
@@ -59,6 +70,88 @@ ESCAPE HTML
 ==========================================
 */
 
+/*
+==========================================
+MFA HELPER FUNCTIONS
+==========================================
+*/
+
+/**
+ * Generate a cryptographically secure six-digit
+ * verification code for MFA.
+ *
+ * This is separate from the existing registration OTP.
+ */
+function generateSecureMfaCode() {
+
+    return crypto
+        .randomInt(0, 1000000)
+        .toString()
+        .padStart(6, "0");
+
+}
+
+
+/**
+ * Generate a unique ID for an MFA challenge.
+ */
+function generateMfaChallengeId() {
+
+    return crypto.randomUUID();
+
+}
+
+
+/**
+ * Calculate when an MFA challenge expires.
+ *
+ * The default lifetime is ten minutes.
+ */
+function getMfaChallengeExpiry(
+    minutes = 10
+) {
+
+    if (
+        !Number.isInteger(minutes) ||
+        minutes < 1 ||
+        minutes > 30
+    ) {
+        throw new RangeError(
+            "MFA challenge lifetime must be between 1 and 30 minutes."
+        );
+    }
+
+    return new Date(
+        Date.now() + minutes * 60 * 1000
+    ).toISOString();
+
+}
+
+
+/**
+ * Check whether an MFA challenge has expired.
+ */
+function isMfaChallengeExpired(
+    expiresAt
+) {
+
+    if (
+        typeof expiresAt !== "string"
+    ) {
+        return true;
+    }
+
+    const expiryTime = Date.parse(
+        expiresAt
+    );
+
+    return (
+        !Number.isFinite(expiryTime) ||
+        expiryTime <= Date.now()
+    );
+
+}
+
 function escapeHtml(value) {
 
     return String(value)
@@ -91,7 +184,7 @@ async function sendOTP(
         subject:
             "Verify Your YASU Tech Account",
 
-        htmlContent: `
+            htmlContent: `
             <div style="
                 font-family: Arial, sans-serif;
                 line-height: 1.6;
@@ -151,7 +244,87 @@ async function sendOTP(
     });
 
 }
+/*
+==========================================
+SEND MFA LOGIN CODE EMAIL
+==========================================
+*/
 
+async function sendMfaCodeEmail(
+    email,
+    username,
+    code
+) {
+    await sendBrevoEmail({
+        to: email,
+
+        subject: "Your YASU Tech Login Verification Code",
+
+        htmlContent: `
+            <div style="
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #222;
+                max-width: 600px;
+                margin: 0 auto;
+            ">
+                <h2>
+                    Hello ${escapeHtml(username)},
+                </h2>
+
+                <p>
+                    A login attempt requires an additional
+                    verification step for your YASU Tech account.
+                </p>
+
+                <p>
+                    Your login verification code is:
+                </p>
+
+                <div style="
+                    font-size: 32px;
+                    font-weight: bold;
+                    letter-spacing: 8px;
+                    text-align: center;
+                    padding: 20px;
+                    background: #f5f5f5;
+                    border-radius: 8px;
+                    margin: 20px 0;
+                ">
+                    ${escapeHtml(code)}
+                </div>
+
+                <p>
+                    This code expires in
+                    <strong>10 minutes</strong>.
+                </p>
+
+                <p>
+                    Never share this code with anyone.
+                    YASU Tech staff will not ask you to disclose it.
+                </p>
+
+                <p>
+                    If you did not attempt to log in,
+                    you can ignore this email. Consider changing
+                    your password if you suspect someone else
+                    knows it.
+                </p>
+
+                <hr>
+
+                <p style="
+                    font-size: 13px;
+                    color: #666;
+                ">
+                    YASU Tech<br>
+                    Innovating Today, Engineering Tomorrow.<br>
+                    Powered by Yakubu Sualisu Ahmed
+                </p>
+            </div>
+        `
+    });
+}
 
 /*
 ==========================================
@@ -576,46 +749,6 @@ router.post(
             } = request.body;
 
 
-            /*
-            ==========================================
-            TEMPORARY LOGIN DEBUG
-            ==========================================
-
-            This does NOT display your password.
-
-            It only displays:
-            - username received
-            - password length
-            - whether it matches ADMIN_PASSWORD
-            */
-
-            console.log(
-                "\n========== LOGIN DEBUG =========="
-            );
-
-            console.log(
-                "Username received:",
-                username
-            );
-
-            console.log(
-                "Password length received:",
-                password
-                    ? password.length
-                    : 0
-            );
-
-            console.log(
-                "Matches ADMIN_PASSWORD:",
-                password ===
-                process.env.ADMIN_PASSWORD
-            );
-
-            console.log(
-                "=================================\n"
-            );
-
-
             const user =
                 await get(
                     `
@@ -646,12 +779,6 @@ router.post(
                 );
 
 
-            console.log(
-                "bcrypt password matches database:",
-                passwordMatches
-            );
-
-
             if (
                 !passwordMatches
             ) {
@@ -659,6 +786,16 @@ router.post(
                 return response.status(401).json({
                     message:
                         "Incorrect username or password."
+                });
+
+            }
+
+
+            if (!user.is_active) {
+
+                return response.status(403).json({
+                    message:
+                        "Your account has been deactivated. Please contact the administrator."
                 });
 
             }
@@ -681,7 +818,172 @@ router.post(
 
             }
 
+            /*
+            ==========================================
+            OPTIONAL MFA LOGIN CHECK
+            ==========================================
+            */
 
+            if (
+                Number(user.mfa_enabled) === 1 ||
+                user.mfa_enabled === true
+            ) {
+
+                const storedMethod = user.mfa_method;
+
+                const method =
+                    storedMethod === "totp"
+                        ? "authenticator"
+                        : storedMethod;
+
+                if (
+                    method !== "email" &&
+                    method !== "authenticator"
+                ) {
+
+                    console.error(
+                        "MFA configuration error for user:",
+                        user.id
+                    );
+
+                    return response.status(500).json({
+                        message:
+                            "Your MFA configuration needs attention. Please contact support."
+                    });
+
+                }
+
+                const challengeId =
+                    generateMfaChallengeId();
+
+                const expiresAt =
+                    getMfaChallengeExpiry(10);
+
+                let codeHash = null;
+                let emailCode = null;
+
+                if (method === "email") {
+
+                    if (!user.email) {
+
+                        return response.status(500).json({
+                            message:
+                                "Email verification is unavailable for this account. Please contact support."
+                        });
+
+                    }
+
+                    emailCode =
+                        generateSecureMfaCode();
+
+                    codeHash =
+                        hashChallengeCode(
+                            challengeId,
+                            emailCode
+                        );
+
+                } else {
+
+                    try {
+
+                        if (!user.mfa_secret_encrypted) {
+                            throw new Error(
+                                "The authenticator secret is missing."
+                            );
+                        }
+
+                        decryptSecret(
+                            user.mfa_secret_encrypted
+                        );
+
+                    } catch (error) {
+
+                        console.error(
+                            "MFA authenticator configuration error for user:",
+                            user.id
+                        );
+
+                        return response.status(500).json({
+                            message:
+                                "Authenticator verification is temporarily unavailable. Please contact support."
+                        });
+
+                    }
+
+                }
+
+                await run(
+                    `
+                    INSERT INTO mfa_login_challenges (
+                        id,
+                        user_id,
+                        method,
+                        code_hash,
+                        expires_at,
+                        attempts,
+                        remember_me
+                    )
+                    VALUES (?, ?, ?, ?, ?, 0, ?)
+                    `,
+                    [
+                        challengeId,
+                        user.id,
+                        method,
+                        codeHash,
+                        expiresAt,
+                        rememberMe ? 1 : 0
+                    ]
+                );
+
+                if (method === "email") {
+
+                    try {
+
+                        await sendMfaCodeEmail(
+                            user.email,
+                            user.username,
+                            emailCode
+                        );
+
+                    } catch (error) {
+
+                        console.error(
+                            "MFA email delivery error:",
+                            error.message
+                        );
+
+                        await run(
+                            `
+                            DELETE FROM mfa_login_challenges
+                            WHERE id = ?
+                            `,
+                            [challengeId]
+                        );
+
+                        return response.status(503).json({
+                            message:
+                                "We could not send your verification code. Please try logging in again."
+                        });
+
+                    }
+
+                }
+
+                return response.json({
+
+                    message:
+                        "Additional verification is required.",
+
+                    mfaRequired:
+                        true,
+
+                    challengeId,
+
+                    method
+
+                });
+
+            }
             const expiresIn =
                 rememberMe
                     ? "30d"
@@ -755,7 +1057,395 @@ router.post(
     }
 );
 
+/*
+==========================================
+VERIFY MFA LOGIN CHALLENGE
+==========================================
+*/
 
+router.post(
+    "/verify-mfa-login",
+
+    async (request, response) => {
+
+        try {
+
+            const {
+                challengeId,
+                code
+            } = request.body;
+
+            if (
+                typeof challengeId !== "string" ||
+                typeof code !== "string" ||
+                !/^\d{6}$/.test(code)
+            ) {
+
+                return response.status(400).json({
+                    message:
+                        "Enter a valid six-digit verification code."
+                });
+
+            }
+
+            let challenge =
+                await get(
+                    `
+                    SELECT
+                        c.id AS challenge_id,
+                        c.user_id AS challenge_user_id,
+                        c.method AS challenge_method,
+                        c.code_hash AS challenge_code_hash,
+                        c.expires_at AS challenge_expires_at,
+                        c.attempts AS challenge_attempts,
+                        c.remember_me AS challenge_remember_me,
+
+                        u.id AS user_id,
+                        u.username AS username,
+                        u.email AS email,
+                        u.role AS role,
+                        u.is_active AS is_active,
+                        u.is_verified AS is_verified,
+                        u.mfa_enabled AS mfa_enabled,
+                        u.mfa_method AS mfa_method,
+                        u.mfa_secret_encrypted
+                            AS mfa_secret_encrypted
+
+                    FROM mfa_login_challenges c
+
+                    INNER JOIN users u
+                        ON u.id = c.user_id
+
+                    WHERE c.id = ?
+                    `,
+                    [challengeId]
+                );
+
+            if (!challenge) {
+
+                return response.status(401).json({
+                    message:
+                        "This verification request is invalid or has expired. Please log in again."
+                });
+
+            }
+
+            if (
+                isMfaChallengeExpired(
+                    challenge.challenge_expires_at
+                )
+            ) {
+
+                await run(
+                    `
+                    DELETE FROM mfa_login_challenges
+                    WHERE id = ?
+                    `,
+                    [challengeId]
+                );
+
+                return response.status(401).json({
+                    message:
+                        "Your verification code has expired. Please log in again."
+                });
+
+            }
+
+            if (
+                Number(challenge.challenge_attempts) >= 5
+            ) {
+
+                await run(
+                    `
+                    DELETE FROM mfa_login_challenges
+                    WHERE id = ?
+                    `,
+                    [challengeId]
+                );
+
+                return response.status(429).json({
+                    message:
+                        "Too many verification attempts. Please log in again."
+                });
+
+            }
+
+            if (
+                !challenge.is_active ||
+                !challenge.is_verified ||
+                !(
+                    Number(challenge.mfa_enabled) === 1 ||
+                    challenge.mfa_enabled === true
+                )
+            ) {
+
+                await run(
+                    `
+                    DELETE FROM mfa_login_challenges
+                    WHERE id = ?
+                    `,
+                    [challengeId]
+                );
+
+                return response.status(403).json({
+                    message:
+                        "Your account or MFA settings have changed. Please log in again."
+                });
+
+            }
+
+            const configuredMethod =
+                challenge.mfa_method === "totp"
+                    ? "authenticator"
+                    : challenge.mfa_method;
+
+            if (
+                configuredMethod !==
+                challenge.challenge_method
+            ) {
+
+                await run(
+                    `
+                    DELETE FROM mfa_login_challenges
+                    WHERE id = ?
+                    `,
+                    [challengeId]
+                );
+
+                return response.status(401).json({
+                    message:
+                        "Your verification request is no longer valid. Please log in again."
+                });
+
+            }
+
+            /*
+            ------------------------------------------
+            RECORD A VERIFICATION ATTEMPT
+            ------------------------------------------
+            */
+
+            const attemptResult =
+                await run(
+                    `
+                    UPDATE mfa_login_challenges
+
+                    SET attempts = attempts + 1
+
+                    WHERE id = ?
+                    AND attempts < 5
+                    `,
+                    [challengeId]
+                );
+
+            if (
+                attemptResult.changes !== 1
+            ) {
+
+                return response.status(401).json({
+                    message:
+                        "This verification request is no longer valid. Please log in again."
+                });
+
+            }
+
+            /*
+            ------------------------------------------
+            VERIFY THE SECOND FACTOR
+            ------------------------------------------
+            */
+
+            let codeIsValid = false;
+
+            if (
+                challenge.challenge_method === "email"
+            ) {
+
+                codeIsValid =
+                    verifyChallengeCode(
+                        challengeId,
+                        code,
+                        challenge.challenge_code_hash
+                    );
+
+            } else if (
+                challenge.challenge_method ===
+                "authenticator"
+            ) {
+
+                try {
+
+                    const authenticatorSecret =
+                        decryptSecret(
+                            challenge.mfa_secret_encrypted
+                        );
+
+                    codeIsValid =
+                        verifyAuthenticatorCode(
+                            authenticatorSecret,
+                            code
+                        );
+
+                } catch (error) {
+
+                    console.error(
+                        "MFA verification configuration error:",
+                        error.message
+                    );
+
+                    return response.status(500).json({
+                        message:
+                            "Authenticator verification is temporarily unavailable."
+                    });
+
+                }
+
+            }
+
+            if (!codeIsValid) {
+
+                const latestChallenge =
+                    await get(
+                        `
+                        SELECT attempts
+                        FROM mfa_login_challenges
+                        WHERE id = ?
+                        `,
+                        [challengeId]
+                    );
+
+                if (
+                    !latestChallenge ||
+                    Number(latestChallenge.attempts) >= 5
+                ) {
+
+                    await run(
+                        `
+                        DELETE FROM mfa_login_challenges
+                        WHERE id = ?
+                        `,
+                        [challengeId]
+                    );
+
+                    return response.status(429).json({
+                        message:
+                            "Too many verification attempts. Please log in again."
+                    });
+
+                }
+
+                return response.status(401).json({
+                    message:
+                        "The verification code is incorrect."
+                });
+
+            }
+
+            /*
+            ------------------------------------------
+            CONSUME THE CHALLENGE
+            ------------------------------------------
+
+            Only the request that successfully deletes
+            the challenge may proceed to issue a token.
+            ------------------------------------------
+            */
+
+            const consumedChallenge =
+                await run(
+                    `
+                    DELETE FROM mfa_login_challenges
+                    WHERE id = ?
+                    `,
+                    [challengeId]
+                );
+
+            if (
+                consumedChallenge.changes !== 1
+            ) {
+
+                return response.status(401).json({
+                    message:
+                        "This verification request has already been used. Please log in again."
+                });
+
+            }
+
+            /*
+            ------------------------------------------
+            ISSUE THE AUTHENTICATED SESSION
+            ------------------------------------------
+            */
+
+            const expiresIn =
+                Number(challenge.challenge_remember_me) === 1
+                    ? "30d"
+                    : "24h";
+
+            const token =
+                jwt.sign(
+                    {
+                        id:
+                            challenge.user_id,
+
+                        username:
+                            challenge.username,
+
+                        email:
+                            challenge.email,
+
+                        role:
+                            challenge.role
+                    },
+
+                    process.env.JWT_SECRET,
+
+                    {
+                        expiresIn
+                    }
+                );
+
+            return response.json({
+
+                message:
+                    "Login successful.",
+
+                token,
+
+                user: {
+
+                    id:
+                        challenge.user_id,
+
+                    username:
+                        challenge.username,
+
+                    email:
+                        challenge.email,
+
+                    role:
+                        challenge.role
+
+                }
+
+            });
+
+        } catch (error) {
+
+            console.error(
+                "MFA login verification error:",
+                error.message
+            );
+
+            return response.status(500).json({
+                message:
+                    "Unable to verify your login. Please try again."
+            });
+
+        }
+
+    }
+);
 /*
 ==========================================
 CURRENT USER
