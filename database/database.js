@@ -237,7 +237,8 @@ async function postgresRun(
 
     if (
         /^INSERT\s+/i.test(trimmedSql) &&
-        !/\bRETURNING\b/i.test(trimmedSql)
+        !/\bRETURNING\b/i.test(trimmedSql) &&
+        /\bVALUES\b/i.test(trimmedSql)
     ) {
         postgresSql =
             `${postgresSql} RETURNING id`;
