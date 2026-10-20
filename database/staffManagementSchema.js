@@ -420,6 +420,65 @@ async function initializeStaffManagementSchema({
 
     /*
     --------------------------------------------------
+    USER NOTIFICATIONS
+    --------------------------------------------------
+
+    Stores persistent, user-specific notifications.
+
+    Notifications can record:
+    - Role appointments and promotions
+    - Role responsibilities and access scope
+    - The person authorizing an appointment
+    - Read and unread status
+
+    Supports SQLite locally and PostgreSQL in production.
+    --------------------------------------------------
+    */
+
+    await run(
+        isPostgres
+            ? `
+                CREATE TABLE IF NOT EXISTS user_notifications (
+                    id SERIAL PRIMARY KEY,
+                    user_id INTEGER NOT NULL
+                        REFERENCES users(id) ON DELETE CASCADE,
+                    actor_user_id INTEGER
+                        REFERENCES users(id) ON DELETE SET NULL,
+                    type TEXT NOT NULL,
+                    title TEXT NOT NULL,
+                    message TEXT NOT NULL,
+                    metadata TEXT,
+                    is_read INTEGER NOT NULL DEFAULT 0,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            `
+            : `
+                CREATE TABLE IF NOT EXISTS user_notifications (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER NOT NULL,
+                    actor_user_id INTEGER,
+                    type TEXT NOT NULL,
+                    title TEXT NOT NULL,
+                    message TEXT NOT NULL,
+                    metadata TEXT,
+                    is_read INTEGER NOT NULL DEFAULT 0,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (user_id)
+                        REFERENCES users(id) ON DELETE CASCADE,
+                    FOREIGN KEY (actor_user_id)
+                        REFERENCES users(id) ON DELETE SET NULL
+                )
+            `
+    );
+
+    await run(`
+        CREATE INDEX IF NOT EXISTS
+        idx_user_notifications_user_created
+        ON user_notifications (user_id, created_at)
+    `);
+
+    /*
+    --------------------------------------------------
     9. SEED INITIAL SYSTEM ROLES
     --------------------------------------------------
 

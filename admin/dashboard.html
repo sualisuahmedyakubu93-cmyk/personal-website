@@ -6709,36 +6709,108 @@ const profileMenuName =
 const profileMenuRole =
     document.getElementById("adminProfileMenuRole");
 
-const username =
-    localStorage.getItem("username") ||
-    sessionStorage.getItem("username") ||
-    "Administrator";
+    const token =
+        sessionStorage.getItem("userToken") ||
+        localStorage.getItem("userToken") ||
+        sessionStorage.getItem("token") ||
+        localStorage.getItem("token");
 
-const role =
-    localStorage.getItem("userRole") ||
-    sessionStorage.getItem("userRole") ||
-    "admin";
+    const roleTitles = {
+        super_admin: "Super Administrator",
+        admin: "Administrator",
+        technical_staff: "Technical Staff",
+        content_staff: "Content Staff",
+        departmental_staff: "Departmental Staff",
+        user: "Regular User"
+    };
 
-if (profileName) {
-    profileName.textContent = username;
-}
+    function displayProfile(username, role) {
+        const safeUsername = username || "User";
+        const safeRole = roleTitles[role] || "Account";
 
-if (profileRole) {
-    profileRole.textContent = role;
-}
+        if (profileName) {
+            profileName.textContent = safeUsername;
+        }
 
-if (profileAvatar) {
-    profileAvatar.textContent =
-        username.charAt(0).toUpperCase();
-}
+        if (profileRole) {
+            profileRole.textContent = safeRole;
+        }
 
-if (profileMenuName) {
-    profileMenuName.textContent = username;
-}
+        if (profileAvatar) {
+            profileAvatar.textContent =
+                safeUsername.charAt(0).toUpperCase();
+        }
 
-if (profileMenuRole) {
-    profileMenuRole.textContent = role;
-}
+        if (profileMenuName) {
+            profileMenuName.textContent = safeUsername;
+        }
+
+        if (profileMenuRole) {
+            profileMenuRole.textContent = safeRole;
+        }
+    }
+
+    displayProfile(
+        localStorage.getItem("username") ||
+            sessionStorage.getItem("username") ||
+            "User",
+        localStorage.getItem("userRole") ||
+            sessionStorage.getItem("userRole") ||
+            "user"
+    );
+
+    async function refreshCurrentProfile() {
+        if (!token) {
+            return;
+        }
+
+        try {
+            const response = await fetch("/api/auth/me", {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            });
+
+            if (response.status === 401 || response.status === 403) {
+                console.warn(
+                    "YASU Tech: Current account could not be verified."
+                );
+                return;
+            }
+
+            if (!response.ok) {
+                throw new Error(
+                    "Profile request failed: HTTP " + response.status
+                );
+            }
+
+            const data = await response.json();
+
+            if (!data.success || !data.user) {
+                throw new Error("Invalid profile response.");
+            }
+
+            const currentUser = data.user;
+
+            displayProfile(
+                currentUser.username,
+                currentUser.role
+            );
+
+            localStorage.setItem("username", currentUser.username);
+            localStorage.setItem("userRole", currentUser.role);
+
+            sessionStorage.setItem("username", currentUser.username);
+            sessionStorage.setItem("userRole", currentUser.role);
+        } catch (error) {
+            console.error(
+                "YASU Tech: Unable to refresh the profile.",
+                error
+            );
+        }
+    }
+
+    refreshCurrentProfile();
 
 
     const profileLogoutButton =

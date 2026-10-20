@@ -1453,22 +1453,75 @@ CURRENT USER
 */
 
 router.get(
-    "/me",
+"/me",
+authenticateToken,
+async (request, response) => {
+try {
+if (!request.user || !request.user.id) {
+return response.status(401).json({
+success: false,
+message: "Please log in again."
+});
+}
 
-    authenticateToken,
 
-    (request, response) => {
+        const currentUser = await get(
+            `SELECT
+                id,
+                username,
+                email,
+                role,
+                is_verified,
+                is_active
+             FROM users
+             WHERE id = ?`,
+            [request.user.id]
+        );
 
-        response.json({
+        if (!currentUser || !currentUser.is_verified) {
+            return response.status(403).json({
+                success: false,
+                message: "Your account is unavailable or not verified."
+            });
+        }
 
-            user:
-                request.user
+        if (
+            currentUser.is_active === false ||
+            currentUser.is_active === 0
+        ) {
+            return response.status(403).json({
+                success: false,
+                message: "Your account is inactive."
+            });
+        }
 
+        return response.json({
+            success: true,
+            user: {
+                id: currentUser.id,
+                username: currentUser.username,
+                email: currentUser.email,
+                role: currentUser.role,
+                is_verified: currentUser.is_verified,
+                is_active: currentUser.is_active
+            }
         });
+    } catch (error) {
+        console.error(
+            "Current-user retrieval error:",
+            error.message
+        );
 
+        return response.status(500).json({
+            success: false,
+            message: "Unable to retrieve your account details."
+        });
     }
+}
+
 
 );
+
 
 
 module.exports = router;

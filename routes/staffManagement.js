@@ -41,6 +41,378 @@ async function writeAuditLog(actorId, action, targetType, targetId, details = {}
         ]
     );
 }
+// --------------------------------------------------
+// ROLE APPOINTMENT NOTIFICATION HELPERS
+// --------------------------------------------------
+
+/**
+ * Describe each supported role.
+ *
+ * Responsibilities and access remain subject to the
+ * permissions assigned to the account.
+ */
+function getRoleAppointmentDetails(role) {
+    const roleDetails = {
+        admin: {
+            title: "Administrator",
+            responsibilities:
+                "Manage authorized website operations, users, and content.",
+            accessScope:
+                "Administrative functions allowed by the permissions assigned to your account. You cannot appoint a Super Administrator or override protected security controls."
+        },
+
+        technical_staff: {
+            title: "Technical Staff",
+            responsibilities:
+                "Support authorized technical maintenance, troubleshooting, and diagnostics.",
+            accessScope:
+                "Technical functions explicitly permitted for your account. Staff management and content access are not automatically granted."
+        },
+
+        content_staff: {
+            title: "Content Staff",
+            responsibilities:
+                "Prepare, edit, and manage assigned documents, speeches, presentations, and writings.",
+            accessScope:
+                "Content areas and publishing actions permitted by your assigned permissions."
+        },
+
+        departmental_staff: {
+            title: "Departmental Staff",
+            responsibilities:
+                "Support activities, records, and content for your assigned department.",
+            accessScope:
+                "Your assigned department and the functions permitted by your account permissions."
+        },
+
+        user: {
+            title: "Regular User",
+            responsibilities:
+                "Maintain your account, manage your own profile, and use available public-facing website features.",
+            accessScope:
+                "Your own account and the features available to regular users. Staff and administrative controls are not included."
+        }
+    };
+
+    return roleDetails[role] || null;
+}
+
+/**
+ * Store a persistent notification about an appointment
+ * or a change to an existing user's role.
+ *
+ * actor must be the actual database-verified account
+ * that authorized the action.
+ */
+async function createRoleAppointmentNotification({
+recipient,
+actor,
+previousRole = null,
+newRole
+}) {
+const details = getRoleAppointmentDetails(newRole);
+
+
+const message =
+    previousRole && previousRole !== newRole
+        ? `Your YASU Tech role has changed to ${details.title}.`
+        : `You have been appointed to the role of ${details.title} at YASU Tech.`;
+
+const metadata = {
+    previousRole,
+    newRole,
+    roleTitle: details.title,
+    responsibilities: details.responsibilities,
+    accessScope: details.accessScope
+};
+
+await run(
+    `INSERT INTO user_notifications (
+        user_id,
+        actor_user_id,
+        type,
+        title,
+        message,
+        metadata,
+        is_read,
+        created_at
+    )
+    VALUES (?, ?, ?, ?, ?, ?, 0, CURRENT_TIMESTAMP)`,
+    [
+        recipient.id,
+        actor.id,
+        previousRole && previousRole !== newRole
+            ? "role_changed"
+            : "role_appointment",
+        "Your YASU Tech role",
+        message,
+        JSON.stringify(metadata)
+    ]
+);
+
+// Send the appointment or promotion email after
+// the in-app notification has been saved.
+try {
+    if (!recipient.email) {
+        console.warn(
+            "Staff appointment email skipped: recipient has no email address.",
+            { recipientId: recipient.id }
+        );
+        return;
+    }
+
+    const escapeHtml = (value) =>
+        String(value ?? "").replace(
+            /[&<>"']/g,
+            (character) => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            })[character]
+        );
+
+    const isPromotion =
+        Boolean(previousRole) &&
+        previousRole !== newRole;
+
+    const previousDetails = previousRole
+        ? getRoleAppointmentDetails(previousRole)
+        : null;
+
+    const actionTitle = isPromotion
+        ? "Official Role Change Notification"
+        : "Official Staff Appointment";
+
+    const roleChangeDetails = isPromotion
+        ? `
+            <p><strong>Previous role:</strong>
+                ${escapeHtml(previousDetails?.title || previousRole)}
+            </p>
+            <p><strong>New role:</strong>
+                ${escapeHtml(details.title)}
+            </p>
+        `
+        : `
+            <p><strong>Appointed role:</strong>
+                ${escapeHtml(details.title)}
+            </p>
+        `;
+
+    const websiteUrl =
+        process.env.PUBLIC_SITE_URL ||
+        "https://yasutech.onrender.com";
+
+    await sendBrevoEmail({
+        to: recipient.email,
+        subject: `${actionTitle} - YASU Tech`,
+        htmlContent: `
+            <div style="font-family:Arial,sans-serif;line-height:1.7;color:#222;max-width:680px;margin:0 auto;">
+                <h2>${actionTitle}</h2>
+                <p>Hello ${escapeHtml(recipient.username || "Team Member")},</p>
+                <p>This email confirms an official change to your role at YASU Tech.</p>
+                ${roleChangeDetails}
+                <p><strong>Responsibilities:</strong>
+                    ${escapeHtml(details.responsibilities)}
+                </p>
+                <p><strong>Access scope:</strong>
+                    ${escapeHtml(details.accessScope)}
+                </p>
+                <p><strong>Authorised by:</strong>
+                    ${escapeHtml(actor.username || actor.email || "An authorised administrator")}
+                </p>
+                <p>Your actual access depends on the permissions assigned to your account.</p>
+                <p><a href="${escapeHtml(websiteUrl)}">Visit YASU Tech</a></p>
+                <p>
+                    YASU Tech<br>
+                    Innovating Today, Engineering Tomorrow<br>
+                    Powered by Yakubu Sualisu Ahmed
+                </p>
+            </div>
+        `
+    });
+
+    console.info(
+        "Staff appointment email accepted by Brevo:",
+        {
+            recipientId: recipient.id,
+            role: newRole,
+            type: isPromotion ? "promotion" : "appointment"
+        }
+    );
+} catch (emailError) {
+    console.error(
+        "Staff appointment email could not be sent:",
+        {
+            recipientId: recipient.id,
+            role: newRole,
+            error: emailError.message
+        }
+    );
+}
+
+
+}
+
+
+// --------------------------------------------------
+// PERSONAL USER NOTIFICATIONS
+// --------------------------------------------------
+
+
+/**
+ * Return notifications belonging only to the authenticated,
+ * verified and active user.
+ *
+ * The user ID always comes from the current database-backed
+ * authentication context, never from a request parameter.
+ */
+router.get(
+    "/notifications",
+    async (req, res) => {
+        try {
+            const currentUser = await get(
+                `SELECT id, is_verified, is_active
+                 FROM users
+                 WHERE id = ?`,
+                [req.user.id]
+            );
+
+            if (
+                !currentUser ||
+                !Number(currentUser.is_verified) ||
+                !Number(currentUser.is_active)
+            ) {
+                return res.status(403).json({
+                    success: false,
+                    message:
+                        "Your account is unavailable, inactive, or not verified."
+                });
+            }
+
+            const notifications = await all(
+                `SELECT
+                    id,
+                    type,
+                    title,
+                    message,
+                    metadata,
+                    is_read,
+                    created_at
+                 FROM user_notifications
+                 WHERE user_id = ?
+                 ORDER BY created_at DESC, id DESC
+                 LIMIT 50`,
+                [currentUser.id]
+            );
+
+            return res.json({
+                success: true,
+                count: notifications.length,
+                unreadCount: notifications.filter(
+                    notification =>
+                        !Number(notification.is_read)
+                ).length,
+                notifications
+            });
+        } catch (error) {
+            console.error(
+                "Load personal notifications error:",
+                error
+            );
+
+            return res.status(500).json({
+                success: false,
+                message:
+                    "Unable to load your notifications."
+            });
+        }
+    }
+);
+
+// Mark one of the current user's notifications as read.
+router.patch(
+    "/notifications/:id/read",
+    async (req, res) => {
+        try {
+            const notificationId = Number(req.params.id);
+
+            if (
+                !Number.isSafeInteger(notificationId) ||
+                notificationId <= 0
+            ) {
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        "A valid notification ID is required."
+                });
+            }
+
+            const currentUser = await get(
+                `SELECT id, is_verified, is_active
+                 FROM users
+                 WHERE id = ?`,
+                [req.user.id]
+            );
+
+            if (
+                !currentUser ||
+                !Number(currentUser.is_verified) ||
+                !Number(currentUser.is_active)
+            ) {
+                return res.status(403).json({
+                    success: false,
+                    message:
+                        "Your account is unavailable, inactive, or not verified."
+                });
+            }
+
+            const notification = await get(
+                `SELECT id, is_read
+                 FROM user_notifications
+                 WHERE id = ?
+                   AND user_id = ?`,
+                [notificationId, currentUser.id]
+            );
+
+            if (!notification) {
+                return res.status(404).json({
+                    success: false,
+                    message:
+                        "Notification not found."
+                });
+            }
+
+            if (!Number(notification.is_read)) {
+                await run(
+                    `UPDATE user_notifications
+                     SET is_read = 1
+                     WHERE id = ?
+                       AND user_id = ?`,
+                    [notificationId, currentUser.id]
+                );
+            }
+
+            return res.json({
+                success: true,
+                message:
+                    "Notification marked as read."
+            });
+        } catch (error) {
+            console.error(
+                "Mark notification as read error:",
+                error
+            );
+
+            return res.status(500).json({
+                success: false,
+                message:
+                    "Unable to update the notification."
+            });
+        }
+    }
+);
 
 // GET /api/staff-management/overview
 router.get(
@@ -195,13 +567,15 @@ router.patch(
             const targetId = Number(req.params.id);
             const { role } = req.body;
 
-            if (!Number.isInteger(targetId) || targetId <= 0) {
+            // Validate the target user ID.
+            if (!Number.isSafeInteger(targetId) || targetId <= 0) {
                 return res.status(400).json({
                     success: false,
                     message: "A valid user ID is required."
                 });
             }
 
+            // Validate the requested role.
             if (typeof role !== "string" || !role.trim()) {
                 return res.status(400).json({
                     success: false,
@@ -211,8 +585,19 @@ router.patch(
 
             const normalizedRole = role.trim().toLowerCase();
 
+            // Prevent an administrator from changing their own role.
+            if (targetId === Number(req.user.id)) {
+                return res.status(403).json({
+                    success: false,
+                    message: "You cannot change your own role."
+                });
+            }
+
+            // Load the target account from the database.
             const target = await get(
-                "SELECT id, role FROM users WHERE id = ?",
+                `SELECT id, username, email, role
+                 FROM users
+                 WHERE id = ?`,
                 [targetId]
             );
 
@@ -223,6 +608,7 @@ router.patch(
                 });
             }
 
+            // Confirm that the requested role exists.
             const roleRecord = await get(
                 "SELECT slug FROM roles WHERE slug = ?",
                 [normalizedRole]
@@ -235,42 +621,119 @@ router.patch(
                 });
             }
 
+            // Prevent ordinary role changes from appointing
+            // another Super Administrator.
+            if (
+                normalizedRole === "super_admin" &&
+                target.role !== "super_admin"
+            ) {
+                return res.status(403).json({
+                    success: false,
+                    message:
+                        "Appointing another Super Administrator is not permitted through this endpoint."
+                });
+            }
+
+            // Do not perform unnecessary updates or send
+            // duplicate notifications when the role is unchanged.
+            if (target.role === normalizedRole) {
+                return res.json({
+                    success: true,
+                    message: "The user already has this role.",
+                    changed: false
+                });
+            }
+
+            // Protect the last Super Administrator.
             if (
                 target.role === "super_admin" &&
                 normalizedRole !== "super_admin"
             ) {
                 const remaining = await get(
-                    "SELECT COUNT(*) AS total FROM users WHERE role = 'super_admin'"
+                    `SELECT COUNT(*) AS total
+                     FROM users
+                     WHERE role = 'super_admin'`
                 );
 
                 if (Number(remaining?.total || 0) <= 1) {
                     return res.status(400).json({
                         success: false,
-                        message: "The last super administrator cannot be demoted."
+                        message:
+                            "The last Super Administrator cannot be demoted."
                     });
                 }
             }
 
+            // Confirm the authorizing account from the database.
+            const actor = await get(
+                `SELECT id, username, email, role, is_verified, is_active
+                 FROM users
+                 WHERE id = ?`,
+                [req.user.id]
+            );
+
+            if (
+                !actor ||
+                actor.role !== "super_admin" ||
+                !Number(actor.is_verified) ||
+                !Number(actor.is_active)
+            ) {
+                return res.status(403).json({
+                    success: false,
+                    message:
+                        "An active, verified Super Administrator is required."
+                });
+            }
+
+            // Update the user's role.
             await run(
                 "UPDATE users SET role = ? WHERE id = ?",
                 [normalizedRole, targetId]
             );
 
+            // Record the change in the audit log.
             await writeAuditLog(
-                req.user.id,
+                actor.id,
                 "user.role_changed",
                 "user",
                 targetId,
-                { previousRole: target.role, newRole: normalizedRole }
+                {
+                    previousRole: target.role,
+                    newRole: normalizedRole
+                }
             );
 
-            res.json({
+            // Create a persistent notification for the recipient.
+            let notificationCreated = true;
+
+            try {
+                await createRoleAppointmentNotification({
+                    recipient: target,
+                    actor,
+                    previousRole: target.role,
+                    newRole: normalizedRole
+                });
+            } catch (notificationError) {
+                notificationCreated = false;
+
+                console.error(
+                    "Role-change notification could not be saved:",
+                    notificationError
+                );
+            }
+
+            return res.json({
                 success: true,
-                message: "User role updated successfully."
+                message: notificationCreated
+                    ? "User role updated and notification created successfully."
+                    : "User role updated, but the notification could not be saved. Check the server logs.",
+                changed: true,
+                notificationCreated
             });
         } catch (error) {
             console.error("Update user role error:", error);
-            res.status(500).json({
+
+            return res.status(500).json({
                 success: false,
                 message: "Unable to update the user role."
             });
@@ -542,7 +1005,35 @@ router.post(
                     message: "The selected role does not exist."
                 });
             }
+            // Protect the Super Administrator role.
+if (role === "super_admin") {
+    return res.status(403).json({
+        success: false,
+        message:
+            "The Super Administrator role cannot be assigned through ordinary account creation."
+    });
+}
 
+// Verify the actual authorizing account from the database.
+const actor = await get(
+    `SELECT id, username, email, role, is_verified, is_active
+     FROM users
+     WHERE id = ?`,
+    [req.user.id]
+);
+
+if (
+    !actor ||
+    actor.role !== "super_admin" ||
+    !Number(actor.is_verified) ||
+    !Number(actor.is_active)
+) {
+    return res.status(403).json({
+        success: false,
+        message:
+            "An active, verified Super Administrator is required."
+    });
+}
             const passwordHash = await bcrypt.hash(password, 12);
             const otp = String(
                 Math.floor(100000 + Math.random() * 900000)
@@ -604,13 +1095,36 @@ router.post(
                 created?.id ?? result?.lastID ?? "unknown",
                 { username, email, role }
             );
+// Notify newly appointed staff members.
+// Ordinary regular-user registrations do not receive
+// staff-appointment notifications.
+let notificationCreated = null;
 
+if (role !== "user" && created) {
+    try {
+        await createRoleAppointmentNotification({
+            recipient: created,
+            actor,
+            newRole: role
+        });
+
+        notificationCreated = true;
+    } catch (notificationError) {
+        notificationCreated = false;
+
+        console.error(
+            "Staff appointment notification could not be saved:",
+            notificationError
+        );
+    }
+}
             return res.status(201).json({
-                success: true,
-                message:
-                    "Account created. A verification code has been sent to the user's email.",
-                user: created
-            });
+    success: true,
+    message:
+        "Account created. A verification code has been sent to the user's email.",
+    user: created,
+    notificationCreated
+});
         } catch (error) {
             console.error("Staff account creation error:", error);
 

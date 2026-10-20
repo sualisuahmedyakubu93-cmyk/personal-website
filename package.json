@@ -1,11 +1,14 @@
 {
   "name": "yasutech",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "YASU Tech - Personal website and technology portfolio of Yakubu Sualisu Ahmed",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "version:patch": "node scripts/release-version.js patch",
+    "version:minor": "node scripts/release-version.js minor",
+    "version:major": "node scripts/release-version.js major"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.0",
